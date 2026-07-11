@@ -1,0 +1,394 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   COBRR TECH LABS — Design System
+   A premium, corporate, engineering-focused visual language.
+   Light-first with disciplined ink/sand neutrals and a single confident accent.
+   ========================================================================== */
+
+@theme {
+  /* Neutrals — the backbone of the system */
+  --color-ink: #0a0e1a; /* near-black navy, primary text + dark surfaces */
+  --color-ink-soft: #121a2e; /* elevated dark surface */
+  --color-ink-line: #1e2740; /* borders on dark */
+  --color-paper: #ffffff; /* base light surface */
+  --color-sand: #f5f4f0; /* warm off-white section surface */
+  --color-sand-deep: #ecebe4; /* slightly deeper warm surface */
+  --color-line: #e4e3dd; /* hairline borders on light */
+
+  /* Text */
+  --color-muted: #565d6d; /* secondary text on light */
+  --color-muted-dark: #93a0bd; /* secondary text on dark */
+
+  /* Brand accent — a single, confident cobalt */
+  --color-brand: #2450e6;
+  --color-brand-strong: #1b3ec2;
+  --color-brand-soft: #eaefff;
+
+  /* Secondary accent — warm copper, used sparingly for emphasis */
+  --color-copper: #c1863c;
+
+  /* Typography */
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  /* Motion */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Radius scale — rounded corners with moderation */
+  --radius-card: 14px;
+}
+
+:root {
+  --background: var(--color-paper);
+  --foreground: var(--color-ink);
+}
+
+* {
+  border-color: var(--color-line);
+}
+
+html {
+  scroll-behavior: smooth;
+  /* offset for the sticky header when jumping to anchors */
+  scroll-padding-top: 6rem;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--color-brand);
+  color: #fff;
+}
+
+/* ==========================================================================
+   Layout primitives
+   ========================================================================== */
+@layer components {
+  .container-page {
+    width: 100%;
+    max-width: 80rem; /* 1280px */
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+  }
+
+  @media (min-width: 1024px) {
+    .container-page {
+      padding-inline: 2.5rem;
+    }
+  }
+
+  .section {
+    padding-block: 5rem;
+  }
+  @media (min-width: 768px) {
+    .section {
+      padding-block: 7rem;
+    }
+  }
+
+  /* ---- Typography helpers ---- */
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-brand);
+  }
+  .eyebrow::before {
+    content: "";
+    width: 1.75rem;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.5;
+  }
+  .eyebrow-center {
+    justify-content: center;
+  }
+
+  .heading-xl {
+    font-size: clamp(2.25rem, 5vw, 3.75rem);
+    line-height: 1.04;
+    letter-spacing: -0.03em;
+    font-weight: 600;
+  }
+  .heading-lg {
+    font-size: clamp(1.9rem, 3.6vw, 2.85rem);
+    line-height: 1.08;
+    letter-spacing: -0.025em;
+    font-weight: 600;
+  }
+  .heading-md {
+    font-size: clamp(1.35rem, 2.2vw, 1.6rem);
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+    font-weight: 600;
+  }
+  .lead {
+    font-size: clamp(1.05rem, 1.4vw, 1.2rem);
+    line-height: 1.6;
+    color: var(--color-muted);
+  }
+
+  /* Gradient rule used under section headings */
+  .rule-accent {
+    height: 3px;
+    width: 3rem;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--color-brand), var(--color-copper));
+  }
+
+  /* ---- Buttons (base class + variants) ---- */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1;
+    padding: 0.85rem 1.6rem;
+    border-radius: 999px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition:
+      transform 0.25s var(--ease-out-expo),
+      background-color 0.25s ease,
+      color 0.25s ease,
+      border-color 0.25s ease,
+      box-shadow 0.25s ease;
+    white-space: nowrap;
+    user-select: none;
+  }
+  .btn:active {
+    transform: translateY(1px);
+  }
+  .btn:focus-visible {
+    outline: 2px solid var(--color-brand);
+    outline-offset: 2px;
+  }
+  .btn svg {
+    transition: transform 0.3s var(--ease-out-expo);
+  }
+  .btn:hover svg {
+    transform: translateX(3px);
+  }
+
+  /* Primary CTA — "dark sand": premium ink button for light surfaces
+     (replaces the old repeated blue). */
+  .btn-primary {
+    background: var(--color-ink);
+    color: #fff;
+    box-shadow: 0 12px 26px -16px rgba(10, 14, 26, 0.7);
+  }
+  .btn-primary:hover {
+    background: var(--color-ink-soft);
+    box-shadow: 0 18px 34px -16px rgba(10, 14, 26, 0.6);
+  }
+
+  .btn-dark {
+    background: var(--color-ink);
+    color: #fff;
+  }
+  .btn-dark:hover {
+    background: #000;
+  }
+
+  /* Solid light button — the primary CTA to use on top of dark surfaces. */
+  .btn-light {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    box-shadow: 0 12px 26px -16px rgba(0, 0, 0, 0.5);
+  }
+  .btn-light:hover {
+    background: var(--color-sand-deep);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--color-ink);
+    border-color: var(--color-line);
+  }
+  .btn-outline:hover {
+    border-color: var(--color-ink);
+    background: var(--color-ink);
+    color: #fff;
+  }
+
+  .btn-ghost-light {
+    background: rgba(255, 255, 255, 0.06);
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.18);
+  }
+  .btn-ghost-light:hover {
+    background: #fff;
+    color: var(--color-ink);
+    border-color: #fff;
+  }
+
+  .btn-lg {
+    padding: 1rem 2rem;
+    font-size: 1rem;
+  }
+  .btn-sm {
+    padding: 0.6rem 1.1rem;
+    font-size: 0.85rem;
+  }
+
+  /* Text link with animated underline */
+  .link-underline {
+    position: relative;
+    font-weight: 600;
+    color: var(--color-ink);
+  }
+  .link-underline::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    height: 1.5px;
+    width: 100%;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.35s var(--ease-out-expo);
+  }
+  .link-underline:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  /* ---- Cards ---- */
+  .card {
+    background: var(--color-paper);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-card);
+    transition:
+      transform 0.4s var(--ease-out-expo),
+      box-shadow 0.4s var(--ease-out-expo),
+      border-color 0.4s ease;
+  }
+  .card-hover:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 24px 50px -30px rgba(10, 14, 26, 0.35);
+    border-color: color-mix(in srgb, var(--color-ink) 22%, transparent);
+  }
+
+  /* Small pill/tag */
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 0.3rem 0.7rem;
+    border-radius: 999px;
+    background: var(--color-sand);
+    border: 1px solid var(--color-line);
+    color: var(--color-muted);
+  }
+
+  /* Glass / etched technology text used in the marquee — translucent fill
+     with a subtle outline, brightening on hover. */
+  .tech-glass {
+    color: rgba(255, 255, 255, 0.05);
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.22);
+    transition:
+      color 0.4s ease,
+      -webkit-text-stroke-color 0.4s ease;
+    cursor: default;
+  }
+  .tech-glass:hover {
+    color: rgba(255, 255, 255, 0.82);
+    -webkit-text-stroke-color: rgba(255, 255, 255, 0.82);
+  }
+
+  /* Subtle engineering grid backdrop */
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, rgba(10, 14, 26, 0.045) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(10, 14, 26, 0.045) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+  .bg-grid-dark {
+    background-image:
+      linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+}
+
+/* Infinite marquee — duplicate the content and slide by -50% for a seamless
+   loop. Pauses on hover so cards stay readable. */
+@keyframes marquee-x {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-x var(--marquee-duration, 46s) linear infinite;
+}
+.marquee-track.is-reverse {
+  animation-direction: reverse;
+}
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+/* Outlined "wave" text — a bordered wordmark with a bright highlight that
+   sweeps through the letters forever. */
+@keyframes text-wave-sweep {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.text-wave {
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 1px var(--color-sand-deep);
+  background-image: linear-gradient(
+    100deg,
+    transparent 18%,
+    color-mix(in srgb, var(--color-sand-deep) 60%, #fff) 42%,
+    #ffffff 50%,
+    color-mix(in srgb, var(--color-sand-deep) 60%, #fff) 58%,
+    transparent 82%
+  );
+  background-size: 220% 100%;
+  background-repeat: no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: text-wave-sweep 4.5s linear infinite;
+}
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}

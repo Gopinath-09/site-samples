@@ -38,15 +38,15 @@ export default function TrustedBy() {
         {/* Right — the wall. Negative margins collapse adjacent borders into
             single hairlines, so the grid reads as one continuous frame. */}
         <RevealGroup className="grid grid-cols-2 border-l border-t border-line sm:grid-cols-3">
-          {trustedBy.map((name) => (
-            <RevealItem key={name}>
+          {trustedBy.map((client) => (
+            <RevealItem key={client.name}>
               <div className="group relative flex h-28 items-center justify-center border-b border-r border-line px-4 transition-colors duration-300 hover:bg-sand">
                 {/* Corner ticks appear on hover — a quiet engineered detail */}
                 <span className="pointer-events-none absolute left-2 top-2 h-2 w-2 border-l border-t border-brand opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                 <span className="pointer-events-none absolute bottom-2 right-2 h-2 w-2 border-b border-r border-brand opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
                 <span className="text-center text-sm font-bold uppercase tracking-widest text-ink/40 transition-colors duration-300 group-hover:text-ink">
-                  {name}
+                  {client.name}
                 </span>
               </div>
             </RevealItem>

@@ -5,6 +5,7 @@ import PageHeader from "@/components/layout/PageHeader";
 import FaqSection from "@/components/home/FaqSection";
 import FinalCta from "@/components/home/FinalCta";
 import Button from "@/components/ui/Button";
+import Media from "@/components/ui/Media";
 import Reveal, { RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { ArrowRight, Check } from "@/components/ui/icons";
 import type { Faq } from "@/lib/content";
@@ -162,31 +163,12 @@ export default async function ProductDetailPage(
             {product.gallery.map((shot) => (
               <RevealItem key={shot.label} className="h-full">
                 <figure className="group h-full overflow-hidden rounded-2xl border border-line bg-paper shadow-xs transition-shadow duration-300 hover:shadow-lg">
-                  {shot.image ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      src={shot.image}
-                      alt={shot.caption}
-                      className="aspect-video w-full object-cover"
-                    />
-                  ) : (
-                    /* Placeholder frame — set `image` on the product record to replace. */
-                    <div className="relative flex aspect-video w-full flex-col justify-end overflow-hidden bg-linear-to-br from-brand-soft/70 to-sand p-5">
-                      <div className="absolute left-5 top-5 flex gap-1.5" aria-hidden>
-                        <span className="h-2 w-2 rounded-full bg-ink/15" />
-                        <span className="h-2 w-2 rounded-full bg-ink/15" />
-                        <span className="h-2 w-2 rounded-full bg-ink/15" />
-                      </div>
-                      <div className="absolute inset-x-5 top-12 space-y-2 opacity-60" aria-hidden>
-                        <div className="h-1.5 w-2/3 rounded-full bg-ink/10" />
-                        <div className="h-1.5 w-1/2 rounded-full bg-ink/10" />
-                        <div className="h-1.5 w-3/5 rounded-full bg-ink/10" />
-                      </div>
-                      <span className="relative text-xs font-bold uppercase tracking-wider text-brand">
-                        {shot.label}
-                      </span>
-                    </div>
-                  )}
+                  <Media
+                    src={shot.image}
+                    alt={shot.caption}
+                    label={shot.label}
+                    sizes="(min-width: 640px) 50vw, 100vw"
+                  />
                   <figcaption className="border-t border-line p-5 text-xs leading-relaxed text-muted">
                     {shot.caption}
                   </figcaption>

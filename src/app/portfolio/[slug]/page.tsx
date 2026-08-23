@@ -4,6 +4,7 @@ import PageHeader from "@/components/layout/PageHeader";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Button from "@/components/ui/Button";
 import CardLink from "@/components/ui/CardLink";
+import Media from "@/components/ui/Media";
 import FinalCta from "@/components/home/FinalCta";
 import { RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { portfolioProjects } from "@/lib/content";
@@ -137,42 +138,13 @@ export default async function PortfolioDetailPage({ params }: Props) {
                     key={shot.label}
                     className="group overflow-hidden rounded-2xl border border-line/80 bg-paper shadow-xs transition-shadow duration-300 hover:shadow-lg"
                   >
-                    {shot.image ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
-                        src={shot.image}
-                        alt={shot.caption}
-                        className="aspect-video w-full object-cover"
-                      />
-                    ) : (
-                      /* Placeholder frame — swap in `image` on the data record to replace. */
-                      <div
-                        className="relative flex aspect-video w-full flex-col justify-end overflow-hidden bg-sand p-4"
-                        style={{
-                          backgroundImage: `linear-gradient(140deg, ${proj.accent}18, transparent 60%)`,
-                        }}
-                      >
-                        <div className="absolute left-4 top-4 flex gap-1.5" aria-hidden>
-                          <span className="h-2 w-2 rounded-full bg-ink/15" />
-                          <span className="h-2 w-2 rounded-full bg-ink/15" />
-                          <span className="h-2 w-2 rounded-full bg-ink/15" />
-                        </div>
-                        <div
-                          className="absolute inset-x-4 top-11 space-y-2 opacity-60"
-                          aria-hidden
-                        >
-                          <div className="h-1.5 w-2/3 rounded-full bg-ink/10" />
-                          <div className="h-1.5 w-1/2 rounded-full bg-ink/10" />
-                          <div className="h-1.5 w-3/5 rounded-full bg-ink/10" />
-                        </div>
-                        <span
-                          className="relative text-xs font-bold uppercase tracking-wider"
-                          style={{ color: proj.accent }}
-                        >
-                          {shot.label}
-                        </span>
-                      </div>
-                    )}
+                    <Media
+                      src={shot.image}
+                      alt={shot.caption}
+                      label={shot.label}
+                      accent={proj.accent}
+                      sizes="(min-width: 640px) 50vw, 100vw"
+                    />
                     <figcaption className="border-t border-line/60 p-4 text-xs leading-relaxed text-muted">
                       {shot.caption}
                     </figcaption>

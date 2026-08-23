@@ -1,9 +1,19 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
   reactCompiler: true,
-  allowedDevOrigins: ['26.20.200.61'],
+  allowedDevOrigins: ["26.20.200.61"],
+
+  /**
+   * Image pipeline for the asset-heavy redesign. AVIF is tried first and falls
+   * back to WebP, then to the source format. Next 16 requires `qualities` to be
+   * an explicit allowlist: 75 covers general imagery, 90 is reserved for the
+   * hero and product screenshots where fine UI text has to stay crisp.
+   */
+  images: {
+    formats: ["image/avif", "image/webp"],
+    qualities: [75, 90],
+  },
 
   /**
    * `/case-studies` was superseded by the richer `/portfolio` section, which

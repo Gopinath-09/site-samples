@@ -389,6 +389,12 @@ export interface PortfolioProject {
   duration: string;
   clientFeedback: { quote: string; author: string; role: string };
   accent: string;
+  /**
+   * Cleared for publication. `false` means the record is a draft placeholder and
+   * is withheld from the site until the claim can be backed by a real client,
+   * a signed-off number, or written permission to use the name.
+   */
+  verified: boolean;
 }
 
 export const portfolioProjects: PortfolioProject[] = [
@@ -426,6 +432,7 @@ export const portfolioProjects: PortfolioProject[] = [
       role: "COO, Precision Manufacturing Co.",
     },
     accent: "#2563eb",
+    verified: false,
   },
   {
     slug: "regional-health-patient-portal",
@@ -461,6 +468,7 @@ export const portfolioProjects: PortfolioProject[] = [
       role: "CIO, Regional Health Network",
     },
     accent: "#0d9488",
+    verified: false,
   },
   {
     slug: "urban-retail-ai-recommendation",
@@ -496,6 +504,7 @@ export const portfolioProjects: PortfolioProject[] = [
       role: "Chief Product Officer, Urban Retail Group",
     },
     accent: "#6366f1",
+    verified: false,
   },
   {
     slug: "fintech-micro-lending-platform",
@@ -531,6 +540,7 @@ export const portfolioProjects: PortfolioProject[] = [
       role: "Head of Product, CrediSwift Fintech",
     },
     accent: "#d97706",
+    verified: false,
   },
   {
     slug: "global-logistics-fleet-tracker",
@@ -566,6 +576,7 @@ export const portfolioProjects: PortfolioProject[] = [
       role: "Director of Technology, TransWorld Logistics",
     },
     accent: "#2563eb",
+    verified: false,
   },
   {
     slug: "edtech-interactive-learning-lms",
@@ -601,6 +612,7 @@ export const portfolioProjects: PortfolioProject[] = [
       role: "Managing Director, EduSpark Global",
     },
     accent: "#0d9488",
+    verified: false,
   },
 ];
 
@@ -944,13 +956,19 @@ export interface Metric {
   prefix?: string;
   label: string;
   decimals?: number;
+  /**
+   * Cleared for publication. `false` means the record is a draft placeholder and
+   * is withheld from the site until the claim can be backed by a real client,
+   * a signed-off number, or written permission to use the name.
+   */
+  verified: boolean;
 }
 
 export const metrics: Metric[] = [
-  { value: 120, suffix: "+", label: "Projects & Platforms Delivered" },
-  { value: 40, suffix: "+", label: "Enterprise & Startup Clients" },
-  { value: 99.99, suffix: "%", label: "Production Uptime SLA", decimals: 2 },
-  { value: 8, suffix: " Yrs", label: "Combined Engineering Record" },
+  { value: 120, suffix: "+", label: "Projects & Platforms Delivered", verified: false },
+  { value: 40, suffix: "+", label: "Enterprise & Startup Clients", verified: false },
+  { value: 99.99, suffix: "%", label: "Production Uptime SLA", decimals: 2, verified: false },
+  { value: 8, suffix: " Yrs", label: "Combined Engineering Record", verified: false },
 ];
 
 export interface Testimonial {
@@ -959,6 +977,12 @@ export interface Testimonial {
   role: string;
   company: string;
   rating: number;
+  /**
+   * Cleared for publication. `false` means the record is a draft placeholder and
+   * is withheld from the site until the claim can be backed by a real client,
+   * a signed-off number, or written permission to use the name.
+   */
+  verified: boolean;
 }
 
 export const testimonials: Testimonial[] = [
@@ -968,6 +992,7 @@ export const testimonials: Testimonial[] = [
     role: "VP Engineering",
     company: "Enterprise SaaS",
     rating: 5,
+    verified: false,
   },
   {
     quote: "They were honest about trade-offs from day one. That transparency is rare, and it's why we keep entrusting COBRR with our primary platforms.",
@@ -975,6 +1000,7 @@ export const testimonials: Testimonial[] = [
     role: "COO",
     company: "Precision Manufacturing",
     rating: 5,
+    verified: false,
   },
   {
     quote: "The AI features COBRR built weren't just a gimmick — they went into production safely on our data and delivered immediate conversion lift.",
@@ -982,6 +1008,7 @@ export const testimonials: Testimonial[] = [
     role: "Chief Product Officer",
     company: "Urban Retail Group",
     rating: 5,
+    verified: false,
   },
   {
     quote: "Our platform migration was delivered on time with zero unplanned downtime during cutover. Their documentation and runbooks are top class.",
@@ -989,6 +1016,7 @@ export const testimonials: Testimonial[] = [
     role: "Director of Technology",
     company: "TransWorld Logistics",
     rating: 5,
+    verified: false,
   },
 ];
 
@@ -1166,14 +1194,25 @@ export const blogPosts: BlogPost[] = [
   },
 ];
 
-export const trustedBy: string[] = [
-  "SATISFY",
-  "SUDESI A&F",
-  "YHAI",
-  "TRACKER BOX",
-  "UNION COLLEGE",
-  "DUDUK",
-  "SAARC NETKAMPUS",
+export interface Client {
+  name: string;
+  /** Path under `public/clients/`. Absent renders the name as a wordmark. */
+  logo?: string;
+  /**
+   * Set true only once you hold written permission to display the client's
+   * name or mark. Unverified entries never reach the page.
+   */
+  verified: boolean;
+}
+
+export const trustedBy: Client[] = [
+  { name: "SATISFY", verified: false },
+  { name: "SUDESI A&F", verified: false },
+  { name: "YHAI", verified: false },
+  { name: "TRACKER BOX", verified: false },
+  { name: "UNION COLLEGE", verified: false },
+  { name: "DUDUK", verified: false },
+  { name: "SAARC NETKAMPUS", verified: false },
 ];
 
 export const teamMembers = [
@@ -1287,3 +1326,29 @@ export const openRoles = [
   { title: "Cloud DevOps Architect (AWS / Kubernetes)", location: "Remote / Bangalore", department: "Infrastructure" },
   { title: "Senior UI/UX Product Designer", location: "Remote", department: "Design" },
 ];
+
+/* -------------------------------------------------------------------------- */
+/* 14. PROOF GATE                                                             */
+/* -------------------------------------------------------------------------- */
+/**
+ * Nothing that asserts a fact about a third party or about our track record
+ * should reach a visitor before someone has confirmed it is true. These
+ * accessors are the only ones the home page reads, so an unverified record is
+ * structurally incapable of being published: forgetting to check is no longer
+ * a way to end up with invented proof on the site.
+ *
+ * Flip a record's `verified` to true when the evidence exists, and the section
+ * that consumes it reappears on its own.
+ */
+export const verifiedClients = trustedBy.filter((c) => c.verified);
+export const verifiedProjects = portfolioProjects.filter((p) => p.verified);
+export const verifiedTestimonials = testimonials.filter((t) => t.verified);
+export const verifiedMetrics = metrics.filter((m) => m.verified);
+
+/** True when a proof-backed section has enough real records to be worth showing. */
+export const hasProof = {
+  clients: verifiedClients.length > 0,
+  projects: verifiedProjects.length > 0,
+  testimonials: verifiedTestimonials.length > 0,
+  metrics: verifiedMetrics.length > 0,
+};

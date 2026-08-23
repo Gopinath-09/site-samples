@@ -84,8 +84,8 @@ export default function ContactForm() {
           Our team will get back to you within one business day. In the meantime,
           feel free to explore our work.
         </p>
-        <Button variant="outline" href="/case-studies" className="mt-6">
-          View case studies
+        <Button variant="outline" href="/portfolio" className="mt-6">
+          View our portfolio
         </Button>
       </div>
     );

@@ -8,17 +8,26 @@
 
 @theme {
   /* Neutrals — the backbone of the system */
-  --color-ink: #0a0e1a; /* near-black navy, primary text + dark surfaces */
-  --color-ink-soft: #121a2e; /* elevated dark surface */
-  --color-ink-line: #1e2740; /* borders on dark */
-  --color-paper: #ffffff; /* base light surface */
-  --color-sand: #f5f4f0; /* warm off-white section surface */
-  --color-sand-deep: #ecebe4; /* slightly deeper warm surface */
-  --color-line: #e4e3dd; /* hairline borders on light */
+  --color-ink: #0a0e1a;
+  /* near-black navy, primary text + dark surfaces */
+  --color-ink-soft: #121a2e;
+  /* elevated dark surface */
+  --color-ink-line: #1e2740;
+  /* borders on dark */
+  --color-paper: #ffffff;
+  /* base light surface */
+  --color-sand: #f5f4f0;
+  /* warm off-white section surface */
+  --color-sand-deep: #ecebe4;
+  /* slightly deeper warm surface */
+  --color-line: #e4e3dd;
+  /* hairline borders on light */
 
   /* Text */
-  --color-muted: #565d6d; /* secondary text on light */
-  --color-muted-dark: #93a0bd; /* secondary text on dark */
+  --color-muted: #565d6d;
+  /* secondary text on light */
+  --color-muted-dark: #93a0bd;
+  /* secondary text on dark */
 
   /* Brand accent — a single, confident cobalt */
   --color-brand: #2450e6;
@@ -74,7 +83,8 @@ body {
 @layer components {
   .container-page {
     width: 100%;
-    max-width: 80rem; /* 1280px */
+    max-width: 80rem;
+    /* 1280px */
     margin-inline: auto;
     padding-inline: 1.5rem;
   }
@@ -88,6 +98,7 @@ body {
   .section {
     padding-block: 5rem;
   }
+
   @media (min-width: 768px) {
     .section {
       padding-block: 7rem;
@@ -105,6 +116,7 @@ body {
     text-transform: uppercase;
     color: var(--color-brand);
   }
+
   .eyebrow::before {
     content: "";
     width: 1.75rem;
@@ -112,6 +124,7 @@ body {
     background: currentColor;
     opacity: 0.5;
   }
+
   .eyebrow-center {
     justify-content: center;
   }
@@ -122,18 +135,21 @@ body {
     letter-spacing: -0.03em;
     font-weight: 600;
   }
+
   .heading-lg {
     font-size: clamp(1.9rem, 3.6vw, 2.85rem);
     line-height: 1.08;
     letter-spacing: -0.025em;
     font-weight: 600;
   }
+
   .heading-md {
     font-size: clamp(1.35rem, 2.2vw, 1.6rem);
     line-height: 1.2;
     letter-spacing: -0.015em;
     font-weight: 600;
   }
+
   .lead {
     font-size: clamp(1.05rem, 1.4vw, 1.2rem);
     line-height: 1.6;
@@ -170,16 +186,20 @@ body {
     white-space: nowrap;
     user-select: none;
   }
+
   .btn:active {
     transform: translateY(1px);
   }
+
   .btn:focus-visible {
     outline: 2px solid var(--color-brand);
     outline-offset: 2px;
   }
+
   .btn svg {
     transition: transform 0.3s var(--ease-out-expo);
   }
+
   .btn:hover svg {
     transform: translateX(3px);
   }
@@ -191,6 +211,7 @@ body {
     color: #fff;
     box-shadow: 0 12px 26px -16px rgba(10, 14, 26, 0.7);
   }
+
   .btn-primary:hover {
     background: var(--color-ink-soft);
     box-shadow: 0 18px 34px -16px rgba(10, 14, 26, 0.6);
@@ -200,6 +221,7 @@ body {
     background: var(--color-ink);
     color: #fff;
   }
+
   .btn-dark:hover {
     background: #000;
   }
@@ -210,6 +232,7 @@ body {
     color: var(--color-ink);
     box-shadow: 0 12px 26px -16px rgba(0, 0, 0, 0.5);
   }
+
   .btn-light:hover {
     background: var(--color-sand-deep);
   }
@@ -219,6 +242,7 @@ body {
     color: var(--color-ink);
     border-color: var(--color-line);
   }
+
   .btn-outline:hover {
     border-color: var(--color-ink);
     background: var(--color-ink);
@@ -230,6 +254,7 @@ body {
     color: #fff;
     border-color: rgba(255, 255, 255, 0.18);
   }
+
   .btn-ghost-light:hover {
     background: #fff;
     color: var(--color-ink);
@@ -240,6 +265,7 @@ body {
     padding: 1rem 2rem;
     font-size: 1rem;
   }
+
   .btn-sm {
     padding: 0.6rem 1.1rem;
     font-size: 0.85rem;
@@ -251,6 +277,7 @@ body {
     font-weight: 600;
     color: var(--color-ink);
   }
+
   .link-underline::after {
     content: "";
     position: absolute;
@@ -263,6 +290,7 @@ body {
     transform-origin: right;
     transition: transform 0.35s var(--ease-out-expo);
   }
+
   .link-underline:hover::after {
     transform: scaleX(1);
     transform-origin: left;
@@ -278,6 +306,7 @@ body {
       box-shadow 0.4s var(--ease-out-expo),
       border-color 0.4s ease;
   }
+
   .card-hover:hover {
     transform: translateY(-4px);
     box-shadow: 0 24px 50px -30px rgba(10, 14, 26, 0.35);
@@ -308,6 +337,7 @@ body {
       -webkit-text-stroke-color 0.4s ease;
     cursor: default;
   }
+
   .tech-glass:hover {
     color: rgba(255, 255, 255, 0.82);
     -webkit-text-stroke-color: rgba(255, 255, 255, 0.82);
@@ -320,6 +350,7 @@ body {
       linear-gradient(to bottom, rgba(10, 14, 26, 0.045) 1px, transparent 1px);
     background-size: 56px 56px;
   }
+
   .bg-grid-dark {
     background-image:
       linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
@@ -341,9 +372,11 @@ body {
   width: max-content;
   animation: marquee-x var(--marquee-duration, 46s) linear infinite;
 }
+
 .marquee-track.is-reverse {
   animation-direction: reverse;
 }
+
 .marquee-track:hover {
   animation-play-state: paused;
 }
@@ -354,6 +387,7 @@ body {
   0% {
     background-position: 200% 0;
   }
+
   100% {
     background-position: -200% 0;
   }
@@ -362,14 +396,12 @@ body {
 .text-wave {
   -webkit-text-fill-color: transparent;
   -webkit-text-stroke: 1px var(--color-sand-deep);
-  background-image: linear-gradient(
-    100deg,
-    transparent 18%,
-    color-mix(in srgb, var(--color-sand-deep) 60%, #fff) 42%,
-    #ffffff 50%,
-    color-mix(in srgb, var(--color-sand-deep) 60%, #fff) 58%,
-    transparent 82%
-  );
+  background-image: linear-gradient(100deg,
+      transparent 18%,
+      color-mix(in srgb, var(--color-sand-deep) 60%, #fff) 42%,
+      #ffffff 50%,
+      color-mix(in srgb, var(--color-sand-deep) 60%, #fff) 58%,
+      transparent 82%);
   background-size: 220% 100%;
   background-repeat: no-repeat;
   -webkit-background-clip: text;
@@ -382,9 +414,11 @@ body {
   .marquee-track {
     animation: none;
   }
+
   html {
     scroll-behavior: auto;
   }
+
   *,
   *::before,
   *::after {

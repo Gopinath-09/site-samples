@@ -4,6 +4,8 @@ import Reveal from "@/components/ui/Reveal";
 export interface LegalSection {
   heading: string;
   paragraphs: string[];
+  /** Optional anchor so sections can be linked to directly (e.g. #cookie-policy). */
+  id?: string;
 }
 
 /** Shared layout for Privacy Policy and Terms — clean, readable, on-brand. */
@@ -27,7 +29,8 @@ export default function LegalPage({
           <div className="space-y-10">
             {sections.map((s, i) => (
               <Reveal key={s.heading}>
-                <div>
+                {/* scroll-mt clears the fixed header when linked to directly */}
+                <div id={s.id} className="scroll-mt-28">
                   <h2 className="heading-md flex items-baseline gap-3">
                     <span className="font-mono text-sm text-brand">
                       {String(i + 1).padStart(2, "0")}

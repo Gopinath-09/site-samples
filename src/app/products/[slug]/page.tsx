@@ -107,6 +107,96 @@ export default async function ProductDetailPage(
         </div>
       </section>
 
+      {/* Benefits */}
+      <section className="section bg-paper">
+        <div className="container-page grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
+          <div>
+            <span className="eyebrow">Benefits</span>
+            <Reveal>
+              <h2 className="heading-md mt-4">
+                What changes once {product.name} is in place.
+              </h2>
+            </Reveal>
+            <Reveal delay={0.05}>
+              <p className="mt-5 leading-relaxed text-muted">
+                Outcomes teams report after adopting the platform — measured
+                against how they worked before, not against a feature list.
+              </p>
+            </Reveal>
+          </div>
+
+          <RevealGroup className="grid gap-4">
+            {product.benefits.map((b, i) => (
+              <RevealItem key={b}>
+                <div className="card flex items-start gap-4 p-6">
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-brand text-sm font-bold text-white">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <p className="pt-1.5 text-sm font-semibold leading-snug text-ink">
+                    {b}
+                  </p>
+                </div>
+              </RevealItem>
+            ))}
+          </RevealGroup>
+        </div>
+      </section>
+
+      {/* Product gallery */}
+      <section className="section bg-sand">
+        <div className="container-page">
+          <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+            <div>
+              <span className="eyebrow">Gallery</span>
+              <Reveal>
+                <h2 className="heading-md mt-4">A look inside {product.name}.</h2>
+              </Reveal>
+            </div>
+            <Button variant="outline" href="/contact" className="shrink-0">
+              Book a live demo
+              <ArrowRight width={18} height={18} />
+            </Button>
+          </div>
+
+          <RevealGroup className="mt-12 grid gap-6 sm:grid-cols-2">
+            {product.gallery.map((shot) => (
+              <RevealItem key={shot.label} className="h-full">
+                <figure className="group h-full overflow-hidden rounded-2xl border border-line bg-paper shadow-xs transition-shadow duration-300 hover:shadow-lg">
+                  {shot.image ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={shot.image}
+                      alt={shot.caption}
+                      className="aspect-video w-full object-cover"
+                    />
+                  ) : (
+                    /* Placeholder frame — set `image` on the product record to replace. */
+                    <div className="relative flex aspect-video w-full flex-col justify-end overflow-hidden bg-linear-to-br from-brand-soft/70 to-sand p-5">
+                      <div className="absolute left-5 top-5 flex gap-1.5" aria-hidden>
+                        <span className="h-2 w-2 rounded-full bg-ink/15" />
+                        <span className="h-2 w-2 rounded-full bg-ink/15" />
+                        <span className="h-2 w-2 rounded-full bg-ink/15" />
+                      </div>
+                      <div className="absolute inset-x-5 top-12 space-y-2 opacity-60" aria-hidden>
+                        <div className="h-1.5 w-2/3 rounded-full bg-ink/10" />
+                        <div className="h-1.5 w-1/2 rounded-full bg-ink/10" />
+                        <div className="h-1.5 w-3/5 rounded-full bg-ink/10" />
+                      </div>
+                      <span className="relative text-xs font-bold uppercase tracking-wider text-brand">
+                        {shot.label}
+                      </span>
+                    </div>
+                  )}
+                  <figcaption className="border-t border-line p-5 text-xs leading-relaxed text-muted">
+                    {shot.caption}
+                  </figcaption>
+                </figure>
+              </RevealItem>
+            ))}
+          </RevealGroup>
+        </div>
+      </section>
+
       {/* Architecture + pricing placeholder */}
       <section className="section bg-paper">
         <div className="container-page grid gap-12 lg:grid-cols-2 lg:gap-16">
@@ -164,7 +254,11 @@ export default async function ProductDetailPage(
         </div>
       </section>
 
-      <FaqSection items={productFaqs} />
+      <FaqSection
+        items={productFaqs}
+        tone="sand"
+        title={`${product.name} — common questions.`}
+      />
       <FinalCta />
     </>
   );

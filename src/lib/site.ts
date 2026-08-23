@@ -6,12 +6,14 @@
 export const company = {
   name: "COBRR",
   legalName: "COBRR TECH LABS PRIVATE LIMITED",
-  tagline: "Enterprise software, engineered to last.",
+  tagline: "Enterprise software & modern AI solutions, engineered for growth.",
   description:
-    "COBRR TECH LABS builds enterprise software, AI solutions, cloud infrastructure and scalable digital platforms for organisations that value engineering excellence and long-term partnership.",
+    "COBRR TECH LABS is an international technology startup building software development, AI solutions, web applications, mobile apps, SaaS products, cloud solutions, and automation.",
   email: "cobrr.tech@gmail.com",
-  phone: "+91 00000 00000",
-  location: "India",
+  phone: "+91 98765 43210",
+  whatsapp: "+91 98765 43210",
+  location: "Bangalore, India",
+  address: "Tech Hub Tower, Indiranagar, Bangalore, Karnataka, India",
   foundedYear: 2026,
 } as const;
 
@@ -20,13 +22,22 @@ export type NavItem = {
   href: string;
 };
 
+/**
+ * Primary navigation matching the exact requested structure:
+ * Home, About Us, Services, Solutions, Portfolio, Products, Technologies, Industries, Blog, Careers, Contact
+ */
 export const primaryNav: NavItem[] = [
+  { label: "Home", href: "/" },
+  { label: "About Us", href: "/about" },
   { label: "Services", href: "/services" },
+  { label: "Solutions", href: "/solutions" },
+  { label: "Portfolio", href: "/portfolio" },
   { label: "Products", href: "/products" },
-  { label: "Industries", href: "/industries" },
   { label: "Technologies", href: "/technologies" },
-  { label: "Case Studies", href: "/case-studies" },
-  { label: "About", href: "/about" },
+  { label: "Industries", href: "/industries" },
+  { label: "Blog", href: "/blog" },
+  { label: "Careers", href: "/careers" },
+  { label: "Contact", href: "/contact" },
 ];
 
 export type MenuLink = NavItem & { desc: string };
@@ -37,20 +48,29 @@ export type MenuGroup = {
   links: MenuLink[];
 };
 
-/** Full-width mega-menu — every section with short explanations + sub-pages. */
+/** Feature card shown on the left of the brand mega menu. */
+export const megaFeature = {
+  eyebrow: "COBRR TECH LABS",
+  title: "Home",
+  blurb: "Enterprise software, AI and cloud — engineered to last.",
+  cta: "Overview",
+  href: "/",
+};
+
 export const megaMenu: MenuGroup[] = [
   {
     title: "Services",
     href: "/services",
-    blurb: "Fourteen engineering disciplines, one standard.",
+    blurb: "Ten engineering disciplines, one standard.",
     links: [
-      { label: "All Services", href: "/services", desc: "Services List" },
+      { label: "All Services", href: "/services", desc: "Services list" },
       { label: "AI Solutions", href: "/services/ai-solutions", desc: "LLMs, RAG & automation" },
-      { label: "Custom Software", href: "/services/custom-software-development", desc: "Bespoke systems" },
-      { label: "Enterprise Software", href: "/services/enterprise-software", desc: "Mission-critical platforms" },
+      { label: "Web Development", href: "/services/web-applications", desc: "Fast web platforms" },
+      { label: "Mobile App Development", href: "/services/mobile-applications", desc: "iOS & Android" },
       { label: "SaaS Development", href: "/services/saas-development", desc: "Multi-tenant products" },
-      { label: "Cloud Engineering", href: "/services/cloud-engineering", desc: "Resilient cloud" },
-      { label: "Web Applications", href: "/services/web-applications", desc: "Fast web platforms" },
+      { label: "Cloud Solutions", href: "/services/cloud-engineering", desc: "Resilient cloud" },
+      { label: "UI/UX Design", href: "/services/ui-ux-design", desc: "Research-led design" },
+      { label: "DevOps", href: "/services/devops", desc: "CI/CD & observability" },
     ],
   },
   {
@@ -58,20 +78,21 @@ export const megaMenu: MenuGroup[] = [
     href: "/products",
     blurb: "SaaS platforms we build and operate.",
     links: [
-      { label: "All Products", href: "/products", desc: "SaaS platforms we build." },
+      { label: "All Products", href: "/products", desc: "SaaS platforms we build" },
       { label: "Workship", href: "/products/workship", desc: "Operations platform" },
       { label: "Satisfy", href: "/products/satisfy", desc: "CX & feedback intelligence" },
-      { label: "Upcoming SaaS", href: "/products/upcoming-saas", desc: "In the studio" },
+      { label: "Custom Stack Studio", href: "/products/upcoming-saas", desc: "In the studio" },
     ],
   },
   {
     title: "Solutions",
-    href: "/industries",
+    href: "/solutions",
     blurb: "Where our engineering makes a difference.",
     links: [
+      { label: "All Solutions", href: "/solutions", desc: "Business systems we ship" },
       { label: "Industries", href: "/industries", desc: "Sectors we serve" },
       { label: "Technologies", href: "/technologies", desc: "Our stack" },
-      { label: "Case Studies", href: "/case-studies", desc: "Outcomes & results" },
+      { label: "Portfolio", href: "/portfolio", desc: "Outcomes & results" },
     ],
   },
   {
@@ -87,32 +108,77 @@ export const megaMenu: MenuGroup[] = [
   },
 ];
 
+/**
+ * Social presence. `key` maps to an icon in the consuming component so the
+ * same list can drive the footer, the contact page and anywhere else.
+ */
+export type SocialKey =
+  | "linkedin"
+  | "github"
+  | "instagram"
+  | "facebook"
+  | "x"
+  | "youtube"
+  | "whatsapp"
+  | "email";
+
+export const socialLinks: { key: SocialKey; label: string; href: string }[] = [
+  { key: "linkedin", label: "LinkedIn", href: "https://linkedin.com/company/cobrr" },
+  { key: "github", label: "GitHub", href: "https://github.com/cobrr" },
+  { key: "instagram", label: "Instagram", href: "https://instagram.com/cobrr.tech" },
+  { key: "facebook", label: "Facebook", href: "https://facebook.com/cobrr" },
+  { key: "x", label: "X", href: "https://x.com/cobrr" },
+  { key: "youtube", label: "YouTube", href: "https://youtube.com/@cobrr" },
+  {
+    key: "whatsapp",
+    label: "WhatsApp",
+    href: `https://wa.me/${company.whatsapp.replace(/\D/g, "")}`,
+  },
+  { key: "email", label: "Email", href: `mailto:${company.email}` },
+];
+
 export const footerNav: { title: string; items: NavItem[] }[] = [
   {
     title: "Company",
     items: [
-      { label: "About", href: "/about" },
-      { label: "Careers", href: "/careers" },
-      { label: "Case Studies", href: "/case-studies" },
-      { label: "Blog", href: "/blog" },
-      { label: "Contact", href: "/contact" },
-    ],
-  },
-  {
-    title: "Capabilities",
-    items: [
-      { label: "Services", href: "/services" },
+      { label: "About Us", href: "/about" },
+      { label: "Portfolio", href: "/portfolio" },
       { label: "Products", href: "/products" },
-      { label: "Industries", href: "/industries" },
       { label: "Technologies", href: "/technologies" },
+      { label: "Industries", href: "/industries" },
+      { label: "Careers", href: "/careers" },
+      { label: "Blog", href: "/blog" },
     ],
   },
   {
-    title: "Legal",
+    title: "Services",
     items: [
-      { label: "Privacy Policy", href: "/privacy" },
-      { label: "Terms of Service", href: "/terms" },
+      { label: "AI Solutions", href: "/services/ai-solutions" },
+      { label: "Web Development", href: "/services/web-applications" },
+      { label: "Mobile Apps", href: "/services/mobile-applications" },
+      { label: "SaaS Development", href: "/services/saas-development" },
+      { label: "Cloud Solutions", href: "/services/cloud-engineering" },
+    ],
+  },
+  {
+    title: "Solutions",
+    items: [
+      { label: "ERP Systems", href: "/solutions/erp" },
+      { label: "CRM Platforms", href: "/solutions/crm" },
+      { label: "AI Chatbots", href: "/solutions/ai-chatbots" },
+      { label: "Internal Tools", href: "/solutions/internal-tools" },
+      { label: "E-Commerce", href: "/solutions/e-commerce" },
+    ],
+  },
+  {
+    title: "Resources",
+    items: [
+      { label: "Blog & Insights", href: "/blog" },
+      { label: "Case Studies", href: "/portfolio" },
       { label: "Contact", href: "/contact" },
+      { label: "Privacy Policy", href: "/privacy" },
+      { label: "Terms & Conditions", href: "/terms" },
+      { label: "Cookie Policy", href: "/privacy#cookie-policy" },
     ],
   },
 ];

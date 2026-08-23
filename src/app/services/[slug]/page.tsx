@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { services } from "@/lib/content";
 import PageHeader from "@/components/layout/PageHeader";
 import FinalCta from "@/components/home/FinalCta";
+import FaqSection from "@/components/home/FaqSection";
 import Icon from "@/components/ui/Icon";
 import Button from "@/components/ui/Button";
 import Reveal, { RevealGroup, RevealItem } from "@/components/ui/Reveal";
@@ -20,15 +21,6 @@ export async function generateMetadata(
   if (!service) return { title: "Service" };
   return { title: service.title, description: service.summary };
 }
-
-const deliverables = [
-  "Discovery & technical strategy",
-  "System architecture & design",
-  "Iterative, tested delivery",
-  "Security review & hardening",
-  "Documentation & handover",
-  "Ongoing support & evolution",
-];
 
 export default async function ServiceDetailPage(
   props: PageProps<"/services/[slug]">,
@@ -51,30 +43,30 @@ export default async function ServiceDetailPage(
       <section className="section bg-paper">
         <div className="container-page grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:gap-20">
           <div>
-            <span className="eyebrow">What we deliver</span>
+            <span className="eyebrow">Overview</span>
             <Reveal>
               <h2 className="heading-md mt-4">
                 Outcomes engineered around your goals.
               </h2>
             </Reveal>
             <Reveal delay={0.05}>
-              <p className="lead mt-5 text-base">
-                Every {service.title.toLowerCase()} engagement is scoped to your
-                context. We combine senior engineering with a clear process so
-                you get software that is reliable, secure and built to evolve.
-              </p>
+              <p className="lead mt-5 text-base">{service.description}</p>
             </Reveal>
 
-            <RevealGroup className="mt-8 grid gap-3 sm:grid-cols-2">
-              {deliverables.map((d) => (
+            {/* Benefits */}
+            <h3 className="mt-10 text-sm font-bold uppercase tracking-wider text-muted">
+              What you gain
+            </h3>
+            <RevealGroup className="mt-5 grid gap-3">
+              {service.benefits.map((b) => (
                 <RevealItem
-                  key={d}
-                  className="flex items-center gap-3 text-sm font-medium text-ink"
+                  key={b}
+                  className="flex items-start gap-3 text-sm font-medium text-ink"
                 >
-                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-soft text-brand">
+                  <span className="mt-px flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-soft text-brand">
                     <Check width={14} height={14} />
                   </span>
-                  {d}
+                  {b}
                 </RevealItem>
               ))}
             </RevealGroup>
@@ -104,8 +96,97 @@ export default async function ServiceDetailPage(
         </div>
       </section>
 
-      {/* Related services */}
+      {/* Capabilities & technologies */}
       <section className="section bg-sand">
+        <div className="container-page grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
+          <div>
+            <span className="eyebrow">Capabilities</span>
+            <h2 className="heading-md mt-4">What&apos;s included</h2>
+            <RevealGroup className="mt-8 grid gap-4 sm:grid-cols-2">
+              {service.features.map((f) => (
+                <RevealItem key={f} className="h-full">
+                  <div className="card h-full p-5">
+                    <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-ink text-white">
+                      <Check width={15} height={15} />
+                    </span>
+                    <p className="mt-4 text-sm font-semibold leading-snug text-ink">
+                      {f}
+                    </p>
+                  </div>
+                </RevealItem>
+              ))}
+            </RevealGroup>
+          </div>
+
+          <Reveal direction="left">
+            <div className="card p-8">
+              <span className="eyebrow">Technologies used</span>
+              <h3 className="mt-3 text-lg font-semibold text-ink">
+                The stack behind this service
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed text-muted">
+                Chosen for operational maturity and long-term supportability —
+                not novelty.
+              </p>
+              <ul className="mt-6 flex flex-wrap gap-2">
+                {service.technologies.map((t) => (
+                  <li key={t}>
+                    <span className="pill">{t}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-8 border-t border-line pt-6">
+                <Button variant="outline" href="/technologies" className="w-full">
+                  Explore our full stack
+                  <ArrowRight width={16} height={16} />
+                </Button>
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* Delivery process */}
+      <section className="section bg-paper">
+        <div className="container-page">
+          <span className="eyebrow">How we work</span>
+          <h2 className="heading-md mt-4 max-w-2xl">
+            A clear path from first conversation to production.
+          </h2>
+          <RevealGroup className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {service.processSteps.map((step, i) => (
+              <RevealItem key={step} className="h-full">
+                <div className="relative h-full rounded-2xl border border-line bg-paper p-6 shadow-xs">
+                  <span className="text-xs font-bold tracking-widest text-brand">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <h3 className="mt-3 text-base font-semibold leading-snug text-ink">
+                    {step}
+                  </h3>
+                  {i < service.processSteps.length - 1 && (
+                    <span
+                      aria-hidden
+                      className="absolute right-0 top-1/2 hidden h-px w-6 translate-x-full bg-line lg:block"
+                    />
+                  )}
+                </div>
+              </RevealItem>
+            ))}
+          </RevealGroup>
+        </div>
+      </section>
+
+      {/* Service-specific FAQs */}
+      <FaqSection
+        items={service.faqs}
+        tone="sand"
+        eyebrow="FAQ"
+        title={`${service.title} — common questions.`}
+        description="The questions we are asked most often before starting this kind of engagement."
+      />
+
+      {/* Related services */}
+      <section className="section bg-paper">
         <div className="container-page">
           <h2 className="heading-md">Related services</h2>
           <RevealGroup className="mt-8 grid gap-6 md:grid-cols-3">

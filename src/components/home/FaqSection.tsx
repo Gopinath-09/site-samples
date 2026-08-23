@@ -6,18 +6,30 @@ import { faqs as defaultFaqs, type Faq } from "@/lib/content";
 import SectionHeading from "@/components/ui/SectionHeading";
 import { cn } from "@/lib/utils";
 
-export default function FaqSection({ items }: { items?: Faq[] }) {
+export default function FaqSection({
+  items,
+  eyebrow = "FAQ",
+  title = "Answers to the questions we hear most.",
+  description = "Something not covered here? Our team is glad to talk specifics.",
+  tone = "paper",
+}: {
+  items?: Faq[];
+  eyebrow?: string;
+  title?: string;
+  description?: string;
+  /** Alternate background so the section can sit next to other paper sections. */
+  tone?: "paper" | "sand";
+}) {
   const list = items ?? defaultFaqs;
   const [open, setOpen] = useState<number | null>(0);
 
   return (
-    <section className="section bg-paper" id="faq">
+    <section
+      className={cn("section", tone === "sand" ? "bg-sand" : "bg-paper")}
+      id="faq"
+    >
       <div className="container-page grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
-        <SectionHeading
-          eyebrow="FAQ"
-          title="Answers to the questions we hear most."
-          description="Something not covered here? Our team is glad to talk specifics."
-        />
+        <SectionHeading eyebrow={eyebrow} title={title} description={description} />
 
         <div className="divide-y divide-line border-y border-line">
           {list.map((f, i) => {

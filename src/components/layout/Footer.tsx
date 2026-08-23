@@ -1,11 +1,16 @@
 "use client";
 
+import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { company, footerNav } from "@/lib/site";
+import { toast } from "sonner";
+import { company, footerNav, socialLinks, type SocialKey } from "@/lib/site";
 import Button from "@/components/ui/Button";
-import { ArrowUpRight } from "@/components/ui/icons";
+import { ArrowRight, ArrowUpRight } from "@/components/ui/icons";
 import {
+  FaLinkedinIn,
+  FaGithub,
   FaInstagram,
+  FaFacebookF,
   FaEnvelope,
   FaYoutube,
   FaWhatsapp,
@@ -13,13 +18,16 @@ import {
 } from "react-icons/fa6";
 import type { IconType } from "react-icons";
 
-const socials: { label: string; href: string; Icon: IconType }[] = [
-  { label: "Instagram", href: "https://instagram.com/cobrr.tech", Icon: FaInstagram },
-  { label: "Email", href: `mailto:${company.email}`, Icon: FaEnvelope },
-  { label: "YouTube", href: "https://youtube.com/@cobrr", Icon: FaYoutube },
-  { label: "WhatsApp", href: "https://wa.me/910000000000", Icon: FaWhatsapp },
-  { label: "X", href: "https://x.com/cobrr", Icon: FaXTwitter },
-];
+const socialIcons: Record<SocialKey, IconType> = {
+  linkedin: FaLinkedinIn,
+  github: FaGithub,
+  instagram: FaInstagram,
+  facebook: FaFacebookF,
+  x: FaXTwitter,
+  youtube: FaYoutube,
+  whatsapp: FaWhatsapp,
+  email: FaEnvelope,
+};
 
 /** A footer link that reveals a top-right arrow on hover. */
 function FooterLink({ label, onClick }: { label: string; onClick: () => void }) {
@@ -42,6 +50,21 @@ export default function Footer() {
   const router = useRouter();
   const year = 2026; // Date APIs unavailable at build in this env; keep static.
   const open = (href: string) => (window.location.href = href);
+  const [email, setEmail] = useState("");
+
+  /**
+   * Front-end only for now — swap the toast for a POST to your list provider
+   * (or a Server Action) when the newsletter backend is in place.
+   */
+  const subscribe = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      toast.error("Please enter a valid email address.");
+      return;
+    }
+    toast.success("Subscribed — we'll only email when it's worth reading.");
+    setEmail("");
+  };
 
   return (
     <footer className="relative overflow-hidden bg-ink text-white">
@@ -70,7 +93,7 @@ export default function Footer() {
               Start a project
               <ArrowUpRight width={18} height={18} />
             </Button>
-            <Button variant="ghost-light" size="lg" href="/case-studies">
+            <Button variant="ghost-light" size="lg" href="/portfolio">
               View our work
             </Button>
           </div>
@@ -100,22 +123,57 @@ export default function Footer() {
           </button>
 
           {/* Social buttons */}
-          <div className="mt-7 flex gap-2.5">
-            {socials.map((s) => (
-              <button
-                key={s.label}
-                onClick={() => open(s.href)}
-                aria-label={s.label}
-                className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-white/12 text-white/75 transition-colors hover:border-brand hover:bg-brand hover:text-white"
-              >
-                <s.Icon size={17} />
-              </button>
-            ))}
+          <div className="mt-7 flex flex-wrap gap-2.5">
+            {socialLinks.map((s) => {
+              const Icon = socialIcons[s.key];
+              return (
+                <button
+                  key={s.key}
+                  onClick={() => open(s.href)}
+                  aria-label={s.label}
+                  title={s.label}
+                  className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-white/12 text-white/75 transition-colors hover:border-brand hover:bg-brand hover:text-white"
+                >
+                  <Icon size={17} />
+                </button>
+              );
+            })}
           </div>
+
+          {/* Newsletter */}
+          <form onSubmit={subscribe} className="mt-9 max-w-sm">
+            <label
+              htmlFor="footer-newsletter"
+              className="text-xs font-semibold uppercase tracking-widest text-muted-dark"
+            >
+              Newsletter
+            </label>
+            <p className="mt-2 text-sm leading-relaxed text-muted-dark">
+              Engineering notes and product updates. No more than once a month.
+            </p>
+            <div className="mt-4 flex gap-2">
+              <input
+                id="footer-newsletter"
+                type="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="you@company.com"
+                className="min-w-0 flex-1 rounded-xl border border-white/15 bg-white/5 px-4 py-2.5 text-sm text-white placeholder:text-white/35 transition-colors focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/30"
+              />
+              <button
+                type="submit"
+                className="flex shrink-0 cursor-pointer items-center gap-1.5 rounded-xl bg-brand px-4 py-2.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+              >
+                Subscribe
+                <ArrowRight width={15} height={15} />
+              </button>
+            </div>
+          </form>
         </div>
 
         {/* Link columns */}
-        <div className="grid grid-cols-2 gap-8 sm:grid-cols-3">
+        <div className="grid grid-cols-2 gap-8 sm:grid-cols-4">
           {footerNav.map((group) => (
             <div key={group.title}>
               <h3 className="text-xs font-semibold uppercase tracking-widest text-muted-dark">

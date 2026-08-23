@@ -42,6 +42,16 @@ export default function PrivacyPage() {
           ],
         },
         {
+          id: "cookie-policy",
+          heading: "Cookie policy",
+          paragraphs: [
+            "Cookies are small text files stored on your device when you visit a website. We use them sparingly and only for purposes described here.",
+            "Strictly necessary cookies keep the site working — remembering your session and security preferences. These cannot be switched off without breaking core functionality.",
+            "Analytics cookies help us understand which pages are useful and where visitors get stuck, in aggregate. We do not use them to build advertising profiles, and we do not sell the data they produce.",
+            "You can control or delete cookies through your browser settings at any time. Blocking non-essential cookies will not prevent you from using the site or contacting us.",
+          ],
+        },
+        {
           heading: "Your rights",
           paragraphs: [
             "Depending on your location, you may have rights to access, correct, delete or restrict the processing of your personal data.",

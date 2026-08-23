@@ -6,8 +6,11 @@ import SectionHeading from "@/components/ui/SectionHeading";
 import Button from "@/components/ui/Button";
 import { ArrowRight } from "@/components/ui/icons";
 
-// Flatten every technology into one list, then split across two marquee rows.
-const allTech = technologies.flatMap((g) => g.items);
+// Flatten every technology name into one list (items are objects), drop the
+// names that appear in more than one category, then split across two marquee rows.
+const allTech = Array.from(
+  new Set(technologies.flatMap((g) => g.items.map((item) => item.name)))
+);
 const rowA = allTech.filter((_, i) => i % 2 === 0);
 const rowB = allTech.filter((_, i) => i % 2 === 1);
 

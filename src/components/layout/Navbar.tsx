@@ -4,9 +4,10 @@ import { useEffect, useRef, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { megaMenu } from "@/lib/site";
+import { primaryNav, megaMenu, megaFeature } from "@/lib/site";
 import Button from "@/components/ui/Button";
-import { ArrowRight, ArrowUpRight, ChevronDown, Close } from "@/components/ui/icons";
+import Logo from "@/components/layout/Logo";
+import { ArrowRight, ArrowUpRight, Close, Menu as MenuIcon } from "@/components/ui/icons";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -21,11 +22,9 @@ export default function Navbar() {
   useEffect(() => {
     const onScroll = () => {
       const y = window.scrollY;
-      setScrolled(y > 100);
-      // Hide when scrolling down (past a small threshold), reveal on scroll up.
-      const goingDown = y > lastY.current && y > 140;
+      setScrolled(y > 30);
+      const goingDown = y > lastY.current && y > 160;
       setHidden(goingDown);
-      // Scrolling down also closes the mega-menu (desktop).
       if (goingDown) setMegaOpen(false);
       lastY.current = y;
     };
@@ -34,15 +33,19 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Close any open menu when the route changes (safety net for navigations
-  // that don't go through `go()`).
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
+  /**
+   * Close both menus whenever the route changes — including back/forward
+   * navigation, which never goes through `go()`. Adjusting state during render
+   * rather than in an effect avoids a second render pass with the menu still
+   * open. See https://react.dev/reference/react/useState#storing-information-from-previous-renders
+   */
+  const [lastPath, setLastPath] = useState(pathname);
+  if (pathname !== lastPath) {
+    setLastPath(pathname);
     setMobileOpen(false);
     setMegaOpen(false);
-  }, [pathname]);
+  }
 
-  // Lock scroll while the mobile drawer is open.
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? "hidden" : "";
     return () => {
@@ -50,13 +53,18 @@ export default function Navbar() {
     };
   }, [mobileOpen]);
 
-  // Solid (sand) header when scrolled or the mega-menu is open.
-  const solid = scrolled || megaOpen;
-  const dark = solid; // dark text/logo on the light (sand) header
+  /* Escape closes the mega panel — it has no other keyboard dismissal. */
+  useEffect(() => {
+    if (!megaOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMegaOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [megaOpen]);
 
-  // `exact` matches only the page itself (used for leaf links like "All
-  // Services" so they don't stay active on child routes). Non-exact also
-  // matches descendants (used for group headers).
+  const isDarkBgPage = pathname === "/" && !scrolled && !megaOpen;
+
   const isActive = (href: string, exact = false) =>
     href === "/"
       ? pathname === "/"
@@ -76,205 +84,172 @@ export default function Navbar() {
   };
   const scheduleClose = () => {
     if (closeTimer.current) clearTimeout(closeTimer.current);
-    closeTimer.current = setTimeout(() => setMegaOpen(false), 120);
+    closeTimer.current = setTimeout(() => {
+      setMegaOpen(false);
+    }, 150);
   };
 
   return (
     <header
       className={cn(
         "fixed inset-x-0 top-0 z-50 transition-all duration-300",
-        solid ? "bg-sand shadow-[0_10px_30px_-24px_rgba(10,14,26,0.5)]" : "bg-transparent",
-        // Hide on scroll-down / reveal on scroll-up (mobile + desktop).
+        scrolled || megaOpen
+          ? "border-b border-line/60 bg-paper/90 shadow-sm backdrop-blur-md"
+          : "bg-transparent",
         hidden && !mobileOpen ? "-translate-y-full" : "translate-y-0",
       )}
     >
-      <nav className="container-page flex h-18 items-center justify-between py-4">
-        {/* Desktop: "Explore COBRR" wordmark = brand + hover trigger */}
+      <nav className="container-page flex h-20 items-center justify-between py-3">
+        {/* Brand mark — hovering it opens the mega menu, clicking goes home.
+            Focus opens it too, so keyboard users reach the navigation without
+            a separate toggle control. */}
         <div
-          className="hidden lg:block"
+          className="relative flex items-center"
           onMouseEnter={openMega}
           onMouseLeave={scheduleClose}
         >
           <button
-            onClick={() => setMegaOpen((v) => !v)}
+            onClick={() => go("/")}
+            onFocus={openMega}
             aria-expanded={megaOpen}
-            className={cn(
-              "flex cursor-pointer items-center gap-2 text-lg font-bold tracking-tight transition-colors",
-              dark ? "text-ink" : "text-white",
-            )}
+            aria-controls="brand-mega-menu"
+            aria-label="COBRR — go to home page, or browse the site menu"
+            className="cursor-pointer transition-opacity duration-200 hover:opacity-80"
           >
-            <span>
-              {/* Explore{" "} */}
-              <span  className={cn(dark ? "text-ink" : "text-white","tracking-[0.12em] text-2xl font-extrabold")}>COBRR</span>
-            </span>
-            <span
-              className={cn(
-                "flex h-6 w-6 items-center justify-center rounded-full border transition-all duration-300",
-                dark ? "border-line" : "border-white/30",
-                megaOpen && "rotate-180",
-              )}
-            >
-              <ChevronDown width={15} height={15} />
-            </span>
+            <Logo size={38} />
           </button>
-
-          {/* Full-width mega panel — reveals top → bottom */}
-          <AnimatePresence>
-            {megaOpen && (
-              <motion.div
-                initial={{ clipPath: "inset(0 0 100% 0)", opacity: 0.4 }}
-                animate={{ clipPath: "inset(0 0 0% 0)", opacity: 1 }}
-                exit={{ clipPath: "inset(0 0 100% 0)", opacity: 0 }}
-                transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                className="absolute inset-x-0 top-full border-t border-line bg-sand"
-              >
-                <div className="container-page flex gap-10 py-10">
-                  {/* Professional "Home" feature tile */}
-                  <button
-                    onClick={() => go("/")}
-                    className={cn(
-                      "group flex w-64 cursor-pointer shrink-0 flex-col justify-between overflow-hidden rounded-2xl bg-ink p-6 text-left text-white transition-shadow",
-                      isActive("/") && "ring-2 ring-brand ring-offset-2 ring-offset-sand",
-                    )}
-                  >
-                    <div>
-                      <span className="text-xs font-semibold uppercase tracking-[0.16em] text-white/50">
-                        COBRR Tech Labs
-                      </span>
-                      <h3 className="mt-3 text-2xl font-bold">Home</h3>
-                      <p className="mt-2 text-sm leading-relaxed text-white/70">
-                        Enterprise software, AI and cloud — engineered to last.
-                      </p>
-                    </div>
-                    <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-medium text-white/85 transition-colors group-hover:text-white">
-                      Overview
-                      <ArrowRight
-                        width={16}
-                        height={16}
-                        className="transition-transform group-hover:translate-x-0.5"
-                      />
-                    </span>
-                  </button>
-
-                  {/* Section groups */}
-                  <div className="grid flex-1 grid-cols-4 gap-8">
-                    {megaMenu.map((group) => {
-                      const groupActive = isActive(group.href);
-                      return (
-                        <div key={group.title}>
-                          <button
-                            onClick={() => go(group.href)}
-                            className={cn(
-                              "group flex cursor-pointer items-center gap-1.5 text-sm font-semibold uppercase tracking-widest transition-colors",
-                              groupActive ? "text-brand" : "text-ink",
-                            )}
-                          >
-                            {group.title}
-                            <ArrowUpRight
-                              width={14}
-                              height={14}
-                              className="text-brand opacity-0 transition-opacity group-hover:opacity-100"
-                            />
-                          </button>
-                          <p className="mt-2 text-xs leading-relaxed text-muted">
-                            {group.blurb}
-                          </p>
-                          <ul className="mt-4 space-y-1">
-                            {group.links.map((link) => {
-                              const active = isActive(link.href, true);
-                              return (
-                                <li key={link.href}>
-                                  <button
-                                    onClick={() => go(link.href)}
-                                    aria-current={active ? "page" : undefined}
-                                    className={cn(
-                                      "w-full cursor-pointer border-l-2 px-3 py-2 text-left transition-colors",
-                                      active
-                                        ? "border-brand/40 bg-linear-to-r from-brand-soft to-transparent shadow-[inset_2px_0_0_var(--color-brand)]"
-                                        : "border-transparent hover:bg-sand",
-                                    )}
-                                  >
-                                    <span
-                                      className={cn(
-                                        "block text-sm font-medium",
-                                        active ? "text-brand" : "text-ink",
-                                      )}
-                                    >
-                                      {link.label}
-                                    </span>
-                                    <span className="block text-xs text-muted">
-                                      {link.desc}
-                                    </span>
-                                  </button>
-                                </li>
-                              );
-                            })}
-                          </ul>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                {/* CTA strip */}
-                <div className="border-t border-line/70 bg-sand-deep/50">
-                  <div className="container-page flex flex-col items-start justify-between gap-4 py-5 sm:flex-row sm:items-center">
-                    <p className="text-sm text-muted">
-                      Have a project in mind? We reply within one business day.
-                    </p>
-                    <Button size="sm" variant="primary" href="/contact">
-                      Start a project
-                      <ArrowRight width={16} height={16} />
-                    </Button>
-                  </div>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
         </div>
 
-        {/* Mobile: "Explore COBRR" wordmark is the only opener */}
-        <button
-          onClick={() => setMobileOpen(true)}
-          aria-label="Open menu"
-          className={cn(
-            "flex items-center gap-2 text-base font-bold tracking-tight lg:hidden",
-            dark ? "text-ink" : "text-white",
-          )}
-        >
-          {/* Explore  */}<span className="tracking-[0.12em] text-2xl font-extrabold">COBRR</span>
-          <ChevronDown width={16} height={16} />
-        </button>
-
-        {/* Desktop CTAs — equal width */}
-        <div className="hidden items-center gap-2 lg:flex">
-          {/* <Button
-            variant={dark ? "outline" : "ghost-light"}
-            size="sm"
-            href="/careers"
-            className={cn(
-              "w-36 justify-center",
-              isActive("/careers") && "ring-2 ring-brand/50",
-            )}
-          >
-            Careers
-          </Button> */}
+        {/* Action CTA — navigation itself lives in the brand mega menu */}
+        <div className="flex items-center gap-3">
           <Button
-            variant={dark ? "primary" : "light"}
+            variant={isDarkBgPage ? "light" : "dark"}
             size="sm"
             href="/contact"
-            className={cn(
-              "w-36 justify-center",
-              isActive("/contact") && "ring-2 ring-brand/50",
-            )}
+            className="hidden sm:inline-flex"
           >
             Contact us
-            <ArrowRight width={16} height={16} />
+            <ArrowRight width={15} height={15} />
           </Button>
+
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setMobileOpen(true)}
+            aria-label="Open navigation menu"
+            className={cn(
+              "flex h-10 w-10 items-center justify-center rounded-xl border transition-colors lg:hidden",
+              isDarkBgPage
+                ? "border-white/20 bg-white/10 text-white"
+                : "border-line bg-sand text-ink",
+            )}
+          >
+            <MenuIcon width={20} height={20} />
+          </button>
         </div>
       </nav>
 
-      {/* Mobile drawer — slides from the right, 90% width, compact text */}
+      {/* Brand mega menu — full-width panel anchored under the header */}
+      <AnimatePresence>
+        {megaOpen && (
+          <motion.div
+            id="brand-mega-menu"
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+            onMouseEnter={openMega}
+            onMouseLeave={scheduleClose}
+            className="absolute inset-x-0 top-full hidden border-b border-line/70 bg-paper shadow-2xl lg:block"
+          >
+            <div className="container-page grid gap-10 py-12 lg:grid-cols-[minmax(0,18rem)_1fr]">
+              {/* Feature card */}
+              <button
+                onClick={() => go(megaFeature.href)}
+                className="group flex flex-col justify-between rounded-2xl bg-ink p-8 text-left text-white ring-2 ring-brand/70 transition-shadow duration-300 hover:shadow-xl"
+              >
+                <div>
+                  <span className="text-[0.68rem] font-bold uppercase tracking-[0.18em] text-white/45">
+                    {megaFeature.eyebrow}
+                  </span>
+                  <h2 className="mt-5 text-2xl font-bold tracking-tight text-white">
+                    {megaFeature.title}
+                  </h2>
+                  <p className="mt-3 text-sm leading-relaxed text-white/60">
+                    {megaFeature.blurb}
+                  </p>
+                </div>
+                <span className="mt-12 inline-flex items-center gap-2 text-sm font-semibold text-white">
+                  {megaFeature.cta}
+                  <ArrowRight
+                    width={15}
+                    height={15}
+                    className="transition-transform duration-300 group-hover:translate-x-1"
+                  />
+                </span>
+              </button>
+
+              {/* Link columns */}
+              <div className="grid gap-8 sm:grid-cols-2 xl:grid-cols-4">
+                {megaMenu.map((group) => (
+                  <div key={group.title}>
+                    <button
+                      onClick={() => go(group.href)}
+                      className="group/title flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.14em] text-ink transition-colors hover:text-brand"
+                    >
+                      {group.title}
+                      <ArrowUpRight
+                        width={13}
+                        height={13}
+                        className="text-brand opacity-0 transition-opacity group-hover/title:opacity-100"
+                      />
+                    </button>
+                    <p className="mt-3 text-[0.8rem] leading-snug text-muted">
+                      {group.blurb}
+                    </p>
+                    <ul className="mt-5 space-y-0.5 border-l border-line">
+                      {group.links.map((link) => (
+                        <li key={link.href}>
+                          <button
+                            onClick={() => go(link.href)}
+                            className={cn(
+                              "-ml-px w-full cursor-pointer border-l-2 py-2 pl-4 text-left transition-colors duration-200",
+                              isActive(link.href, true)
+                                ? "border-brand"
+                                : "border-transparent hover:border-brand/50",
+                            )}
+                          >
+                            <span className="block text-sm font-semibold text-ink">
+                              {link.label}
+                            </span>
+                            <span className="mt-0.5 block text-xs text-muted">
+                              {link.desc}
+                            </span>
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Footer band */}
+            <div className="border-t border-line/70 bg-sand/60">
+              <div className="container-page flex flex-col gap-4 py-5 sm:flex-row sm:items-center sm:justify-between">
+                <p className="text-sm text-muted">
+                  Have a project in mind? We reply within one business day.
+                </p>
+                <Button variant="dark" size="sm" href="/contact" className="shrink-0">
+                  Start a project
+                  <ArrowRight width={15} height={15} />
+                </Button>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Mobile Drawer */}
       <AnimatePresence>
         {mobileOpen && (
           <>
@@ -282,89 +257,52 @@ export default function Navbar() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.25 }}
               onClick={() => setMobileOpen(false)}
-              className="fixed inset-0 z-40 bg-ink/50 backdrop-blur-sm lg:hidden"
+              className="fixed inset-0 z-40 bg-ink/60 backdrop-blur-sm xl:hidden"
             />
             <motion.aside
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
-              transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-              className="fixed right-0 top-0 z-50 flex h-svh w-[90%] max-w-sm flex-col bg-paper shadow-2xl lg:hidden"
+              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              className="fixed right-0 top-0 z-50 flex h-svh w-[88%] max-w-sm flex-col bg-paper shadow-2xl xl:hidden"
             >
-              <div className="flex items-center justify-end border-b border-line px-5 py-4">
+              <div className="flex items-center justify-between border-b border-line px-5 py-4">
+                <Logo size={32} />
                 <button
                   onClick={() => setMobileOpen(false)}
-                  aria-label="Close menu"
+                  aria-label="Close navigation menu"
                   className="flex h-9 w-9 items-center justify-center rounded-full border border-line text-ink"
                 >
                   <Close width={18} height={18} />
                 </button>
               </div>
 
-              <div className="flex-1 overflow-y-auto px-4 py-4">
-                <button
-                  onClick={() => go("/")}
-                  aria-current={isActive("/") ? "page" : undefined}
-                  className={cn(
-                    "mb-2 block w-full cursor-pointer border-l-2 px-3 py-2 text-left text-sm font-semibold transition-colors",
-                    isActive("/")
-                      ? "border-brand/40 bg-linear-to-r from-brand-soft to-transparent text-brand shadow-[inset_2px_0_0_var(--color-brand)]"
-                      : "border-transparent text-ink hover:bg-sand",
-                  )}
-                >
-                  Home
-                </button>
-                {megaMenu.map((group) => (
-                  <div key={group.title} className="py-3">
+              <div className="flex-1 overflow-y-auto px-5 py-6 space-y-4">
+                <span className="text-[0.68rem] font-bold uppercase tracking-wider text-muted">
+                  Navigation
+                </span>
+                <div className="space-y-1">
+                  {primaryNav.map((item) => (
                     <button
-                      onClick={() => go(group.href)}
-                      className="cursor-pointer px-3 text-[0.68rem] font-semibold uppercase tracking-widest text-brand"
+                      key={item.href}
+                      onClick={() => go(item.href)}
+                      className={cn(
+                        "block w-full rounded-xl px-4 py-2.5 text-left text-sm font-semibold transition-colors",
+                        isActive(item.href, item.href === "/")
+                          ? "bg-brand text-white"
+                          : "text-ink hover:bg-sand",
+                      )}
                     >
-                      {group.title}
+                      {item.label}
                     </button>
-                    <ul className="mt-1.5 space-y-2">
-                      {group.links.map((link) => {
-                        const active = isActive(link.href, true);
-                        return (
-                          <li key={link.href}>
-                            <button
-                              onClick={() => go(link.href)}
-                              aria-current={active ? "page" : undefined}
-                              className={cn(
-                                "w-full cursor-pointer border-l-2 px-3 py-2 text-left transition-colors",
-                                active
-                                  ? "border-brand/40 bg-linear-to-r from-brand-soft to-transparent shadow-[inset_2px_0_0_var(--color-brand)]"
-                                  : "border-transparent hover:bg-sand",
-                              )}
-                            >
-                              <span
-                                className={cn(
-                                  "block text-[0.82rem] font-medium",
-                                  active ? "text-brand" : "text-ink",
-                                )}
-                              >
-                                {link.label}
-                              </span>
-                              <span className="block text-[0.7rem] text-muted">
-                                {link.desc}
-                              </span>
-                            </button>
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
 
-              <div className="flex flex-col gap-2 border-t border-line p-4">
-                {/* <Button variant="outline" size="sm" href="/careers" className="w-full">
-                  Careers
-                </Button> */}
-                <Button variant="primary" size="sm" href="/contact" className="w-full">
-                  Contact us
+              <div className="flex flex-col gap-2 border-t border-line p-5 bg-sand">
+                <Button variant="primary" size="md" href="/contact" className="w-full">
+                  Book a Consultation
                   <ArrowRight width={16} height={16} />
                 </Button>
               </div>

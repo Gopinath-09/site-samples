@@ -7,26 +7,26 @@ import Button from "@/components/ui/Button";
 import { ArrowRight } from "@/components/ui/icons";
 
 export const metadata: Metadata = {
-  title: "Services",
+  title: "Services & Development Capabilities",
   description:
-    "Custom software, enterprise systems, SaaS, ERP, AI, cloud and more — fourteen engineering disciplines delivered by one senior team.",
+    "AI solutions, web development, mobile apps, SaaS, cloud solutions, UI/UX design, DevOps, IT consulting, maintenance, and business automation.",
 };
 
 export default function ServicesPage() {
   return (
     <>
       <PageHeader
-        eyebrow="Services"
-        title="Engineering capability across the full software lifecycle."
-        description="From first line of code to long-term operation, COBRR delivers the disciplines modern organisations depend on — with one consistent standard of quality."
+        eyebrow="ENGINEERING SERVICES"
+        title="Full-Stack Engineering Capabilities for Modern Enterprises."
+        description="From strategic architecture and UI/UX design to production deployment and 24/7 SLA maintenance — we deliver high-impact software."
       >
-        <Button variant="light" size="lg" href="/contact">
-          Discuss your project
+        <Button variant="primary" size="lg" href="/contact">
+          Book a Consultation
           <ArrowRight width={18} height={18} />
         </Button>
       </PageHeader>
 
-      <CoreServices showHeading={false} />
+      <CoreServices limit={10} showHeading={false} />
       <EngineeringProcess />
       <FinalCta />
     </>

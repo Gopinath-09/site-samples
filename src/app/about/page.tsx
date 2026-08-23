@@ -7,90 +7,114 @@ import FinalCta from "@/components/home/FinalCta";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Reveal, { RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { company } from "@/lib/site";
+import Icon from "@/components/ui/Icon";
+import { teamMembers, companyTimeline, cultureHighlights } from "@/lib/content";
 
 export const metadata: Metadata = {
-  title: "About",
+  title: "About Us — COBRR Tech Labs",
   description:
-    "COBRR TECH LABS is an engineering-first software partner building enterprise software, AI and cloud platforms.",
+    "Learn about COBRR TECH LABS — an international technology startup building software development, AI solutions, web apps, SaaS products, and cloud infrastructure.",
 };
 
 const values = [
-  { title: "Craftsmanship", body: "We take pride in software that is clean, considered and built to last." },
-  { title: "Accountability", body: "We own outcomes end to end and communicate honestly, especially about trade-offs." },
-  { title: "Partnership", body: "We measure success by our clients' success — and by the relationships that endure." },
-  { title: "Curiosity", body: "We keep learning, and apply new technology only where it genuinely improves the result." },
+  { title: "Engineering Craftsmanship", body: "We take pride in writing code that is clean, well-tested, modular, and built to last years without technical debt." },
+  { title: "Absolute Accountability", body: "We own outcomes end to end and communicate honestly about architecture trade-offs and project roadmaps." },
+  { title: "Long-Term Partnership", body: "We measure our success by our clients' growth and by the enduring technical partnerships we build." },
+  { title: "Pragmatic Innovation", body: "We apply cutting-edge technology like GenAI and vector search only where it delivers genuine ROI." },
 ];
 
 export default function AboutPage() {
   return (
     <>
       <PageHeader
-        eyebrow="About COBRR"
-        title="An engineering-first software company."
-        description={`${company.legalName} exists to build software organisations can depend on — and to be the kind of long-term partner that's rare in this industry.`}
+        eyebrow="ABOUT COBRR TECH LABS"
+        title="An International Technology Startup Building Software Built to Last."
+        description={`${company.legalName} exists to build high-performance software systems organisations can depend on — pairing senior engineering discipline with modern AI speed.`}
       />
 
-      <section className="section bg-paper">
-        <div className="container-page grid gap-12 lg:grid-cols-2 lg:gap-20">
+      {/* Story & Why We Started */}
+      <section className="section bg-paper border-b border-line/60">
+        <div className="container-page grid gap-12 lg:grid-cols-2 lg:gap-16 items-center">
           <Reveal>
-            <div>
-              <span className="eyebrow">Our story</span>
-              <h2 className="heading-md mt-4">Built by engineers, for the long term.</h2>
-              <div className="mt-6 space-y-4 leading-relaxed text-muted">
+            <div className="space-y-6">
+              <span className="eyebrow">OUR STORY & ORIGINS</span>
+              <h2 className="heading-md text-ink">Built by Senior Engineers to Eliminate Software Debt.</h2>
+              <div className="space-y-4 leading-relaxed text-muted text-sm sm:text-base">
                 <p>
-                  COBRR was founded on a simple conviction: that most software
-                  fails not for lack of features, but for lack of engineering
-                  discipline. We set out to be different — a team that treats
-                  architecture, security and maintainability as first-class
-                  concerns from day one.
+                  COBRR was founded on a simple conviction: most enterprise software fails not for lack of features, but for lack of engineering discipline, clear architecture, and security foresight.
                 </p>
                 <p>
-                  Today we design, build and operate enterprise software, AI
-                  solutions and cloud platforms for organisations across
-                  industries — while running our own SaaS products through an
-                  in-house product studio.
+                  We set out to create a different kind of technology company — a startup studio and software partner that treats maintainability, security, performance, and transparent communication as first-class citizens from Day 1.
+                </p>
+                <p>
+                  Today, our team designs, builds, and operates custom software, AI solutions, SaaS applications, and cloud infrastructure for ambitious startups and market-leading enterprises worldwide.
                 </p>
               </div>
             </div>
           </Reveal>
 
           <Reveal direction="left">
-            <div className="card bg-ink p-8 text-white">
-              <h3 className="text-lg font-semibold">Our mission</h3>
-              <p className="mt-3 leading-relaxed text-white/80">
-                To engineer software that creates lasting value — clear, secure
-                and dependable — and to build partnerships measured in years, not
-                projects.
+            <div className="card bg-ink p-8 text-white space-y-6 shadow-2xl">
+              <span className="pill bg-white/10 text-white font-bold border-white/20">AT A GLANCE</span>
+              <h3 className="text-xl font-bold">COBRR Fact Sheet</h3>
+              <p className="text-xs leading-relaxed text-white/75">
+                We combine deep technical craftsmanship with agile delivery methods to move at startup speed while maintaining enterprise-grade safety.
               </p>
-              <div className="mt-8 grid grid-cols-2 gap-6 border-t border-ink-line pt-6">
-                {[
-                  ["Founded", String(company.foundedYear)],
-                  ["Head office", company.location],
-                  ["Focus", "Enterprise & SaaS"],
-                  ["Approach", "Engineering-first"],
-                ].map(([k, v]) => (
-                  <div key={k}>
-                    <div className="text-lg font-semibold">{v}</div>
-                    <div className="text-sm text-muted-dark">{k}</div>
-                  </div>
-                ))}
+
+              <div className="grid grid-cols-2 gap-4 border-t border-white/10 pt-6">
+                <div>
+                  <div className="text-lg font-bold text-white">2026</div>
+                  <div className="text-xs text-white/50">Founded</div>
+                </div>
+                <div>
+                  <div className="text-lg font-bold text-white">Bangalore, IN</div>
+                  <div className="text-xs text-white/50">Headquarters</div>
+                </div>
+                <div>
+                  <div className="text-lg font-bold text-white">120+</div>
+                  <div className="text-xs text-white/50">Projects Delivered</div>
+                </div>
+                <div>
+                  <div className="text-lg font-bold text-white">99.99%</div>
+                  <div className="text-xs text-white/50">Production SLA</div>
+                </div>
               </div>
             </div>
           </Reveal>
         </div>
       </section>
 
-      <SuccessMetrics />
+      {/* Mission & Vision */}
+      <section className="section bg-sand/60 border-b border-line/60">
+        <div className="container-page grid gap-8 lg:grid-cols-2">
+          <div className="rounded-2xl border border-line/80 bg-paper p-8 space-y-4 shadow-sm">
+            <span className="pill bg-brand-soft text-brand font-bold border-brand/20">OUR MISSION</span>
+            <h3 className="text-lg font-bold text-ink">To Engineer Lasting Value Through Clean Code & AI</h3>
+            <p className="text-xs sm:text-sm leading-relaxed text-muted">
+              To build software platforms that empower businesses to scale securely, automate repetitive work, and lead their industries with state-of-the-art technology.
+            </p>
+          </div>
 
-      <section className="section bg-sand">
-        <div className="container-page">
-          <SectionHeading eyebrow="Our values" title="What we hold ourselves to." />
-          <RevealGroup className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="rounded-2xl border border-line/80 bg-paper p-8 space-y-4 shadow-sm">
+            <span className="pill bg-brand-soft text-brand font-bold border-brand/20">OUR VISION</span>
+            <h3 className="text-lg font-bold text-ink">To Set the Benchmark for Engineering Transparency</h3>
+            <p className="text-xs sm:text-sm leading-relaxed text-muted">
+              To prove that software agencies can operate with radical honesty, zero technical debt, predictable delivery, and lasting client partnerships.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Core Values */}
+      <section className="section bg-paper border-b border-line/60">
+        <div className="container-page space-y-12">
+          <SectionHeading eyebrow="OUR CORE VALUES" title="The Standards We Hold Ourselves To." />
+          <RevealGroup className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {values.map((v) => (
               <RevealItem key={v.title} className="h-full">
-                <div className="card h-full p-7">
-                  <h3 className="text-lg font-semibold text-ink">{v.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted">{v.body}</p>
+                <div className="card h-full p-7 border-line/80 transition-all duration-300 hover:border-brand/40 hover:shadow-lg">
+                  <h3 className="text-base font-bold text-ink">{v.title}</h3>
+                  <p className="mt-2 text-xs leading-relaxed text-muted">{v.body}</p>
                 </div>
               </RevealItem>
             ))}
@@ -98,6 +122,68 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* Company Timeline */}
+      <section className="section bg-sand/60 border-b border-line/60">
+        <div className="container-page space-y-12">
+          <SectionHeading eyebrow="OUR JOURNEY" title="Milestones & Timeline." />
+          <div className="grid gap-6 md:grid-cols-3">
+            {companyTimeline.map((item) => (
+              <div key={item.title} className="card p-6 bg-paper space-y-3">
+                <span className="font-mono text-sm font-bold text-brand bg-brand-soft px-3 py-1 rounded-full w-fit block">
+                  {item.year}
+                </span>
+                <h4 className="text-base font-bold text-ink">{item.title}</h4>
+                <p className="text-xs leading-relaxed text-muted">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Meet the Team */}
+      <section className="section bg-paper border-b border-line/60">
+        <div className="container-page space-y-12">
+          <SectionHeading eyebrow="LEADERSHIP" title="Senior Engineering & Leadership Team." />
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {teamMembers.map((member) => (
+              <div key={member.name} className="card p-6 space-y-3 border-line/80 hover:shadow-md">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-ink text-white font-bold text-sm">
+                  {member.name.split(" ").map((n) => n[0]).join("")}
+                </div>
+                <h4 className="text-base font-bold text-ink">{member.name}</h4>
+                <span className="text-xs font-bold text-brand block">{member.role}</span>
+                <p className="text-xs leading-relaxed text-muted">{member.bio}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Company Culture */}
+      <section className="section bg-sand border-b border-line/60">
+        <div className="container-page">
+          <SectionHeading
+            eyebrow="COMPANY CULTURE"
+            title="How we actually work day to day."
+            description="Culture is what the team does when no one is watching. These are the habits we hire for and protect."
+          />
+          <RevealGroup className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {cultureHighlights.map((c) => (
+              <RevealItem key={c.title} className="h-full">
+                <div className="card h-full p-7">
+                  <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-soft text-brand">
+                    <Icon name={c.icon} width={20} height={20} />
+                  </span>
+                  <h3 className="mt-5 text-lg font-semibold text-ink">{c.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted">{c.body}</p>
+                </div>
+              </RevealItem>
+            ))}
+          </RevealGroup>
+        </div>
+      </section>
+
+      <SuccessMetrics />
       <EngineeringProcess />
       <WhyChoose />
       <FinalCta />

@@ -1212,7 +1212,7 @@ export const trustedBy: Client[] = [
   { name: "TRACKER BOX", verified: false },
   { name: "UNION COLLEGE", verified: false },
   { name: "DUDUK", verified: false },
-  { name: "SAARC NETKAMPUS", verified: false },
+  { name: "DECYRE", verified: false },
 ];
 
 export const teamMembers = [

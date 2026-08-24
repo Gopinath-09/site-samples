@@ -63,8 +63,6 @@ export default function Navbar() {
     return () => window.removeEventListener("keydown", onKey);
   }, [megaOpen]);
 
-  const isDarkBgPage = pathname === "/" && !scrolled && !megaOpen;
-
   const isActive = (href: string, exact = false) =>
     href === "/"
       ? pathname === "/"
@@ -123,7 +121,7 @@ export default function Navbar() {
         {/* Action CTA — navigation itself lives in the brand mega menu */}
         <div className="flex items-center gap-3">
           <Button
-            variant={isDarkBgPage ? "light" : "dark"}
+            variant="dark"
             size="sm"
             href="/contact"
             className="hidden sm:inline-flex"
@@ -136,12 +134,7 @@ export default function Navbar() {
           <button
             onClick={() => setMobileOpen(true)}
             aria-label="Open navigation menu"
-            className={cn(
-              "flex h-10 w-10 items-center justify-center rounded-xl border transition-colors lg:hidden",
-              isDarkBgPage
-                ? "border-white/20 bg-white/10 text-white"
-                : "border-line bg-sand text-ink",
-            )}
+            className="flex h-10 w-10 items-center justify-center rounded-xl border border-line bg-sand text-ink transition-colors lg:hidden"
           >
             <MenuIcon width={20} height={20} />
           </button>

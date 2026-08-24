@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 
 /**
@@ -26,11 +26,24 @@ export default function Logo({
   size?: number;
 }) {
   const [src, setSrc] = useState(PRIMARY);
+  const ref = useRef<HTMLImageElement>(null);
+
+  /*
+   * `onError` alone is not enough: the browser requests the image while parsing
+   * the server-rendered HTML, so a 404 can fire and be discarded before React
+   * hydrates and attaches the handler, leaving a permanently broken mark. On
+   * mount we therefore ask the element whether it already failed.
+   */
+  useEffect(() => {
+    const el = ref.current;
+    if (el?.complete && el.naturalWidth === 0) setSrc(FALLBACK);
+  }, []);
 
   return (
     <span className={cn("inline-flex items-center", className)}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
+        ref={ref}
         src={src}
         alt="COBRR"
         onError={() => setSrc(FALLBACK)}

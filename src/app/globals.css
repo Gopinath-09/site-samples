@@ -38,8 +38,8 @@
   --color-copper: #c1863c;
 
   /* Typography */
-  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --font-sans: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
 
   /* Motion */
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
@@ -424,5 +424,210 @@ body {
   *::after {
     animation-duration: 0.001ms !important;
     transition-duration: 0.001ms !important;
+  }
+}
+
+/* ==========================================================================
+   THE ENGINEERING DOCUMENT
+   The home page reads as a technical document rather than a brochure: a grid
+   that is visible instead of implied, hairline rules doing the work borders
+   and shadows would otherwise do, numbered sections, and monospace carrying
+   every label, figure and annotation. Nothing here is decorative — each rule
+   is a real division, each number a real position in a sequence.
+   ========================================================================== */
+@layer components {
+
+  /* ---- Monospace furniture ---- */
+
+  /* Field labels, column headers, annotations. */
+  .mono-label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+
+  /* Figures and measurements, where alignment matters more than colour. */
+  .mono-figure {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.01em;
+  }
+
+  /* ---- Section markers ---- */
+
+  /*
+   * The "01 ————" that opens each section. The rule is a flex child rather
+   * than a pseudo-element border so it absorbs whatever space is left on the
+   * line, which is what makes the sequence feel measured rather than centred.
+   */
+  .marker {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .marker-index {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: var(--color-brand);
+    flex-shrink: 0;
+  }
+
+  .marker-title {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .marker-rule {
+    height: 1px;
+    flex: 1;
+    background: var(--color-line);
+  }
+
+  /* ---- Display typography ---- */
+
+  /*
+   * Larger and tighter than .heading-xl, for the one headline per page that
+   * has to carry the whole first impression.
+   */
+  .heading-display {
+    font-size: clamp(2.75rem, 7.2vw, 5.5rem);
+    line-height: 0.98;
+    letter-spacing: -0.04em;
+    font-weight: 600;
+  }
+
+  /* ---- Hairline structure ---- */
+
+  /* A full-bleed division between bands of content. */
+  .rule-hair {
+    height: 1px;
+    width: 100%;
+    background: var(--color-line);
+  }
+
+  /*
+   * A row of facts separated by real vertical rules. Negative margins on the
+   * children collapse adjacent borders so the row reads as one ruled strip
+   * rather than a set of boxed cells.
+   */
+  .fact-row {
+    display: grid;
+    border-top: 1px solid var(--color-line);
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  /*
+   * Cells opening a row sit flush with the page margin so the strip aligns
+   * with the headline above it, and cells closing a row drop their rule so the
+   * strip ends on content rather than a stray hairline. Both depend on where
+   * the row actually breaks, so the selectors track the column count: two up
+   * to `md`, four beyond it. Change one and you must change the other.
+   */
+  .fact-cell {
+    padding-block: 1.5rem;
+    padding-inline: 1.25rem;
+    border-right: 1px solid var(--color-line);
+  }
+
+  .fact-cell:nth-child(2n + 1) {
+    padding-left: 0;
+  }
+
+  .fact-cell:nth-child(2n) {
+    border-right: 0;
+  }
+
+  @media (min-width: 768px) {
+    .fact-cell:nth-child(2n + 1) {
+      padding-left: 1.25rem;
+    }
+
+    .fact-cell:nth-child(2n) {
+      border-right: 1px solid var(--color-line);
+    }
+
+    .fact-cell:nth-child(4n + 1) {
+      padding-left: 0;
+    }
+
+    .fact-cell:nth-child(4n) {
+      border-right: 0;
+    }
+  }
+
+  /* ---- Dark band ---- */
+
+  /*
+   * Inverts the document for a full section. Hairlines and muted text have to
+   * be redefined here, since the light values disappear against the ink.
+   */
+  .band-dark {
+    background: var(--color-ink);
+    color: #fff;
+  }
+
+  .band-dark .marker-rule,
+  .band-dark .rule-hair,
+  .band-dark .fact-row,
+  .band-dark .fact-cell {
+    border-color: var(--color-ink-line);
+    background-color: transparent;
+  }
+
+  .band-dark .marker-rule,
+  .band-dark .rule-hair {
+    background: var(--color-ink-line);
+  }
+
+  .band-dark .fact-row {
+    border-top-color: var(--color-ink-line);
+    border-bottom-color: var(--color-ink-line);
+  }
+
+  .band-dark .mono-label,
+  .band-dark .marker-title {
+    color: var(--color-muted-dark);
+  }
+}
+
+/*
+ * Traces the accent along a diagram edge to suggest data actually moving
+ * through the system. Held to a slow cycle so it reads as instrumentation
+ * rather than animation.
+ */
+@keyframes trace-flow {
+  from {
+    stroke-dashoffset: 24;
+  }
+
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.trace {
+  stroke-dasharray: 4 8;
+  animation: trace-flow 1.6s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .trace {
+    animation: none;
   }
 }

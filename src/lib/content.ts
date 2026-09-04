@@ -813,6 +813,13 @@ export const products: Product[] = [];
 export interface RoadmapItem {
   name: string;
   blurb: string;
+  /**
+   * Path under `public/roadmap/` to footage of the thing running, played on
+   * hover. Absent for every entry today, and the row falls back to a drawn
+   * panel — which is the honest state, because none of these has a running
+   * product to film yet. Add a file here the moment one does.
+   */
+  video?: string;
 }
 
 /**

@@ -1,57 +1,94 @@
-import { productRoadmap } from "@/lib/content";
+import { productRoadmap, services, verifiedProjects } from "@/lib/content";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Button from "@/components/ui/Button";
-import { RevealGroup, RevealItem } from "@/components/ui/Reveal";
+import Reveal from "@/components/ui/Reveal";
+import RoadmapVisual from "@/components/graphics/RoadmapVisual";
 import { ArrowRight } from "@/components/ui/icons";
 
 /**
  * What COBRR is building next.
  *
- * Uses the reference's "featured wins" treatment: a wall of cells sharing
- * hairline rules rather than a set of separate cards, so the group reads as one
- * ruled table of contents. Negative-margin borders would leave doubled lines
- * between cells, so the grid draws them instead — the container is the line
- * colour and a one-pixel gap lets it through.
+ * Laid out the way the reference lays out its problem rows: the direction on
+ * the left, the explanation in the middle, and a panel on the right that comes
+ * alive on hover. Each row is ruled rather than boxed, so the set reads as a
+ * list to be gone through rather than a grid of options to compare.
  *
- * What this section deliberately does not borrow is the reference's content.
- * Those cells carry client logos, funding figures and outcomes; a roadmap has
- * none of those, and dressing intent up in the furniture of proof is exactly
- * the overclaim this site has been stripped of. The cells carry a number, the
- * direction and a plain status instead.
+ * The reference plays product footage in that panel. Nothing here has a running
+ * product to film — that is the whole point of a roadmap — so the panel is drawn
+ * and animates on hover instead. `RoadmapItem.video` is wired for the day one of
+ * these does: drop the file in `public/roadmap/`, set the field, and that row
+ * plays it.
+ *
+ * The section opens with a statement of what the studio actually does, because
+ * the roadmap only makes sense once a reader knows the work it grows out of.
  */
 export default function FeaturedProducts() {
   return (
     <section className="section bg-paper" id="products">
       <div className="container-page">
-        <SectionHeading
-          eyebrow="Product roadmap"
-          title="What we're building next."
-          description="Directions we are investing in, drawn from the systems we already run for clients. These are in active development, not products available today."
-        />
+        {/* Positioning statement, in our own terms and our own facts */}
+        <Reveal>
+          <div className="max-w-4xl border-b border-line pb-14">
+            <span className="eyebrow">What we do</span>
+            <h2 className="heading-lg mt-5 text-balance text-fg">
+              From first release to full reinvention.
+            </h2>
+            <p className="lead mt-6 max-w-2xl">
+              Good software does not happen by accident. We are an engineering
+              studio in Coimbatore combining product thinking, interface design
+              and {services.length} delivery disciplines under one roof — the
+              same team from the requirement through to the years after launch.
+              {" "}
+              {verifiedProjects.length} platforms are running on that basis
+              today.
+            </p>
+          </div>
+        </Reveal>
 
-        <RevealGroup className="mt-14 grid gap-px border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-16">
+          <SectionHeading
+            eyebrow="Product roadmap"
+            title="What we're building next."
+            description="Directions we are investing in, drawn from the systems we already run for clients. These are in active development, not products available today."
+          />
+        </div>
+
+        <div className="mt-12 border-t border-line">
           {productRoadmap.map((item, i) => (
-            <RevealItem key={item.name}>
-              <div className="group flex h-full min-h-[15rem] flex-col justify-between bg-paper p-7 transition-colors duration-300 hover:bg-sand">
-                <div className="flex items-start justify-between gap-3">
-                  <span className="mono-label">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <span className="mono-label text-brand/70 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                    In dev
-                  </span>
-                </div>
+            <Reveal key={item.name}>
+              <article className="group grid items-center gap-6 border-b border-line py-8 lg:grid-cols-[3.5rem_minmax(0,17rem)_1fr_minmax(0,18rem)] lg:gap-10 lg:py-9">
+                <span className="mono-label">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
 
-                <div>
-                  <h3 className="text-base font-bold text-fg">{item.name}</h3>
-                  <p className="mt-2.5 text-xs leading-relaxed text-muted">
-                    {item.blurb}
-                  </p>
+                <h3 className="text-lg font-semibold leading-snug text-fg">
+                  {item.name}
+                </h3>
+
+                <p className="max-w-xl text-sm leading-relaxed text-muted">
+                  {item.blurb}
+                </p>
+
+                {/* Media panel — real footage when it exists, drawn until then */}
+                <div className="relative aspect-video w-full overflow-hidden rounded-xl border border-line bg-ink">
+                  {item.video ? (
+                    <video
+                      className="h-full w-full object-cover"
+                      src={item.video}
+                      muted
+                      loop
+                      playsInline
+                      preload="none"
+                      aria-hidden
+                    />
+                  ) : (
+                    <RoadmapVisual seed={i} />
+                  )}
                 </div>
-              </div>
-            </RevealItem>
+              </article>
+            </Reveal>
           ))}
-        </RevealGroup>
+        </div>
 
         <div className="mt-10 flex flex-col items-center gap-4 text-center">
           <p className="mono-label">In development — not yet available</p>

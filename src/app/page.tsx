@@ -7,6 +7,7 @@ import ProblemsWeSolve from "@/components/home/ProblemsWeSolve";
 import TechnologiesSection from "@/components/home/TechnologiesSection";
 import EngineeringProcess from "@/components/home/EngineeringProcess";
 import FeaturedProjects from "@/components/home/FeaturedProjects";
+import IndustriesServed from "@/components/home/IndustriesServed";
 import WhyChoose from "@/components/home/WhyChoose";
 import Testimonials from "@/components/home/Testimonials";
 import FaqSection from "@/components/home/FaqSection";
@@ -42,16 +43,19 @@ export default function Home() {
       {/* 09 — Delivered systems */}
       <FeaturedProjects limit={6} />
 
-      {/* 10 — Why COBRR */}
+      {/* 10 — Key industries */}
+      <IndustriesServed />
+
+      {/* 11 — Why COBRR */}
       <WhyChoose />
 
-      {/* 11 — Testimonials (hidden until one is verified) */}
+      {/* 12 — Testimonials (hidden until one is verified) */}
       <Testimonials limit={8} />
 
-      {/* 12 — FAQ */}
+      {/* 13 — FAQ */}
       <FaqSection />
 
-      {/* 13 — Closing call to action */}
+      {/* 14 — Closing call to action */}
       <FinalCta />
     </>
   );

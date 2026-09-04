@@ -1124,19 +1124,195 @@ export interface Industry {
   name: string;
   icon: IconKey;
   description: string;
+  /** The sentence that opens the panel when this industry is selected. */
+  headline: string;
+  /** What organisations in this sector are usually up against. */
+  challenges: string[];
+  /** How our disciplines answer them. Capability, never a claimed result. */
+  solutions: string[];
+  /**
+   * Slug of a delivered platform that demonstrates this sector. Present only
+   * where one exists — several sectors here are ones we build for without yet
+   * having a case study cleared, and the panel says so rather than implying
+   * work that has not happened.
+   */
+  proof?: string;
 }
 
+/**
+ * The ten sectors the company portfolio document lists, in its order. The
+ * challenges describe the sector; the solutions describe our disciplines. No
+ * entry claims an outcome, and only the six with a delivered platform link to
+ * one.
+ */
 export const industries: Industry[] = [
-  { name: "Healthcare", icon: "health", description: "HIPAA-conscious patient portals, EHR systems, and telemedicine apps." },
-  { name: "Education", icon: "cap", description: "Scalable learning management systems, online assessment tools, and EdTech." },
-  { name: "Finance", icon: "chart", description: "Secure credit scoring, payment gateways, micro-lending, and fintech apps." },
-  { name: "Retail", icon: "bag", description: "Omnichannel e-commerce, cloud POS, and AI recommendation engines." },
-  { name: "Manufacturing", icon: "gear", description: "Plant floor execution, IoT inventory tracking, and custom ERP systems." },
-  { name: "Real Estate", icon: "building", description: "Property management portals, tenant portals, and MLS listing systems." },
-  { name: "Hospitality", icon: "sparkle", description: "Online booking systems, guest portals, and PMS management tools." },
-  { name: "Government", icon: "shield", description: "Secure, accessible, and auditable public-sector software systems." },
-  { name: "Logistics", icon: "grid", description: "GPS fleet tracking, dispatch optimization, and proof-of-delivery apps." },
-  { name: "Travel", icon: "phone", description: "Flight & hotel booking engines, itinerary planners, and travel apps." },
+  {
+    name: "Education",
+    icon: "cap",
+    description: "School and college platforms covering academics, admissions, transport and reporting.",
+    headline: "One system for everything a school runs on.",
+    challenges: [
+      "Admissions, fees, attendance and exams living in separate registers",
+      "Parents phoning the office for information nobody has to hand",
+      "Reports rebuilt by hand every term",
+    ],
+    solutions: [
+      "A single ERP covering academics, finance, transport and HR",
+      "Parent and teacher portals so information is pulled, not chased",
+      "Reporting generated from the records already being kept",
+    ],
+    proof: "complete-school-erp",
+  },
+  {
+    name: "Healthcare",
+    icon: "health",
+    description: "Clinic operations, patient records and AI assistance for hospitals and practices.",
+    headline: "Software that keeps up with a waiting room.",
+    challenges: [
+      "Patient flow, billing and records handled across disconnected tools",
+      "Front desks answering the same questions all day",
+      "Clinical history that cannot be retrieved quickly when it matters",
+    ],
+    solutions: [
+      "Clinic platforms covering registration, appointments, pharmacy and billing",
+      "AI assistants handling navigation and routine enquiry around the clock",
+      "Structured records that can actually be searched",
+    ],
+    proof: "clinic-management-system",
+  },
+  {
+    name: "Government",
+    icon: "shield",
+    description: "Secure, auditable and accessible systems for public-sector bodies.",
+    headline: "Public systems that stand up to scrutiny.",
+    challenges: [
+      "Services that must be accessible to everyone, not most people",
+      "Every action needing to be auditable after the fact",
+      "Procurement and security standards set before a line is written",
+    ],
+    solutions: [
+      "Accessible interfaces built to standard rather than retrofitted",
+      "Role-based access with an audit trail through the system",
+      "Infrastructure and deployment documented for handover",
+    ],
+  },
+  {
+    name: "Tourism",
+    icon: "sparkle",
+    description: "Membership, booking and activity platforms for tourism bodies and operators.",
+    headline: "Memberships and bookings that hold at peak season.",
+    challenges: [
+      "Bookings taken across phone, email and paper with no single view",
+      "Membership records that go stale between renewals",
+      "Demand that arrives in bursts around seasons and events",
+    ],
+    solutions: [
+      "Booking and accommodation management in one platform",
+      "Membership and event registration with an administration view",
+      "Architecture ready for payment and analytics as volume grows",
+    ],
+    proof: "yhai-tamil-nadu",
+  },
+  {
+    name: "Manufacturing",
+    icon: "gear",
+    description: "Plant, inventory and operations systems for production businesses.",
+    headline: "Visibility from the floor to the ledger.",
+    challenges: [
+      "Stock counts that are already wrong by the time they are entered",
+      "Purchasing and production planning from different numbers",
+      "Paperwork moving slower than the goods it describes",
+    ],
+    solutions: [
+      "Inventory and warehouse tracking against real movement",
+      "Purchase orders and vendor management in the same system",
+      "Dashboards built from operational data rather than re-keyed reports",
+    ],
+    proof: "stock-management",
+  },
+  {
+    name: "Retail",
+    icon: "bag",
+    description: "Inventory, purchasing and sales platforms for retail operations.",
+    headline: "Know what you hold, and what it is doing.",
+    challenges: [
+      "Stock accuracy drifting between counts",
+      "Purchasing decisions made without current sales data",
+      "Alerts arriving after the shelf is already empty",
+    ],
+    solutions: [
+      "Inventory movement tracked from purchase through sale",
+      "Barcode-supported workflows that match how staff actually work",
+      "Automated alerts on thresholds you set",
+    ],
+    proof: "stock-management",
+  },
+  {
+    name: "Logistics",
+    icon: "grid",
+    description: "Tracking, routing and proof-of-delivery systems for fleets and transport.",
+    headline: "Where the vehicle is, without making a phone call.",
+    challenges: [
+      "No live view of where vehicles are or when they will arrive",
+      "Routes planned once and never revisited",
+      "Incidents reported after the fact rather than as they happen",
+    ],
+    solutions: [
+      "Live GPS tracking with geo-fencing and arrival estimates",
+      "Route optimisation and driver applications for the field",
+      "Alerting and SOS paths built into the same system",
+    ],
+    proof: "gps-transport-management",
+  },
+  {
+    name: "Enterprise",
+    icon: "building",
+    description: "Internal platforms for workforce, projects, assets and collaboration.",
+    headline: "The internal system nobody wanted to build.",
+    challenges: [
+      "Attendance, leave, assets and projects tracked in separate spreadsheets",
+      "Managers assembling the same status report every week",
+      "Access granted by convention rather than by role",
+    ],
+    solutions: [
+      "One platform for workforce, projects, assets and documents",
+      "Dashboards that assemble themselves from real activity",
+      "Role-based permissions applied consistently across modules",
+    ],
+    proof: "onprembox",
+  },
+  {
+    name: "Startups",
+    icon: "chart",
+    description: "First releases and platform foundations for teams finding their market.",
+    headline: "Ship the version that proves the idea.",
+    challenges: [
+      "Everything sounds essential until someone has to build it",
+      "Early technical choices that become expensive within a year",
+      "Needing to move quickly without accruing debt that stops you later",
+    ],
+    solutions: [
+      "Scope cut to the part that tests the idea",
+      "Foundations that will not need replacing at the next stage",
+      "Architecture and documentation an incoming team can pick up",
+    ],
+  },
+  {
+    name: "NGOs",
+    icon: "code",
+    description: "Membership, programme and reporting systems for non-profit organisations.",
+    headline: "More of the budget going to the work.",
+    challenges: [
+      "Administration consuming time meant for programmes",
+      "Reporting to funders assembled by hand each cycle",
+      "Budgets that cannot absorb enterprise licensing",
+    ],
+    solutions: [
+      "Membership and programme records in one place",
+      "Reporting generated from the data already collected",
+      "Deployments sized to the budget rather than to a licence tier",
+    ],
+  },
 ];
 
 /* -------------------------------------------------------------------------- */

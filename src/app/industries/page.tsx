@@ -6,101 +6,78 @@ import SectionHeading from "@/components/ui/SectionHeading";
 import Button from "@/components/ui/Button";
 import { RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { ArrowRight, Check } from "@/components/ui/icons";
+import { industries, verifiedProjects } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Industries We Serve",
   description:
-    "COBRR builds software for healthcare, education, finance, retail, manufacturing, logistics, real estate, government, hospitality, and travel sectors.",
+    "COBRR Tech Labs builds software for education, healthcare, government, tourism, manufacturing, retail, logistics, enterprise operations, startups and NGOs.",
 };
+
+/**
+ * Sectors we build for.
+ *
+ * The substance of this page is the tabbed panel, which states each sector's
+ * challenges and what we do about them. What used to sit beneath it was a set
+ * of invented outcome cards — a 32% drop in patient no-shows, a portal serving
+ * 40,000 patients — alongside claimed HIPAA, GDPR and PCI-DSS certifications
+ * and dedicated per-vertical teams. None of that is supported by anything, and
+ * certification claims in particular are the kind a buyer verifies.
+ */
 
 const commitments = [
   {
-    title: "Domain-aware architecture",
-    body: "We study your industry's regulatory constraints, data sensitivity requirements, and operational workflows before writing a line of code.",
+    title: "We learn the operation first",
+    body: "Before any architecture is proposed we map how the work is actually done — who does what, in what order, and where it currently breaks.",
   },
   {
-    title: "Compliance from the start",
-    body: "HIPAA, GDPR, PCI-DSS, and sector-specific audit requirements are treated as first-class engineering constraints — not afterthoughts.",
+    title: "Regulatory constraints are design inputs",
+    body: "Where a sector imposes rules on access, retention or auditability, they shape the data model from the start rather than being bolted on late.",
   },
   {
-    title: "Sector-specific integrations",
-    body: "Whether it's a healthcare HL7 standard, a logistics EDI feed, or a retail POS protocol, we have handled the integration before.",
+    title: "We say where we have not been",
+    body: "Six of these ten sectors have a delivered platform behind them. The other four we build for without a published case study, and the panel above says so.",
   },
   {
-    title: "Dedicated vertical teams",
-    body: "Client projects are staffed with engineers who have delivered in your vertical — reducing the learning curve and accelerating delivery.",
-  },
-];
-
-const caseHighlights = [
-  {
-    industry: "Healthcare",
-    headline: "32% drop in patient no-shows",
-    detail: "Built a HIPAA-conscious telehealth and patient portal serving 40,000+ patients.",
-  },
-  {
-    industry: "Retail",
-    headline: "+24% checkout conversion",
-    detail: "Deployed an AI-driven personalization engine lifting e-commerce revenue in 3 months.",
-  },
-  {
-    industry: "Manufacturing",
-    headline: "70% faster reporting",
-    detail: "Replaced 12+ fragmented tools with a real-time cloud ERP and shop-floor IoT system.",
-  },
-  {
-    industry: "Finance",
-    headline: "98% processing time reduction",
-    detail: "Automated credit decisioning engine processing loan applications in under 60 seconds.",
-  },
-  {
-    industry: "Logistics",
-    headline: "22% fuel cost savings",
-    detail: "IoT fleet tracking and route optimization across 1,200+ vehicles on national highways.",
-  },
-  {
-    industry: "Education",
-    headline: "150,000+ concurrent users",
-    detail: "Auto-scaling video learning platform with serverless coding assessment sandboxes.",
+    title: "One team, across sectors",
+    body: "We are a small studio, not a set of vertical practices. The same engineers work across sectors, which is why patterns move between them.",
   },
 ];
 
 export default function IndustriesPage() {
+  const withProof = industries.filter((i) => i.proof).length;
+
   return (
     <>
       <PageHeader
         eyebrow="INDUSTRIES WE SERVE"
-        title="Software shaped by the sector it serves."
-        description="Every industry has its own constraints, data models, and compliance requirements. We bring engineering that respects your regulations, your data, and the way your business actually works."
-      >
-        <Button variant="light" size="lg" href="/contact">
-          Discuss your industry
-          <ArrowRight width={18} height={18} />
-        </Button>
-      </PageHeader>
+        title="Built for the sector, not adapted to it."
+        description={`${industries.length} sectors, ${withProof} of them with a delivered platform behind them. Each one has its own constraints, and those constraints belong in the architecture rather than in a later revision.`}
+      />
 
-      {/* Industry cards */}
       <IndustriesServed />
 
-      {/* Domain commitments */}
+      {/* How we approach a sector */}
       <section className="section bg-paper">
         <div className="container-page grid gap-14 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20">
           <SectionHeading
             eyebrow="Our commitment"
             title="Depth before breadth, always."
-            description="We don't claim expertise in every industry equally. We go deep in the sectors we serve, and we're honest about where we're still growing."
+            description="We do not claim equal expertise in every sector. We go deep where we have delivered, and we are explicit about where we have not."
           />
 
           <RevealGroup className="grid gap-5 sm:grid-cols-2">
             {commitments.map((c) => (
               <RevealItem key={c.title} className="h-full">
-                <div className="card h-full flex gap-4 p-6">
-                  <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-ink text-white">
+                <div className="card flex h-full gap-4 p-6">
+                  <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-brand text-ink">
                     <Check width={14} height={14} />
                   </span>
                   <div>
                     <h3 className="font-semibold text-fg">{c.title}</h3>
-                    <p className="mt-1.5 text-sm leading-relaxed text-muted">{c.body}</p>
+                    <p className="mt-1.5 text-sm leading-relaxed text-muted">
+                      {c.body}
+                    </p>
                   </div>
                 </div>
               </RevealItem>
@@ -109,34 +86,19 @@ export default function IndustriesPage() {
         </div>
       </section>
 
-      {/* Sector impact highlights */}
+      {/* Point at the work rather than describing outcomes we cannot evidence */}
       <section className="section bg-sand">
-        <div className="container-page">
+        <div className="container-page flex flex-col items-center gap-6 text-center">
           <SectionHeading
             align="center"
-            eyebrow="Sector impact"
-            title="Outcomes across industries."
-            description="Real results from software delivered across six major industry verticals."
+            eyebrow="The evidence"
+            title="What we have actually delivered."
+            description={`${verifiedProjects.length} platforms across these sectors — each with what it does, who it was built for where we can name them, and where it currently stands.`}
           />
-
-          <RevealGroup className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {caseHighlights.map((h) => (
-              <RevealItem key={h.industry} className="h-full">
-                <div className="card h-full p-7">
-                  <span className="pill">{h.industry}</span>
-                  <p className="mt-4 text-2xl font-bold text-fg leading-tight">{h.headline}</p>
-                  <p className="mt-3 text-sm leading-relaxed text-muted">{h.detail}</p>
-                </div>
-              </RevealItem>
-            ))}
-          </RevealGroup>
-
-          <div className="mt-10 flex justify-center">
-            <Button variant="outline" href="/portfolio">
-              See full portfolio
-              <ArrowRight width={18} height={18} />
-            </Button>
-          </div>
+          <Button variant="outline" href="/portfolio">
+            View the portfolio
+            <ArrowRight width={18} height={18} />
+          </Button>
         </div>
       </section>
 

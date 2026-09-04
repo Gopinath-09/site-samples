@@ -39,7 +39,7 @@ export default function SectionHeading({
       <h2
         className={cn(
           "heading-lg mt-4 text-balance",
-          tone === "dark" ? "text-white" : "text-ink",
+          tone === "dark" ? "text-white" : "text-fg",
         )}
       >
         {title}

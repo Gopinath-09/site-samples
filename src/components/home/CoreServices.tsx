@@ -63,7 +63,7 @@ export default function CoreServices({
                 </div>
 
                 {/* Title */}
-                <h3 className="text-lg font-semibold leading-snug text-ink transition-transform duration-300 md:group-hover:translate-x-1">
+                <h3 className="text-lg font-semibold leading-snug text-fg transition-transform duration-300 md:group-hover:translate-x-1">
                   {s.title}
                 </h3>
 

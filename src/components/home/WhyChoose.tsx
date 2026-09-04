@@ -20,7 +20,7 @@ export default function WhyChoose() {
                 <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-ink text-white">
                   <Icon name={d.icon} width={20} height={20} />
                 </span>
-                <h3 className="mt-5 text-lg font-semibold text-ink">{d.title}</h3>
+                <h3 className="mt-5 text-lg font-semibold text-fg">{d.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted">
                   {d.description}
                 </p>

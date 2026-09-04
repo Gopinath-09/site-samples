@@ -29,13 +29,13 @@ export default function TrustedBy() {
 
           <dl className="mt-8 flex gap-10 border-t border-line pt-6">
             <div>
-              <dt className="mono-figure text-2xl font-bold tracking-tight text-ink">
+              <dt className="mono-figure text-2xl font-bold tracking-tight text-fg">
                 {verifiedClients.length}
               </dt>
               <dd className="mt-1 text-xs text-muted">Named clients</dd>
             </div>
             <div>
-              <dt className="mono-figure text-2xl font-bold tracking-tight text-ink">
+              <dt className="mono-figure text-2xl font-bold tracking-tight text-fg">
                 {industries.length}
               </dt>
               <dd className="mt-1 text-xs text-muted">Industries served</dd>
@@ -53,7 +53,7 @@ export default function TrustedBy() {
                 <span className="pointer-events-none absolute left-2 top-2 h-2 w-2 border-l border-t border-brand opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                 <span className="pointer-events-none absolute bottom-2 right-2 h-2 w-2 border-b border-r border-brand opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
-                <span className="text-center text-sm font-bold uppercase tracking-widest text-ink/40 transition-colors duration-300 group-hover:text-ink">
+                <span className="text-center text-sm font-bold uppercase tracking-widest text-fg/40 transition-colors duration-300 group-hover:text-fg">
                   {client.name}
                 </span>
               </div>

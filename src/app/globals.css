@@ -3,40 +3,52 @@
 /* ==========================================================================
    COBRR TECH LABS — Design System
    A premium, corporate, engineering-focused visual language.
-   Light-first with disciplined ink/sand neutrals and a single confident accent.
+   Dark throughout, with disciplined surface steps and a single confident accent.
    ========================================================================== */
 
 @theme {
-  /* Neutrals — the backbone of the system */
-  --color-ink: #0a0e1a;
-  /* near-black navy, primary text + dark surfaces */
-  --color-ink-soft: #121a2e;
+  /*
+   * The site is dark throughout. The surface names keep their original
+   * meanings — `paper` is the page, `sand` the alternate band, `ink` the
+   * deepest well — so every existing `bg-paper` / `bg-sand` / `bg-ink` keeps
+   * doing the same job; only the values moved. What could not survive the flip
+   * is text: `--color-fg` was added for that, because `ink` still has to mean
+   * "the dark colour" for overlays and deep panels.
+   */
+
+  /* Surfaces, deepest first */
+  --color-ink: #05070e;
+  /* deepest well — emphasis panels, overlays */
+  --color-ink-soft: #0e1424;
   /* elevated dark surface */
   --color-ink-line: #1e2740;
-  /* borders on dark */
-  --color-paper: #ffffff;
-  /* base light surface */
-  --color-sand: #f5f4f0;
-  /* warm off-white section surface */
-  --color-sand-deep: #ecebe4;
-  /* slightly deeper warm surface */
-  --color-line: #e4e3dd;
-  /* hairline borders on light */
+  /* borders inside dark panels */
+  --color-paper: #0a0e1a;
+  /* the page itself */
+  --color-sand: #0f1526;
+  /* alternate section band, one step lifted */
+  --color-sand-deep: #151d31;
+  /* a further step, for nested surfaces */
+  --color-line: #1e2740;
+  /* hairline borders */
 
   /* Text */
-  --color-muted: #565d6d;
-  /* secondary text on light */
+  --color-fg: #eef2f8;
+  /* primary text on every surface */
+  --color-muted: #8e9bb5;
+  /* secondary text */
   --color-muted-dark: #93a0bd;
-  /* secondary text on dark */
+  /* secondary text inside the darkest panels */
 
-  /* Brand accent — a single, confident cobalt */
-  --color-brand: #2450e6;
-  --color-brand-strong: #1b3ec2;
-  --color-brand-soft: #eaefff;
-
-  /* Lifted accent for use on ink. The cobalt above only reaches about 2.5:1
-     against the dark surface, so it is not legible there. */
-  --color-brand-light: #5b83ff;
+  /*
+   * Brand. The cobalt below reaches only about 2.5:1 on these surfaces, so the
+   * lifted blue is now the accent that text and icons use, and the cobalt is
+   * kept for solid fills where the text sits on top of it.
+   */
+  --color-brand: #5b83ff;
+  --color-brand-strong: #2450e6;
+  --color-brand-soft: #16203f;
+  --color-brand-light: #9bb6ff;
 
   /* Secondary accent — warm copper, used sparingly for emphasis */
   --color-copper: #c1863c;
@@ -54,7 +66,8 @@
 
 :root {
   --background: var(--color-paper);
-  --foreground: var(--color-ink);
+  --foreground: var(--color-fg);
+  color-scheme: dark;
 }
 
 * {
@@ -211,46 +224,48 @@ body {
   /* Primary CTA — "dark sand": premium ink button for light surfaces
      (replaces the old repeated blue). */
   .btn-primary {
-    background: var(--color-ink);
-    color: #fff;
-    box-shadow: 0 12px 26px -16px rgba(10, 14, 26, 0.7);
+    background: #fff;
+    color: var(--color-ink);
+    box-shadow: 0 12px 26px -16px rgba(0, 0, 0, 0.8);
   }
 
   .btn-primary:hover {
-    background: var(--color-ink-soft);
-    box-shadow: 0 18px 34px -16px rgba(10, 14, 26, 0.6);
+    background: var(--color-sand-deep);
+    color: var(--color-fg);
+    box-shadow: 0 18px 34px -16px rgba(0, 0, 0, 0.7);
   }
 
   .btn-dark {
-    background: var(--color-ink);
-    color: #fff;
+    background: var(--color-sand-deep);
+    color: var(--color-fg);
+    border-color: var(--color-line);
   }
 
   .btn-dark:hover {
-    background: #000;
+    background: #1c263e;
   }
 
   /* Solid light button — the primary CTA to use on top of dark surfaces. */
   .btn-light {
-    background: var(--color-paper);
+    background: #fff;
     color: var(--color-ink);
     box-shadow: 0 12px 26px -16px rgba(0, 0, 0, 0.5);
   }
 
   .btn-light:hover {
-    background: var(--color-sand-deep);
+    background: #dfe4ee;
   }
 
   .btn-outline {
     background: transparent;
-    color: var(--color-ink);
+    color: var(--color-fg);
     border-color: var(--color-line);
   }
 
   .btn-outline:hover {
-    border-color: var(--color-ink);
-    background: var(--color-ink);
-    color: #fff;
+    border-color: #fff;
+    background: #fff;
+    color: var(--color-ink);
   }
 
   .btn-ghost-light {
@@ -279,7 +294,7 @@ body {
   .link-underline {
     position: relative;
     font-weight: 600;
-    color: var(--color-ink);
+    color: var(--color-fg);
   }
 
   .link-underline::after {
@@ -302,7 +317,7 @@ body {
 
   /* ---- Cards ---- */
   .card {
-    background: var(--color-paper);
+    background: var(--color-sand);
     border: 1px solid var(--color-line);
     border-radius: var(--radius-card);
     transition:
@@ -313,8 +328,8 @@ body {
 
   .card-hover:hover {
     transform: translateY(-4px);
-    box-shadow: 0 24px 50px -30px rgba(10, 14, 26, 0.35);
-    border-color: color-mix(in srgb, var(--color-ink) 22%, transparent);
+    box-shadow: 0 24px 50px -24px rgba(0, 0, 0, 0.75);
+    border-color: color-mix(in srgb, #ffffff 22%, transparent);
   }
 
   /* Small pill/tag */
@@ -326,7 +341,7 @@ body {
     font-weight: 600;
     padding: 0.3rem 0.7rem;
     border-radius: 999px;
-    background: var(--color-sand);
+    background: var(--color-sand-deep);
     border: 1px solid var(--color-line);
     color: var(--color-muted);
   }
@@ -350,8 +365,8 @@ body {
   /* Subtle engineering grid backdrop */
   .bg-grid {
     background-image:
-      linear-gradient(to right, rgba(10, 14, 26, 0.045) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(10, 14, 26, 0.045) 1px, transparent 1px);
+      linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
     background-size: 56px 56px;
   }
 

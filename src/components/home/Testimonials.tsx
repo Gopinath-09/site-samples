@@ -62,7 +62,7 @@ function Card({ t, index }: { t: Testimonial; index: number }) {
       <div className="relative z-10 flex flex-1 flex-col">
         <Stars value={t.rating} />
 
-        <blockquote className="mt-4 flex-1 text-[0.95rem] leading-relaxed text-ink/90">
+        <blockquote className="mt-4 flex-1 text-[0.95rem] leading-relaxed text-fg/90">
           {t.quote}
         </blockquote>
       </div>
@@ -75,7 +75,7 @@ function Card({ t, index }: { t: Testimonial; index: number }) {
           {initials(t.name)}
         </span>
         <span className="min-w-0">
-          <span className="block truncate text-sm font-semibold text-ink">
+          <span className="block truncate text-sm font-semibold text-fg">
             {t.name}
           </span>
           <span className="block truncate text-xs text-muted">

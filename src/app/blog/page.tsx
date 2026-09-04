@@ -70,15 +70,15 @@ export default function BlogPage() {
               <div className="flex flex-col justify-center gap-6 bg-sand p-10">
                 <div>
                   <dt className="text-xs font-semibold uppercase tracking-widest text-muted">Author</dt>
-                  <dd className="mt-1 font-semibold text-ink">{featured.author}</dd>
+                  <dd className="mt-1 font-semibold text-fg">{featured.author}</dd>
                 </div>
                 <div>
                   <dt className="text-xs font-semibold uppercase tracking-widest text-muted">Published</dt>
-                  <dd className="mt-1 font-semibold text-ink">{featured.date}</dd>
+                  <dd className="mt-1 font-semibold text-fg">{featured.date}</dd>
                 </div>
                 <div>
                   <dt className="text-xs font-semibold uppercase tracking-widest text-muted">Reading time</dt>
-                  <dd className="mt-1 font-semibold text-ink">{featured.read}</dd>
+                  <dd className="mt-1 font-semibold text-fg">{featured.read}</dd>
                 </div>
               </div>
             </CardLink>

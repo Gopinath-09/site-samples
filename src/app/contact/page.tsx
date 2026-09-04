@@ -110,7 +110,7 @@ export default function ContactPage() {
                 <div key={o.city} className="mt-6 card bg-sand p-6">
                   <div className="flex items-start justify-between gap-4">
                     <div>
-                      <h3 className="font-semibold text-ink">
+                      <h3 className="font-semibold text-fg">
                         {o.city}, {o.country}
                       </h3>
                       <p className="mt-1 text-sm text-muted">{o.address}</p>
@@ -137,7 +137,7 @@ export default function ContactPage() {
                         href={s.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 rounded-full border border-line bg-paper px-3.5 py-2 text-xs font-semibold text-ink/80 transition-colors hover:border-brand/40 hover:text-brand"
+                        className="inline-flex items-center gap-1.5 rounded-full border border-line bg-paper px-3.5 py-2 text-xs font-semibold text-fg/80 transition-colors hover:border-brand/40 hover:text-brand"
                       >
                         {s.label}
                         <ArrowUpRight width={13} height={13} />
@@ -150,11 +150,11 @@ export default function ContactPage() {
               {/* Response SLA */}
               <div className="mt-6 rounded-2xl border border-brand/25 bg-brand-soft/40 p-5">
                 <div className="flex items-center gap-3">
-                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand text-white text-xs font-bold">
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand text-ink text-xs font-bold">
                     1d
                   </span>
                   <div>
-                    <p className="font-semibold text-ink">One-business-day reply</p>
+                    <p className="font-semibold text-fg">One-business-day reply</p>
                     <p className="text-sm text-muted">
                       We reply to every genuine enquiry. No auto-responses, no black holes.
                     </p>
@@ -217,7 +217,7 @@ export default function ContactPage() {
           <div className="mt-8 space-y-4">
             {faqs.map((faq) => (
               <div key={faq.q} className="card p-6">
-                <h3 className="font-semibold text-ink">{faq.q}</h3>
+                <h3 className="font-semibold text-fg">{faq.q}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted">{faq.a}</p>
               </div>
             ))}

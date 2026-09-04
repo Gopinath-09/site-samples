@@ -68,7 +68,7 @@ export default async function ProductDetailPage(
           <Reveal>
             <div className="card h-full p-8">
               <span className="pill text-copper">The problem</span>
-              <p className="mt-5 text-lg leading-relaxed text-ink">
+              <p className="mt-5 text-lg leading-relaxed text-fg">
                 {product.problem}
               </p>
             </div>
@@ -100,7 +100,7 @@ export default async function ProductDetailPage(
                   <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-brand-soft text-brand">
                     <Check width={16} height={16} />
                   </span>
-                  <span className="text-sm font-medium text-ink">{f}</span>
+                  <span className="text-sm font-medium text-fg">{f}</span>
                 </div>
               </RevealItem>
             ))}
@@ -133,7 +133,7 @@ export default async function ProductDetailPage(
                   <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-brand text-sm font-bold text-white">
                     {String(i + 1).padStart(2, "0")}
                   </span>
-                  <p className="pt-1.5 text-sm font-semibold leading-snug text-ink">
+                  <p className="pt-1.5 text-sm font-semibold leading-snug text-fg">
                     {b}
                   </p>
                 </div>
@@ -198,7 +198,7 @@ export default async function ProductDetailPage(
                       <Check width={13} height={13} />
                     </span>
                     <div>
-                      <div className="font-semibold text-ink">{t}</div>
+                      <div className="font-semibold text-fg">{t}</div>
                       <div className="text-sm text-muted">{d}</div>
                     </div>
                   </li>
@@ -221,7 +221,7 @@ export default async function ProductDetailPage(
                     key={tier}
                     className="flex items-center justify-between rounded-xl border border-line px-5 py-4"
                   >
-                    <span className="font-semibold text-ink">{tier}</span>
+                    <span className="font-semibold text-fg">{tier}</span>
                     <span className="font-mono text-sm text-muted">
                       {i === 2 ? "Custom" : "On request"}
                     </span>

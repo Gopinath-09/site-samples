@@ -21,7 +21,7 @@ export default function IndustriesServed() {
                 <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-soft text-brand">
                   <Icon name={ind.icon} width={20} height={20} />
                 </span>
-                <h3 className="mt-4 text-base font-semibold text-ink">
+                <h3 className="mt-4 text-base font-semibold text-fg">
                   {ind.name}
                 </h3>
                 <p className="mt-1.5 text-sm leading-relaxed text-muted">

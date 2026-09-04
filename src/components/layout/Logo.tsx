@@ -1,56 +1,45 @@
-"use client";
-
-import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 
 /**
- * COBRR monogram. Mark only — no wordmark or tagline — so the top-left corner
- * stays a single, quiet brand anchor.
+ * The COBRR wordmark.
  *
- * Artwork resolution order:
- *   1. `public/cobrr-logo.png`  — drop the official export here and it is used
- *      automatically, no code change required. (`.png`, or swap PRIMARY below
- *      for `.svg` / `.webp`.)
- *   2. `public/cobrr-mark.svg`  — vector stand-in, used only if the file above
- *      is missing, so the header never renders a broken image.
+ * Set as type rather than artwork. There is no image to load, nothing to go
+ * missing, and it stays crisp at any size and in any colour the surrounding
+ * context sets — the previous mark shipped a PNG that did not exist and fell
+ * back to an SVG only after hydration, so the header rendered a broken image
+ * on first paint.
+ *
+ * The letterforms are tightened well past the default and given a slight
+ * gradient falloff so the mark reads as one object; the accent stop closes it
+ * off, which is what stops five identical-weight capitals from looking like a
+ * word rather than a mark.
  */
-const PRIMARY = "/cobrr-logo.png";
-const FALLBACK = "/cobrr-mark.svg";
-
 export default function Logo({
   className,
-  size = 36,
+  size = 38,
 }: {
   className?: string;
-  /** Rendered height in pixels. Width follows the mark's aspect ratio. */
+  /** Rendered cap height in pixels; the mark scales from this. */
   size?: number;
 }) {
-  const [src, setSrc] = useState(PRIMARY);
-  const ref = useRef<HTMLImageElement>(null);
-
-  /*
-   * `onError` alone is not enough: the browser requests the image while parsing
-   * the server-rendered HTML, so a 404 can fire and be discarded before React
-   * hydrates and attaches the handler, leaving a permanently broken mark. On
-   * mount we therefore ask the element whether it already failed.
-   */
-  useEffect(() => {
-    const el = ref.current;
-    if (el?.complete && el.naturalWidth === 0) setSrc(FALLBACK);
-  }, []);
-
   return (
-    <span className={cn("inline-flex items-center", className)}>
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        ref={ref}
-        src={src}
-        alt="COBRR"
-        onError={() => setSrc(FALLBACK)}
-        style={{ height: size, width: "auto" }}
-        className="shrink-0 select-none"
-        draggable={false}
-      />
+    <span
+      className={cn(
+        "inline-flex select-none items-baseline leading-none",
+        className,
+      )}
+      style={{ fontSize: size * 0.66 }}
+    >
+      <span className="bg-linear-to-r from-white via-white to-white/65 bg-clip-text font-bold tracking-tighter text-transparent">
+        COBRR
+      </span>
+      <span
+        aria-hidden
+        className="ml-[0.06em] text-brand"
+        style={{ fontSize: "1.15em", lineHeight: 0 }}
+      >
+        .
+      </span>
     </span>
   );
 }

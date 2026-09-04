@@ -106,7 +106,7 @@ export default function TechnologiesPage() {
             {principles.map((p) => (
               <RevealItem key={p.title} className="h-full">
                 <div className="card h-full p-7">
-                  <h3 className="text-lg font-semibold text-ink">{p.title}</h3>
+                  <h3 className="text-lg font-semibold text-fg">{p.title}</h3>
                   <p className="mt-2 text-sm leading-relaxed text-muted">{p.body}</p>
                 </div>
               </RevealItem>

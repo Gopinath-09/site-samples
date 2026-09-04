@@ -99,7 +99,7 @@ export default function IndustriesPage() {
                     <Check width={14} height={14} />
                   </span>
                   <div>
-                    <h3 className="font-semibold text-ink">{c.title}</h3>
+                    <h3 className="font-semibold text-fg">{c.title}</h3>
                     <p className="mt-1.5 text-sm leading-relaxed text-muted">{c.body}</p>
                   </div>
                 </div>
@@ -124,7 +124,7 @@ export default function IndustriesPage() {
               <RevealItem key={h.industry} className="h-full">
                 <div className="card h-full p-7">
                   <span className="pill">{h.industry}</span>
-                  <p className="mt-4 text-2xl font-bold text-ink leading-tight">{h.headline}</p>
+                  <p className="mt-4 text-2xl font-bold text-fg leading-tight">{h.headline}</p>
                   <p className="mt-3 text-sm leading-relaxed text-muted">{h.detail}</p>
                 </div>
               </RevealItem>

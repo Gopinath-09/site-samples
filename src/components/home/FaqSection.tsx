@@ -41,13 +41,13 @@ export default function FaqSection({
                   aria-expanded={isOpen}
                   className="flex w-full cursor-pointer items-center justify-between gap-4 py-5 text-left"
                 >
-                  <span className="text-base font-semibold text-ink">
+                  <span className="text-base font-semibold text-fg">
                     {f.question}
                   </span>
                   <span
                     className={cn(
                       "relative flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-line transition-colors",
-                      isOpen && "border-brand bg-brand text-white",
+                      isOpen && "border-brand bg-brand text-ink",
                     )}
                   >
                     <span className="absolute h-2.5 w-px bg-current transition-transform" style={{ transform: isOpen ? "scaleY(0)" : "scaleY(1)" }} />

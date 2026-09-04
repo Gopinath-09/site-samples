@@ -52,7 +52,7 @@ export default function BlogList({ posts }: { posts: BlogPost[] }) {
                 "relative cursor-pointer rounded-full border px-4 py-2 text-xs font-semibold transition-colors duration-200",
                 isActive
                   ? "border-transparent text-white"
-                  : "border-line bg-paper text-ink/75 hover:border-brand/40 hover:text-ink",
+                  : "border-line bg-paper text-fg/75 hover:border-brand/40 hover:text-fg",
               )}
             >
               {isActive && (
@@ -102,7 +102,7 @@ export default function BlogList({ posts }: { posts: BlogPost[] }) {
                   </span>
                   <span className="text-xs text-muted">{p.read}</span>
                 </div>
-                <h2 className="mt-5 text-xl font-semibold leading-snug text-ink">
+                <h2 className="mt-5 text-xl font-semibold leading-snug text-fg">
                   {p.title}
                 </h2>
                 <p className="mt-3 flex-1 text-sm leading-relaxed text-muted">

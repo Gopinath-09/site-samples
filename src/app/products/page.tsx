@@ -62,17 +62,17 @@ export default function ProductsPage() {
         <div className="container-page fact-row grid-cols-2 md:grid-cols-3">
           <div className="fact-cell">
             <div className="mono-label">Platforms delivered</div>
-            <div className="mono-figure mt-2 text-xl font-medium text-ink">
+            <div className="mono-figure mt-2 text-xl font-medium text-fg">
               {String(verifiedProjects.length).padStart(2, "0")}
             </div>
           </div>
           <div className="fact-cell">
             <div className="mono-label">Products for sale today</div>
-            <div className="mono-figure mt-2 text-xl font-medium text-ink">00</div>
+            <div className="mono-figure mt-2 text-xl font-medium text-fg">00</div>
           </div>
           <div className="fact-cell">
             <div className="mono-label">Roadmap directions</div>
-            <div className="mono-figure mt-2 text-xl font-medium text-ink">08</div>
+            <div className="mono-figure mt-2 text-xl font-medium text-fg">08</div>
           </div>
         </div>
       </section>
@@ -96,7 +96,7 @@ export default function ProductsPage() {
                     <Check width={16} height={16} />
                   </span>
                   <div>
-                    <h3 className="font-semibold text-ink">{pt.title}</h3>
+                    <h3 className="font-semibold text-fg">{pt.title}</h3>
                     <p className="mt-1.5 text-sm leading-relaxed text-muted">
                       {pt.body}
                     </p>

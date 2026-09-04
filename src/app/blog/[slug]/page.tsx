@@ -43,9 +43,9 @@ export default async function BlogPostPage(props: PageProps<"/blog/[slug]">) {
 
           {/* Article body */}
           <Reveal>
-            <div className="prose-custom space-y-6 text-[1.05rem] leading-relaxed text-ink/85">
+            <div className="prose-custom space-y-6 text-[1.05rem] leading-relaxed text-fg/85">
               {post.body.map((para, i) => (
-                <p key={i} className={i === 0 ? "text-xl font-medium text-ink" : ""}>
+                <p key={i} className={i === 0 ? "text-xl font-medium text-fg" : ""}>
                   {para}
                 </p>
               ))}
@@ -64,7 +64,7 @@ export default async function BlogPostPage(props: PageProps<"/blog/[slug]">) {
             {/* Author card */}
             <div className="card p-6">
               <h3 className="text-xs font-semibold uppercase tracking-widest text-muted">Author</h3>
-              <p className="mt-2 font-semibold text-ink">{post.author}</p>
+              <p className="mt-2 font-semibold text-fg">{post.author}</p>
               <p className="mt-1 text-sm text-muted">{post.date} · {post.read}</p>
               <span
                 className={`mt-3 inline-flex items-center rounded-full border px-2.5 py-1 text-xs font-semibold ${categoryClass(post.category)}`}
@@ -75,7 +75,7 @@ export default async function BlogPostPage(props: PageProps<"/blog/[slug]">) {
 
             {/* Share nudge */}
             <div className="card bg-sand p-6">
-              <h3 className="font-semibold text-ink">Found this useful?</h3>
+              <h3 className="font-semibold text-fg">Found this useful?</h3>
               <p className="mt-2 text-sm text-muted">
                 Share it with your team or reach out if you would like to discuss any of these ideas.
               </p>
@@ -106,7 +106,7 @@ export default async function BlogPostPage(props: PageProps<"/blog/[slug]">) {
                     >
                       {r.category}
                     </span>
-                    <h3 className="mt-4 text-base font-semibold leading-snug text-ink">{r.title}</h3>
+                    <h3 className="mt-4 text-base font-semibold leading-snug text-fg">{r.title}</h3>
                     <p className="mt-2 flex-1 text-sm text-muted line-clamp-3">{r.excerpt}</p>
                     <div className="mt-5 flex items-center gap-1 text-sm font-semibold text-brand">
                       Read

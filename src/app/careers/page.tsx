@@ -74,7 +74,7 @@ export default function CareersPage() {
         <div className="container-page grid grid-cols-2 gap-6 md:grid-cols-4">
           {values.map((v) => (
             <div key={v.label} className="text-center">
-              <div className="text-base font-bold text-ink">{v.label}</div>
+              <div className="text-base font-bold text-fg">{v.label}</div>
               <div className="mt-1 text-sm text-muted">{v.desc}</div>
             </div>
           ))}
@@ -96,7 +96,7 @@ export default function CareersPage() {
                   <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-soft text-brand">
                     <Icon name={p.icon} width={20} height={20} />
                   </span>
-                  <h3 className="mt-5 text-lg font-semibold text-ink">{p.title}</h3>
+                  <h3 className="mt-5 text-lg font-semibold text-fg">{p.title}</h3>
                   <p className="mt-2 text-sm leading-relaxed text-muted">{p.body}</p>
                 </div>
               </RevealItem>
@@ -123,7 +123,7 @@ export default function CareersPage() {
                     </span>
                     <span className="pill text-[0.68rem]">{step.duration}</span>
                   </div>
-                  <h3 className="mt-4 text-base font-semibold text-ink">
+                  <h3 className="mt-4 text-base font-semibold text-fg">
                     {step.title}
                   </h3>
                   <p className="mt-2 text-sm leading-relaxed text-muted">
@@ -202,7 +202,7 @@ export default function CareersPage() {
                   className="group flex w-full cursor-pointer flex-col gap-2 p-6 text-left transition-colors hover:bg-brand-soft/30 sm:flex-row sm:items-center sm:justify-between"
                 >
                   <div>
-                    <div className="text-lg font-semibold text-ink">{role.title}</div>
+                    <div className="text-lg font-semibold text-fg">{role.title}</div>
                     <div className="mt-0.5 flex flex-wrap items-center gap-2 text-sm text-muted">
                       <span>{role.department}</span>
                       <span className="h-1 w-1 rounded-full bg-muted/40" />
@@ -223,7 +223,7 @@ export default function CareersPage() {
           </RevealGroup>
 
           <div className="mt-10 rounded-2xl border border-dashed border-line bg-sand p-8 text-center">
-            <h3 className="text-lg font-semibold text-ink">Don&apos;t see your role?</h3>
+            <h3 className="text-lg font-semibold text-fg">Don&apos;t see your role?</h3>
             <p className="mt-2 text-sm text-muted">
               We are always interested in hearing from exceptional engineers and designers.
               Send us an open application and tell us how you could contribute.

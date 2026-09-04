@@ -23,7 +23,7 @@ export default function EngineeringProcess() {
                 <div className="relative flex h-12 w-12 items-center justify-center rounded-full border border-line bg-paper font-mono text-sm font-semibold text-brand">
                   {s.step}
                 </div>
-                <h3 className="mt-6 text-lg font-semibold text-ink">{s.title}</h3>
+                <h3 className="mt-6 text-lg font-semibold text-fg">{s.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted">
                   {s.description}
                 </p>

@@ -34,7 +34,7 @@ export default function FeaturedProducts() {
               <span className="mono-label">
                 {String(i + 1).padStart(2, "0")}
               </span>
-              <h3 className="mt-4 text-base font-bold text-ink">{item.name}</h3>
+              <h3 className="mt-4 text-base font-bold text-fg">{item.name}</h3>
               <p className="mt-2 text-xs leading-relaxed text-muted">
                 {item.blurb}
               </p>

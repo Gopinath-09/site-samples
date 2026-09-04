@@ -40,7 +40,7 @@ export default function WhoWeAre() {
           <Reveal>
             <div className="rounded-2xl border border-line/80 bg-sand/60 p-8 space-y-4">
               <span className="pill bg-brand-soft text-brand font-bold border-brand/20">OUR MISSION</span>
-              <h3 className="text-xl font-bold text-ink">
+              <h3 className="text-xl font-bold text-fg">
                 To Engineer Software & AI Platforms That Power Tomorrow&apos;s Tech Leaders.
               </h3>
               <p className="text-sm leading-relaxed text-muted">
@@ -76,7 +76,7 @@ export default function WhoWeAre() {
                     <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-soft text-brand mb-4">
                       <IconComp width={20} height={20} />
                     </div>
-                    <h4 className="text-base font-bold text-ink">{val.title}</h4>
+                    <h4 className="text-base font-bold text-fg">{val.title}</h4>
                     <p className="mt-2 text-xs leading-relaxed text-muted">{val.desc}</p>
                   </div>
                 </RevealItem>

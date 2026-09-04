@@ -133,7 +133,7 @@ export default function ContactForm() {
       </div>
 
       <div className="mt-5">
-        <label className="mb-2 block text-sm font-medium text-ink">
+        <label className="mb-2 block text-sm font-medium text-fg">
           What can we help with?
         </label>
         <div className="flex flex-wrap gap-2">
@@ -145,8 +145,8 @@ export default function ContactForm() {
               className={cn(
                 "cursor-pointer rounded-full border px-3.5 py-1.5 text-sm font-medium transition-colors",
                 interest === s
-                  ? "border-brand bg-brand text-white"
-                  : "border-line bg-paper text-muted hover:border-ink",
+                  ? "border-brand bg-brand text-ink"
+                  : "border-line bg-paper text-muted hover:border-fg",
               )}
             >
               {s}
@@ -156,7 +156,7 @@ export default function ContactForm() {
       </div>
 
       <div className="mt-5">
-        <label htmlFor="message" className="mb-2 block text-sm font-medium text-ink">
+        <label htmlFor="message" className="mb-2 block text-sm font-medium text-fg">
           Tell us about your project
           <span className="text-brand"> *</span>
         </label>
@@ -169,7 +169,7 @@ export default function ContactForm() {
           aria-invalid={!!errors.message}
           placeholder="A few sentences on your goals, timeline and any constraints…"
           className={cn(
-            "w-full resize-none rounded-xl border bg-paper px-4 py-3 text-sm text-ink outline-none transition-colors placeholder:text-muted/70",
+            "w-full resize-none rounded-xl border bg-paper px-4 py-3 text-sm text-fg outline-none transition-colors placeholder:text-muted/70",
             errors.message
               ? "border-red-500 focus:border-red-500 focus:ring-2 focus:ring-red-500/15"
               : "border-line focus:border-brand focus:ring-2 focus:ring-brand/15",
@@ -211,7 +211,7 @@ function Field({
 }) {
   return (
     <div>
-      <label htmlFor={name} className="mb-2 block text-sm font-medium text-ink">
+      <label htmlFor={name} className="mb-2 block text-sm font-medium text-fg">
         {label}
         {required && <span className="text-brand"> *</span>}
       </label>
@@ -224,7 +224,7 @@ function Field({
         aria-invalid={!!error}
         placeholder={placeholder}
         className={cn(
-          "w-full rounded-xl border bg-paper px-4 py-3 text-sm text-ink outline-none transition-colors placeholder:text-muted/70",
+          "w-full rounded-xl border bg-paper px-4 py-3 text-sm text-fg outline-none transition-colors placeholder:text-muted/70",
           error
             ? "border-red-500 focus:border-red-500 focus:ring-2 focus:ring-red-500/15"
             : "border-line focus:border-brand focus:ring-2 focus:ring-brand/15",

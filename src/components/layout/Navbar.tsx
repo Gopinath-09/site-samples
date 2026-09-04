@@ -147,7 +147,7 @@ export default function Navbar() {
               "flex h-10 w-10 items-center justify-center rounded-xl border transition-colors lg:hidden",
               overDarkHero
                 ? "border-white/20 bg-white/10 text-white"
-                : "border-line bg-sand text-ink",
+                : "border-line bg-sand text-fg",
             )}
           >
             <MenuIcon width={20} height={20} />
@@ -201,7 +201,7 @@ export default function Navbar() {
                   <div key={group.title}>
                     <button
                       onClick={() => go(group.href)}
-                      className="group/title flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.14em] text-ink transition-colors hover:text-brand"
+                      className="group/title flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.14em] text-fg transition-colors hover:text-brand"
                     >
                       {group.title}
                       <ArrowUpRight
@@ -225,7 +225,7 @@ export default function Navbar() {
                                 : "border-transparent hover:border-brand/50",
                             )}
                           >
-                            <span className="block text-sm font-semibold text-ink">
+                            <span className="block text-sm font-semibold text-fg">
                               {link.label}
                             </span>
                             <span className="mt-0.5 block text-xs text-muted">
@@ -279,7 +279,7 @@ export default function Navbar() {
                 <button
                   onClick={() => setMobileOpen(false)}
                   aria-label="Close navigation menu"
-                  className="flex h-9 w-9 items-center justify-center rounded-full border border-line text-ink"
+                  className="flex h-9 w-9 items-center justify-center rounded-full border border-line text-fg"
                 >
                   <Close width={18} height={18} />
                 </button>
@@ -297,8 +297,8 @@ export default function Navbar() {
                       className={cn(
                         "block w-full rounded-xl px-4 py-2.5 text-left text-sm font-semibold transition-colors",
                         isActive(item.href, item.href === "/")
-                          ? "bg-brand text-white"
-                          : "text-ink hover:bg-sand",
+                          ? "bg-brand text-ink"
+                          : "text-fg hover:bg-sand",
                       )}
                     >
                       {item.label}

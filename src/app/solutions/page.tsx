@@ -51,7 +51,7 @@ export default function SolutionsPage() {
                       />
                     </div>
 
-                    <h3 className="mt-5 text-lg font-bold text-ink group-hover:text-brand transition-colors">
+                    <h3 className="mt-5 text-lg font-bold text-fg group-hover:text-brand transition-colors">
                       {sol.name}
                     </h3>
 
@@ -61,7 +61,7 @@ export default function SolutionsPage() {
 
                     <div className="mt-6 space-y-2">
                       {sol.features.slice(0, 3).map((feat) => (
-                        <div key={feat} className="flex items-center gap-2 text-xs font-semibold text-ink/80">
+                        <div key={feat} className="flex items-center gap-2 text-xs font-semibold text-fg/80">
                           <Check width={13} height={13} className="text-brand shrink-0" />
                           <span>{feat}</span>
                         </div>

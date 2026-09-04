@@ -89,7 +89,7 @@ export default async function PortfolioDetailPage({ params }: Props) {
             {/* Outcome, stated in prose because no figure is evidenced */}
             <div className="space-y-4 border-t border-line/60 pt-8">
               <span className="eyebrow">Outcome</span>
-              <h3 className="text-xl font-bold text-ink">
+              <h3 className="text-xl font-bold text-fg">
                 What the platform changed
               </h3>
               <p className="text-sm leading-relaxed text-muted">
@@ -125,7 +125,7 @@ export default async function PortfolioDetailPage({ params }: Props) {
             {/* Features */}
             <div className="space-y-4 border-t border-line/60 pt-8">
               <span className="eyebrow">Core features</span>
-              <h3 className="text-xl font-bold text-ink">What was built</h3>
+              <h3 className="text-xl font-bold text-fg">What was built</h3>
               <div className="grid gap-3 sm:grid-cols-2">
                 {proj.features.map((feat) => (
                   <div
@@ -133,7 +133,7 @@ export default async function PortfolioDetailPage({ params }: Props) {
                     className="flex items-center gap-2.5 rounded-xl border border-line/80 bg-paper p-3.5 shadow-xs"
                   >
                     <Check width={14} height={14} className="shrink-0 text-brand" />
-                    <span className="text-xs font-semibold text-ink">{feat}</span>
+                    <span className="text-xs font-semibold text-fg">{feat}</span>
                   </div>
                 ))}
               </div>
@@ -143,7 +143,7 @@ export default async function PortfolioDetailPage({ params }: Props) {
             {proj.screenshots && proj.screenshots.length > 0 && (
               <div className="space-y-4 border-t border-line/60 pt-8">
                 <span className="eyebrow">Product screens</span>
-                <h3 className="text-xl font-bold text-ink">Inside the platform</h3>
+                <h3 className="text-xl font-bold text-fg">Inside the platform</h3>
                 <div className="grid gap-5 sm:grid-cols-2">
                   {proj.screenshots.map((shot) => (
                     <figure
@@ -172,10 +172,10 @@ export default async function PortfolioDetailPage({ params }: Props) {
                 <span className="pill border-brand/20 bg-brand-soft font-bold text-brand">
                   Client feedback
                 </span>
-                <blockquote className="text-sm font-medium italic leading-relaxed text-ink sm:text-base">
+                <blockquote className="text-sm font-medium italic leading-relaxed text-fg sm:text-base">
                   &ldquo;{proj.clientFeedback.quote}&rdquo;
                 </blockquote>
-                <div className="text-xs font-bold text-ink">
+                <div className="text-xs font-bold text-fg">
                   {proj.clientFeedback.author} —{" "}
                   <span className="font-normal text-muted">
                     {proj.clientFeedback.role}
@@ -188,32 +188,32 @@ export default async function PortfolioDetailPage({ params }: Props) {
           {/* Specification sidebar */}
           <div className="lg:col-span-1">
             <div className="sticky top-28 space-y-6 rounded-2xl border border-line/80 bg-sand/80 p-7 shadow-lg">
-              <h4 className="text-lg font-bold text-ink">Project details</h4>
+              <h4 className="text-lg font-bold text-fg">Project details</h4>
 
               <dl className="space-y-3 border-y border-line/60 py-4 text-xs">
                 <div className="flex justify-between gap-4">
                   <dt className="font-medium text-muted">Type</dt>
-                  <dd className="text-right font-bold text-ink">
+                  <dd className="text-right font-bold text-fg">
                     {proj.projectType}
                   </dd>
                 </div>
                 <div className="flex justify-between gap-4">
                   <dt className="font-medium text-muted">Industry</dt>
-                  <dd className="text-right font-bold text-ink">
+                  <dd className="text-right font-bold text-fg">
                     {proj.industry}
                   </dd>
                 </div>
                 {proj.client && (
                   <div className="flex justify-between gap-4">
                     <dt className="font-medium text-muted">Client</dt>
-                    <dd className="text-right font-bold text-ink">
+                    <dd className="text-right font-bold text-fg">
                       {proj.client}
                     </dd>
                   </div>
                 )}
                 <div className="flex justify-between gap-4">
                   <dt className="font-medium text-muted">Status</dt>
-                  <dd className="text-right font-bold text-ink">
+                  <dd className="text-right font-bold text-fg">
                     {proj.status}
                   </dd>
                 </div>
@@ -269,7 +269,7 @@ export default async function PortfolioDetailPage({ params }: Props) {
                       className="text-muted transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
                     />
                   </div>
-                  <h3 className="mt-5 text-lg font-semibold leading-snug text-ink">
+                  <h3 className="mt-5 text-lg font-semibold leading-snug text-fg">
                     {r.title}
                   </h3>
                   <p className="mt-2 flex-1 text-sm leading-relaxed text-muted">

@@ -61,7 +61,7 @@ export default async function ServiceDetailPage(
               {service.benefits.map((b) => (
                 <RevealItem
                   key={b}
-                  className="flex items-start gap-3 text-sm font-medium text-ink"
+                  className="flex items-start gap-3 text-sm font-medium text-fg"
                 >
                   <span className="mt-px flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-soft text-brand">
                     <Check width={14} height={14} />
@@ -77,7 +77,7 @@ export default async function ServiceDetailPage(
               <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-ink text-white">
                 <Icon name={service.icon} width={22} height={22} />
               </span>
-              <h3 className="mt-6 text-lg font-semibold text-ink">Focus areas</h3>
+              <h3 className="mt-6 text-lg font-semibold text-fg">Focus areas</h3>
               <ul className="mt-4 space-y-3">
                 {service.points.map((p) => (
                   <li key={p} className="flex items-start gap-3 text-sm text-muted">
@@ -109,7 +109,7 @@ export default async function ServiceDetailPage(
                     <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-ink text-white">
                       <Check width={15} height={15} />
                     </span>
-                    <p className="mt-4 text-sm font-semibold leading-snug text-ink">
+                    <p className="mt-4 text-sm font-semibold leading-snug text-fg">
                       {f}
                     </p>
                   </div>
@@ -121,7 +121,7 @@ export default async function ServiceDetailPage(
           <Reveal direction="left">
             <div className="card p-8">
               <span className="eyebrow">Technologies used</span>
-              <h3 className="mt-3 text-lg font-semibold text-ink">
+              <h3 className="mt-3 text-lg font-semibold text-fg">
                 The stack behind this service
               </h3>
               <p className="mt-2 text-sm leading-relaxed text-muted">
@@ -160,7 +160,7 @@ export default async function ServiceDetailPage(
                   <span className="text-xs font-bold tracking-widest text-brand">
                     {String(i + 1).padStart(2, "0")}
                   </span>
-                  <h3 className="mt-3 text-base font-semibold leading-snug text-ink">
+                  <h3 className="mt-3 text-base font-semibold leading-snug text-fg">
                     {step}
                   </h3>
                   {i < service.processSteps.length - 1 && (

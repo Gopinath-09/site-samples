@@ -1,12 +1,18 @@
-import { trustedBy } from "@/lib/content";
+import { verifiedClients, industries } from "@/lib/content";
 import { RevealGroup, RevealItem } from "@/components/ui/Reveal";
 
 /**
  * Trusted-by wall. A bordered grid of client cells sharing hairline rules —
  * reads like a spec sheet rather than an advertisement. Cells are ready to take
  * real logo artwork: drop an <img> in place of the wordmark span.
+ *
+ * Only clients we hold permission to name reach this wall, and the section
+ * removes itself when none do. Naming a client without their agreement is a
+ * commercial problem as much as an honesty one.
  */
 export default function TrustedBy() {
+  if (verifiedClients.length === 0) return null;
+
   return (
     <section className="border-b border-line bg-paper" id="clients">
       <div className="container-page grid gap-12 py-16 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16 lg:py-20">
@@ -17,19 +23,21 @@ export default function TrustedBy() {
             Teams that shipped with us.
           </h2>
           <p className="mt-4 max-w-sm text-sm leading-relaxed text-muted">
-            From early-stage products to plant-floor systems handling live
-            production data — organisations rely on the platforms we build.
+            From tourism and youth development to hospital patient services —
+            organisations run the platforms we build.
           </p>
 
           <dl className="mt-8 flex gap-10 border-t border-line pt-6">
             <div>
-              <dt className="text-2xl font-bold tracking-tight text-ink">
-                {trustedBy.length}+
+              <dt className="mono-figure text-2xl font-bold tracking-tight text-ink">
+                {verifiedClients.length}
               </dt>
-              <dd className="mt-1 text-xs text-muted">Client partnerships</dd>
+              <dd className="mt-1 text-xs text-muted">Named clients</dd>
             </div>
             <div>
-              <dt className="text-2xl font-bold tracking-tight text-ink">6</dt>
+              <dt className="mono-figure text-2xl font-bold tracking-tight text-ink">
+                {industries.length}
+              </dt>
               <dd className="mt-1 text-xs text-muted">Industries served</dd>
             </div>
           </dl>
@@ -38,7 +46,7 @@ export default function TrustedBy() {
         {/* Right — the wall. Negative margins collapse adjacent borders into
             single hairlines, so the grid reads as one continuous frame. */}
         <RevealGroup className="grid grid-cols-2 border-l border-t border-line sm:grid-cols-3">
-          {trustedBy.map((client) => (
+          {verifiedClients.map((client) => (
             <RevealItem key={client.name}>
               <div className="group relative flex h-28 items-center justify-center border-b border-r border-line px-4 transition-colors duration-300 hover:bg-sand">
                 {/* Corner ticks appear on hover — a quiet engineered detail */}

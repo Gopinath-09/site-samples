@@ -4,7 +4,7 @@ import SystemDiagram, {
 } from "@/components/graphics/SystemDiagram";
 import { ArrowRight } from "@/components/ui/icons";
 import { company } from "@/lib/site";
-import { services, products } from "@/lib/content";
+import { services, verifiedProjects } from "@/lib/content";
 
 /**
  * Opening band of the home page.
@@ -24,7 +24,10 @@ import { services, products } from "@/lib/content";
 const facts = [
   { label: "Founded", value: String(company.foundedYear) },
   { label: "Disciplines", value: String(services.length).padStart(2, "0") },
-  { label: "Products", value: String(products.length).padStart(2, "0") },
+  {
+    label: "Platforms built",
+    value: String(verifiedProjects.length).padStart(2, "0"),
+  },
   { label: "Base", value: company.location },
 ];
 
@@ -59,9 +62,10 @@ export default function HeroSection() {
             </h1>
 
             <p className="lead mt-8 max-w-xl text-muted-dark">
-              We are an engineering studio in Bangalore building enterprise
-              platforms, AI systems and our own SaaS products — designed for the
-              years after launch, not the weeks before it.
+              We are an engineering studio in Coimbatore building enterprise
+              platforms, cloud systems and AI for education, healthcare, tourism
+              and logistics — designed for the years after launch, not the weeks
+              before it.
             </p>
 
             <div className="mt-10 flex flex-wrap gap-3">

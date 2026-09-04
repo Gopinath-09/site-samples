@@ -50,12 +50,11 @@ export default function PortfolioPage() {
                       <span className="pill bg-white/10 text-white font-bold border-white/20">
                         {proj.industry}
                       </span>
-                      <span className="font-mono text-xs text-white/50">{proj.duration} Build</span>
                     </div>
 
                     <div className="relative z-10">
                       <span className="text-xs font-bold uppercase tracking-wider text-white/60">
-                        {proj.client}
+                        {proj.client ?? proj.projectType}
                       </span>
                       <h4 className="text-lg font-bold text-white group-hover:text-brand-soft transition-colors line-clamp-1">
                         {proj.title}
@@ -69,27 +68,24 @@ export default function PortfolioPage() {
                         {proj.summary}
                       </p>
 
+                      {/* Capabilities stand in for a stack list: the portfolio
+                          document records the company stack, not a per-project
+                          one, so naming technologies here would be guesswork. */}
                       <div className="mt-4 flex flex-wrap gap-1.5">
-                        {proj.technologies.slice(0, 4).map((tech) => (
-                          <span key={tech} className="pill text-[0.68rem] bg-sand-deep/70">
-                            {tech}
+                        {proj.features.slice(0, 4).map((feature) => (
+                          <span key={feature} className="pill text-[0.68rem] bg-sand-deep/70">
+                            {feature}
                           </span>
                         ))}
                       </div>
                     </div>
 
                     <div>
-                      <div className="grid grid-cols-3 gap-2 border-t border-line/60 pt-4 text-center">
-                        {proj.results.map((r) => (
-                          <div key={r.label} className="rounded-xl bg-sand/80 p-2">
-                            <div className="text-sm font-bold text-ink" style={{ color: proj.accent }}>
-                              {r.value}
-                            </div>
-                            <div className="text-[0.65rem] font-semibold text-muted leading-tight mt-0.5">
-                              {r.label}
-                            </div>
-                          </div>
-                        ))}
+                      <div className="border-t border-line/60 pt-4">
+                        <span className="mono-label">Status</span>
+                        <p className="mt-1.5 text-xs font-medium leading-relaxed text-muted">
+                          {proj.status}
+                        </p>
                       </div>
 
                       <div className="mt-5 flex items-center justify-between text-xs font-bold text-brand pt-2">

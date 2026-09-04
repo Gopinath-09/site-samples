@@ -1,4 +1,4 @@
-import { testimonials, type Testimonial } from "@/lib/content";
+import { verifiedTestimonials, type Testimonial } from "@/lib/content";
 import SectionHeading from "@/components/ui/SectionHeading";
 import { Star } from "@/components/ui/icons";
 
@@ -99,7 +99,17 @@ export default function Testimonials({
   title?: string;
   subtitle?: string;
 }) {
-  const list = limit ? testimonials.slice(0, limit) : testimonials;
+  const list = limit
+    ? verifiedTestimonials.slice(0, limit)
+    : verifiedTestimonials;
+
+  /*
+   * No testimonial has been collected and cleared yet, so the section removes
+   * itself rather than presenting invented praise. It will reappear on its own
+   * the moment a real quote is marked verified.
+   */
+  if (list.length === 0) return null;
+
   // Duplicate the row so the -50% translate loops seamlessly.
   const loop = [...list, ...list];
 

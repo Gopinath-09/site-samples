@@ -368,26 +368,16 @@ export const solutions: Solution[] = [
 export interface PortfolioProject {
   slug: string;
   title: string;
-  client: string;
+  /** How the portfolio document classifies the engagement. */
+  projectType: string;
   industry: string;
-  thumbnail: string;
   summary: string;
-  problem: string;
-  solution: string;
-  architecture: string;
-  technologies: string[];
+  /** Core features, as recorded for the project. */
   features: string[];
-  /** Engineering obstacles and how each was resolved. */
-  challenges: { title: string; detail: string }[];
-  /**
-   * Product screens shown in the case study gallery. `image` is optional — when
-   * absent the UI renders a labelled placeholder frame, so real screenshots can
-   * be dropped in later without touching the components.
-   */
-  screenshots: { label: string; caption: string; image?: string }[];
-  results: { label: string; value: string }[];
-  duration: string;
-  clientFeedback: { quote: string; author: string; role: string };
+  /** The stated business outcome, in prose rather than as a figure. */
+  benefits: string;
+  /** Where the work currently stands, stated plainly. */
+  status: string;
   accent: string;
   /**
    * Cleared for publication. `false` means the record is a draft placeholder and
@@ -395,224 +385,270 @@ export interface PortfolioProject {
    * a signed-off number, or written permission to use the name.
    */
   verified: boolean;
+
+  /*
+   * Everything below is optional, and absent wherever we hold no evidence for
+   * it. These fields were once required, which forced every record to carry a
+   * fabricated metric, quote and duration purely to satisfy the type. A field
+   * that cannot be left empty is a field that will be invented.
+   */
+
+  /** Named only where the client is identified in the portfolio document. */
+  client?: string;
+  /** Per-project stack. The document records the company stack, not this. */
+  technologies?: string[];
+  /** Measured outcomes. None are evidenced yet. */
+  results?: { label: string; value: string }[];
+  /** Attributed quotes. None have been collected yet. */
+  clientFeedback?: { quote: string; author: string; role: string };
+  /**
+   * Product screens. `image` is optional — without it the UI renders a labelled
+   * placeholder frame, so real screenshots drop in later as a data change.
+   */
+  screenshots?: { label: string; caption: string; image?: string }[];
 }
 
+/**
+ * The nine platforms COBRR has built, taken from the company portfolio
+ * document. Client names appear only for the two engagements that document
+ * identifies by name; the rest are described by sector alone.
+ */
 export const portfolioProjects: PortfolioProject[] = [
   {
-    slug: "precision-manufacturing-erp",
-    title: "Real-Time Manufacturing ERP & Production Control",
-    client: "Precision Manufacturing Co.",
-    industry: "Manufacturing",
-    thumbnail: "/projects/manufacturing-erp.jpg",
-    summary: "Replaced 12+ fragmented spreadsheets and legacy desktop tools with a unified cloud ERP system giving live visibility across factory floors.",
-    problem: "The client suffered from delayed reporting, order entry errors, and poor raw material visibility, causing costly production bottlenecks.",
-    solution: "COBRR engineered a real-time cloud ERP with shop-floor IoT barcode scanners, automated purchase order workflows, and executive analytics dashboards.",
-    architecture: "Microservices backend in Go, Next.js dashboard, PostgreSQL database, and Redis caching hosted on AWS EKS.",
-    technologies: ["Next.js", "Go", "PostgreSQL", "Redis", "Docker", "AWS EKS"],
-    features: ["Shop floor job tracking", "Automated inventory reordering", "Real-time OEE reporting", "Role-based access control"],
-    challenges: [
-      { title: "Zero-downtime cutover", detail: "The plant runs three shifts, so there was no maintenance window. We ran the legacy tools and the new ERP in parallel for two weeks with a one-way data sync, then flipped the source of truth over a weekend." },
-      { title: "Unreliable shop-floor network", detail: "Wi-Fi coverage near the furnaces was intermittent. Barcode scanners were rebuilt as offline-first clients that queue scans locally and reconcile on reconnect." },
-      { title: "Fifteen years of dirty spreadsheet data", detail: "Migration surfaced duplicate part numbers and inconsistent units. We built a validation harness that flagged conflicts for the client's team to resolve before import." },
+    slug: "orthomentors",
+    title: "Orthomentors",
+    projectType: "AI Integrated Learning Management System",
+    industry: "Medical Education",
+    summary:
+      "An AI-powered learning platform for postgraduate orthopaedic students, centralising curriculum delivery, assessment and analytics in one place.",
+    features: [
+      "Learning Management System",
+      "AI Question Generation",
+      "PG Orthopaedic Curriculum",
+      "MCQ Engine",
+      "Assessment Engine",
+      "Progress Tracking",
+      "Performance Analytics",
+      "Faculty Portal",
+      "Student Dashboard",
+      "AI Assistant",
+      "Content Management",
+      "Cloud Architecture",
     ],
-    screenshots: [
-      { label: "Production Control Board", caption: "Live job status across every work centre, colour-coded by schedule risk." },
-      { label: "Inventory & Reorder View", caption: "Raw material levels with automated purchase-order triggers." },
-      { label: "Executive OEE Dashboard", caption: "Availability, performance and quality trends by line and shift." },
-    ],
-    results: [
-      { label: "Reporting Delay", value: "-70%" },
-      { label: "Order Accuracy", value: "+38%" },
-      { label: "Production Uptime", value: "99.99%" },
-    ],
-    duration: "6 Months",
-    clientFeedback: {
-      quote: "COBRR delivered our core ERP on budget with zero downtime during cutover. Our plant leadership now makes data-driven decisions daily.",
-      author: "S. Menon",
-      role: "COO, Precision Manufacturing Co.",
-    },
-    accent: "#2563eb",
-    verified: false,
+    benefits:
+      "Improved learning outcomes, reduced faculty workload, faster content creation and centralised academic management.",
+    status: "Developed and actively enhanced.",
+    accent: "#2450e6",
+    verified: true,
   },
   {
-    slug: "regional-health-patient-portal",
-    title: "HIPAA-Conscious Telehealth & Patient Portal",
-    client: "Regional Health Network",
-    industry: "Healthcare",
-    thumbnail: "/projects/healthcare-portal.jpg",
-    summary: "Built a secure, HIPAA-compliant patient portal connecting 40,000+ patients with online scheduling, telemedicine, and digital records.",
-    problem: "Patient appointment no-shows were at 24%, and phone-based prescription requests overloaded administrative staff daily.",
-    solution: "COBRR designed a web and mobile application offering 1-click video consultations, automated SMS reminders, and encrypted records access.",
-    architecture: "Serverless WebRTC architecture on AWS, React Native mobile apps, Node.js backend, and encrypted PostgreSQL.",
-    technologies: ["React Native", "Next.js", "Node.js", "WebRTC", "PostgreSQL", "AWS"],
-    features: ["HIPAA-compliant video calls", "Automated SMS reminders", "E-Prescription delivery", "Biometric mobile sign-in"],
-    challenges: [
-      { title: "Compliance without friction", detail: "Every HIPAA control we added risked adding a step for elderly patients. We moved verification to device biometrics and one-time links, keeping the audit trail intact while removing password resets entirely." },
-      { title: "Video quality on poor connections", detail: "Consultations dropped on rural mobile data. Adaptive bitrate and an automatic audio-only fallback kept sessions alive instead of failing outright." },
-      { title: "Legacy EHR with no modern API", detail: "The incumbent records system exposed only a nightly flat-file export. We built an integration layer that normalises those exports and reconciles them against portal activity." },
+    slug: "onprembox",
+    title: "OnPremBox",
+    projectType: "Company Management Platform",
+    industry: "Internal Operations / Enterprise",
+    summary:
+      "A centralised platform for workforce management, internal collaboration and operational tracking across an organisation.",
+    features: [
+      "Employee and Project Management",
+      "Attendance",
+      "Leave Management",
+      "Asset Tracking",
+      "Internal Task Management",
+      "Document Repository",
+      "HR Management",
+      "Department Management",
+      "Role-based Access",
+      "Chat Systems",
+      "Notifications",
+      "Client Dashboard",
+      "Dashboard Analytics",
+      "One-Click Auto Scaling",
     ],
-    screenshots: [
-      { label: "Patient Home", caption: "Upcoming appointments, prescriptions and secure messages in one view." },
-      { label: "Telemedicine Consultation", caption: "In-call notes, vitals and prescription issuing for the clinician." },
-      { label: "Scheduling Flow", caption: "Three-tap booking with automated SMS and email reminders." },
-    ],
-    results: [
-      { label: "Patient No-Shows", value: "-32%" },
-      { label: "Staff Hours Saved", value: "1.4k/mo" },
-      { label: "Security Audit Findings", value: "0" },
-    ],
-    duration: "5 Months",
-    clientFeedback: {
-      quote: "The patient engagement portal transformed our clinic operations. Security and patient experience were executed flawlessly.",
-      author: "R. Nair",
-      role: "CIO, Regional Health Network",
-    },
+    benefits:
+      "Better internal visibility, streamlined operations and improved productivity.",
+    status: "Implemented for internal process automation.",
     accent: "#0d9488",
-    verified: false,
+    verified: true,
   },
   {
-    slug: "urban-retail-ai-recommendation",
-    title: "AI-Driven Personalization Engine for E-Commerce",
-    client: "Urban Retail Group",
-    industry: "Retail",
-    thumbnail: "/projects/retail-ai.jpg",
-    summary: "Deployed a real-time vector search recommendation layer that adapts product recommendations to individual shopper intent.",
-    problem: "The client's online storefront suffered from low search conversion and generic product recommendation carousels.",
-    solution: "COBRR integrated OpenAI embeddings and Pinecone vector database into their store checkout flow, lifting conversion without increasing latency.",
-    architecture: "Python FastAPI embedding service, Pinecone vector search, React frontend, and Redis edge caching.",
-    technologies: ["Python", "OpenAI", "Pinecone", "React", "Node.js", "Redis"],
-    features: ["Visual semantic search", "Personalized product carousels", "Real-time intent analysis", "A/B testing framework"],
-    challenges: [
-      { title: "Latency budget of 50ms", detail: "Recommendations sit on the critical rendering path, so an embedding round-trip per request was not viable. Precomputed session vectors plus a Redis edge cache brought p99 under 35ms." },
-      { title: "Cold-start for new visitors", detail: "Two thirds of traffic is anonymous with no history. We blended category-level popularity priors with in-session behaviour so the first recommendation is never generic filler." },
-      { title: "Proving the lift was real", detail: "The client had been burned by vendor-reported numbers. We shipped the A/B framework before the model, so every claim was measured against a holdout on their own analytics." },
+    slug: "yhai-tamil-nadu",
+    title: "YHAI Tamil Nadu Digital Transformation Platform",
+    client: "Youth Hostels Association of India, Tamil Nadu",
+    projectType: "Tourism and Youth Development Platform",
+    industry: "Tourism / Membership / Activity Management",
+    summary:
+      "A digital platform for the Tamil Nadu branch of the Youth Hostels Association of India, modernising tourism services, memberships, accommodation and activity bookings.",
+    features: [
+      "Tourism Management Platform",
+      "Hostel & Accommodation Management",
+      "Activity Booking System",
+      "Adventure & Trek Booking",
+      "Membership Management",
+      "Event Registration",
+      "Digital Content Management",
+      "Administration Dashboard",
+      "Governor Dashboard",
+      "Mobile Responsive Web Application",
+      "Future-ready Payment and Booking Architecture",
+      "Analytics-ready Architecture",
     ],
-    screenshots: [
-      { label: "Semantic Search Results", caption: "Natural-language and visual similarity search across the catalogue." },
-      { label: "Personalised Storefront", caption: "Carousels reordered in real time against in-session intent." },
-      { label: "Experiment Dashboard", caption: "Conversion lift by variant with holdout comparison." },
-    ],
-    results: [
-      { label: "Checkout Conversion", value: "+24%" },
-      { label: "Search Relevance", value: "+45%" },
-      { label: "API Response Time", value: "<35ms" },
-    ],
-    duration: "3 Months",
-    clientFeedback: {
-      quote: "COBRR's AI engine delivered immediate revenue impact. The vector search feels like magic for our online shoppers.",
-      author: "J. Fernandes",
-      role: "Chief Product Officer, Urban Retail Group",
-    },
+    benefits:
+      "Enhanced member engagement, streamlined tourism operations and scalable digital infrastructure.",
+    status: "Developed with phased rollout readiness.",
     accent: "#6366f1",
-    verified: false,
+    verified: true,
   },
   {
-    slug: "fintech-micro-lending-platform",
-    title: "Automated Credit Scoring & Micro-Lending Engine",
-    client: "CrediSwift Fintech",
-    industry: "Finance",
-    thumbnail: "/projects/fintech-lending.jpg",
-    summary: "Engineered an automated credit decisioning engine that processes loan applications in under 60 seconds with bank-grade security.",
-    problem: "Manual loan underwriting took 48 hours, causing high drop-off rates for small business borrowers.",
-    solution: "COBRR built an algorithmic scoring pipeline combining bank statement parser APIs, credit bureau checks, and automated payout gateways.",
-    architecture: "Microservices in Java Spring Boot, React dashboard, PostgreSQL, and AWS KMS encryption.",
-    technologies: ["Java", "Spring Boot", "React", "PostgreSQL", "Docker", "AWS KMS"],
-    features: ["60-second automated underwriting", "Bank API data parsing", "E-Signature integration", "Automated repayment schedules"],
-    challenges: [
-      { title: "Explainable automated decisions", detail: "Regulators require a reason for every declined application. The scoring pipeline records the contributing factors for each decision, so underwriters can justify an outcome months later." },
-      { title: "Inconsistent bank statement formats", detail: "Every partner bank exports a different layout. A normalisation layer with per-bank parsers and a manual-review queue kept accuracy high without blocking applicants." },
-      { title: "Key management under audit", detail: "Handling financial data meant encryption keys could not live in application config. We moved to AWS KMS with rotation and per-service access scoping." },
+    slug: "gps-transport-management",
+    title: "GPS Transport Management System",
+    projectType: "School Transport Tracking System",
+    industry: "Education / Logistics",
+    summary:
+      "A school transport system giving live vehicle tracking, route visibility and safety alerts to schools, drivers and parents at once.",
+    features: [
+      "Live GPS Tracking",
+      "Driver Mobile App",
+      "Parent App",
+      "Student Boarding Alerts",
+      "ETA Prediction",
+      "Route Optimization",
+      "RFID Integration Ready",
+      "Emergency SOS",
+      "Geo-fencing",
+      "Attendance Integration",
+      "School Admin Dashboard",
     ],
-    screenshots: [
-      { label: "Application Intake", caption: "Borrower-facing flow with bank linking and e-signature." },
-      { label: "Underwriting Console", caption: "Decision factors and score breakdown for each application." },
-      { label: "Portfolio Analytics", caption: "Loan volume, repayment health and default-rate trends." },
-    ],
-    results: [
-      { label: "Processing Time", value: "-98%" },
-      { label: "Loan Volume", value: "+180%" },
-      { label: "Default Rate", value: "<1.2%" },
-    ],
-    duration: "6 Months",
-    clientFeedback: {
-      quote: "The automated lending platform allowed us to scale from 500 to 10,000 monthly applications effortlessly.",
-      author: "M. Costa",
-      role: "Head of Product, CrediSwift Fintech",
-    },
+    benefits:
+      "Improved transport safety, operational visibility and parent communication.",
+    status: "Delivered as a transport module.",
     accent: "#d97706",
-    verified: false,
+    verified: true,
   },
   {
-    slug: "global-logistics-fleet-tracker",
-    title: "IoT Fleet Tracking & Route Optimization Engine",
-    client: "TransWorld Logistics",
-    industry: "Logistics",
-    thumbnail: "/projects/logistics-tracker.jpg",
-    summary: "Built an IoT fleet management platform tracking 1,200+ trucks in real-time across national highways with automated route optimization.",
-    problem: "High fuel expenditure and lack of delivery status transparency caused client dissatisfaction.",
-    solution: "COBRR created a high-throughput telemetry ingestion pipeline using Kafka, WebSockets, and real-time mapping dashboards.",
-    architecture: "Node.js & Go microservices, Apache Kafka event bus, React dashboard, and MongoDB geolocation index.",
-    technologies: ["Go", "Node.js", "Kafka", "MongoDB", "React", "Google Maps API"],
-    features: ["Live GPS map tracking", "Driver route optimization", "Temperature & speed alerts", "Digital proof-of-delivery"],
-    challenges: [
-      { title: "50,000 telemetry events per second", detail: "Direct database writes could not keep up. Kafka absorbs the ingest, with consumers batching into MongoDB and pushing only changed positions over WebSockets." },
-      { title: "Dead zones on national highways", detail: "Trucks lose signal for hours. Devices buffer readings on-board and replay them in order, and the dashboard distinguishes 'no signal' from 'not moving'." },
-      { title: "Driver adoption", detail: "The first proof-of-delivery flow was ignored because it took too long at the dock. We cut it to a scan, a photo and a signature — completion went from patchy to near-universal." },
-    ],
-    screenshots: [
-      { label: "Live Fleet Map", caption: "Real-time positions, routes and exception alerts across the fleet." },
-      { label: "Route Optimisation", caption: "Suggested sequencing with fuel and time savings per run." },
-      { label: "Proof of Delivery", caption: "Driver mobile capture: scan, photo and signature." },
-    ],
-    results: [
-      { label: "Fuel Expenses Saved", value: "-22%" },
-      { label: "On-Time Deliveries", value: "98.4%" },
-      { label: "Telemetry Throughput", value: "50k/sec" },
-    ],
-    duration: "7 Months",
-    clientFeedback: {
-      quote: "Real-time visibility transformed our fleet logistics. COBRR's architecture handled high data throughput effortlessly.",
-      author: "K. Iyer",
-      role: "Director of Technology, TransWorld Logistics",
-    },
-    accent: "#2563eb",
-    verified: false,
-  },
-  {
-    slug: "edtech-interactive-learning-lms",
-    title: "Interactive Video Learning Platform & Assessment Engine",
-    client: "EduSpark Global",
+    slug: "complete-school-erp",
+    title: "Complete School ERP",
+    projectType: "School Management Platform",
     industry: "Education",
-    thumbnail: "/projects/edtech-lms.jpg",
-    summary: "Designed a cloud learning platform supporting 150,000+ active students with interactive video lectures and automated coding assessments.",
-    problem: "Legacy LMS could not support concurrent video streams during exam windows, leading to platform crashes.",
-    solution: "COBRR built an auto-scaling cloud video delivery network with serverless coding sandboxes for automated assignment grading.",
-    architecture: "Next.js frontend, AWS CloudFront video CDN, Dockerized execution sandboxes, and PostgreSQL database.",
-    technologies: ["Next.js", "Python", "Docker", "AWS CloudFront", "PostgreSQL"],
-    features: ["Adaptive HLS video streaming", "Dockerized code grading sandbox", "Gamified student badges", "Real-time teacher analytics"],
-    challenges: [
-      { title: "Traffic that is 95% idle, 5% extreme", detail: "National exam windows create a 40x spike in minutes. Autoscaling alone reacted too slowly, so capacity is pre-warmed against the published exam calendar." },
-      { title: "Running untrusted student code", detail: "Coding assessments execute arbitrary submissions. Each runs in a short-lived container with no network, a hard memory cap and a two-second CPU limit." },
-      { title: "Video cost at scale", detail: "Naive streaming would have made bandwidth the largest line item. Per-region CDN caching and tuned adaptive ladders cut delivery cost substantially without hurting playback." },
+    summary:
+      "An ERP covering the academic, administrative and operational processes of a school from a single platform.",
+    features: [
+      "Student Information System",
+      "Admissions",
+      "Fee Management",
+      "Transport",
+      "Hostel",
+      "Library",
+      "Timetable",
+      "Attendance",
+      "Examinations",
+      "Report Cards",
+      "Parent Portal",
+      "Teacher Portal",
+      "HR",
+      "Payroll",
+      "Inventory",
+      "AI Reports",
     ],
-    screenshots: [
-      { label: "Interactive Lecture Player", caption: "Adaptive video with in-line questions and note-taking." },
-      { label: "Coding Assessment", caption: "Sandboxed editor with automated grading feedback." },
-      { label: "Teacher Analytics", caption: "Cohort progress, drop-off points and assessment outcomes." },
+    benefits:
+      "Centralised school operations, reduced manual work and improved data management.",
+    status:
+      "Developed as a full-school management solution, currently in internal testing.",
+    accent: "#2563eb",
+    verified: true,
+  },
+  {
+    slug: "clinic-management-system",
+    title: "Hospital Management System (Clinic)",
+    projectType: "Clinic Operations Platform",
+    industry: "Healthcare",
+    summary:
+      "A clinic management system simplifying patient flow, appointments, billing and records for day-to-day practice.",
+    features: [
+      "Patient Registration",
+      "Appointment Booking",
+      "Doctor Dashboard",
+      "Electronic Medical Records",
+      "Pharmacy",
+      "Billing",
+      "Laboratory",
+      "Prescription Management",
+      "Inventory",
+      "Reports",
     ],
-    results: [
-      { label: "Concurrent Users", value: "150k+" },
-      { label: "Grading Speed", value: "<2 seconds" },
-      { label: "Platform Uptime", value: "99.99%" },
-    ],
-    duration: "5 Months",
-    clientFeedback: {
-      quote: "EduSpark handled our largest national exam window smoothly thanks to COBRR's auto-scaling cloud architecture.",
-      author: "L. Weber",
-      role: "Managing Director, EduSpark Global",
-    },
+    benefits:
+      "Better patient management, smoother operations and organised clinical records.",
+    status: "Implemented for the client clinic in daily use.",
     accent: "#0d9488",
-    verified: false,
+    verified: true,
+  },
+  {
+    slug: "rajiv-gandhi-hospital-ai-chatbot",
+    title: "Rajiv Gandhi Hospital AI Chatbot",
+    client: "Rajiv Gandhi Hospital",
+    projectType: "AI Patient Assistant",
+    industry: "Healthcare",
+    summary:
+      "An AI assistant helping hospital visitors and patients with navigation, information and guidance around the clock.",
+    features: [
+      "AI-powered Patient Assistant",
+      "Appointment Guidance",
+      "Department Navigation",
+      "FAQ Automation",
+      "Multilingual Support",
+      "NLP Engine",
+      "Hospital Information Retrieval",
+      "24x7 Virtual Assistant",
+    ],
+    benefits:
+      "Improved patient support, faster information access and reduced front-desk dependency.",
+    status: "Built as a hospital support chatbot.",
+    accent: "#2450e6",
+    verified: true,
+  },
+  {
+    slug: "stock-management",
+    title: "Stock Management Software",
+    projectType: "Inventory Control Platform",
+    industry: "Retail / Operations",
+    summary:
+      "A stock platform tracking inventory movement, purchasing, sales and warehouse data in one ledger.",
+    features: [
+      "Inventory Management",
+      "Purchase Orders",
+      "Sales Management",
+      "Vendor Management",
+      "Barcode Support",
+      "Warehouse Management",
+      "Inventory Alerts",
+      "Analytics Dashboard",
+    ],
+    benefits:
+      "Improved inventory accuracy, stock control and business tracking.",
+    status: "Developed and deployed for inventory operations.",
+    accent: "#d97706",
+    verified: true,
+  },
+  {
+    slug: "matrimony-application",
+    title: "Matrimony Application",
+    projectType: "AI-ready Matrimonial Platform",
+    industry: "Consumer Technology",
+    summary:
+      "A matrimonial platform built around intelligent matching, verification and privacy controls to improve discovery and trust.",
+    features: [
+      "User Profiles",
+      "AI-powered Match Suggestions",
+      "Chat & Interest Requests",
+      "Privacy Controls",
+      "Subscription Model",
+      "Admin Dashboard",
+      "Verification Workflow",
+    ],
+    benefits:
+      "Enhanced user matching, improved trust and support for subscription-based monetisation.",
+    status: "Issued for client-side testing.",
+    accent: "#6366f1",
+    verified: true,
   },
 ];
 
@@ -632,53 +668,70 @@ export interface Product {
   gallery: { label: string; caption: string; image?: string }[];
 }
 
-export const products: Product[] = [
+/**
+ * Empty by design.
+ *
+ * This array previously held three invented SaaS products, complete with
+ * fabricated benefit figures. The company portfolio document records no
+ * commercially available product: what it records is a roadmap, which is a
+ * statement of intent rather than a thing anyone can buy today. Conflating the
+ * two is the most expensive kind of overclaim, because a prospect can ask for a
+ * demo of something that does not exist.
+ *
+ * The product sections read this array and remove themselves while it is empty.
+ * Add a record here when there is a product to sell, not before.
+ */
+export const products: Product[] = [];
+
+export interface RoadmapItem {
+  name: string;
+  blurb: string;
+}
+
+/**
+ * The stated product roadmap. Presented as direction, never as inventory —
+ * every consumer of this list must label it as what is being built next.
+ */
+export const productRoadmap: RoadmapItem[] = [
   {
-    slug: "workship",
-    name: "Workship",
-    status: "Live",
-    tagline: "The operations platform that keeps distributed software teams in sync.",
-    problem: "Growing engineering teams lose time to scattered project tools, unclear task ownership, and manual status reporting.",
-    solution: "Workship unifies project tracking, automated sprint status reporting, and developer velocity metrics in a single cockpit.",
-    features: ["Kanban & Sprint Boards", "GitHub & GitLab Auto-Sync", "Role-Based Workspaces", "Automated Standup Reports", "API Webhooks"],
-    benefits: ["30% reduction in status meeting overhead", "Real-time visibility over sprint deliverables", "Seamless developer tool integrations"],
-    gallery: [
-      { label: "Sprint Board", caption: "Drag-and-drop planning with live sync from GitHub and GitLab." },
-      { label: "Velocity Dashboard", caption: "Throughput, cycle time and review latency per team." },
-      { label: "Automated Standup", caption: "Yesterday, today and blockers assembled from real activity." },
-      { label: "Workspace Settings", caption: "Role-based permissions and per-workspace integrations." },
-    ],
+    name: "AI Agents",
+    blurb:
+      "Autonomous agents that carry out multi-step work inside a business, rather than answering one question at a time.",
   },
   {
-    slug: "satisfy",
-    name: "Satisfy",
-    status: "Live",
-    tagline: "Customer feedback intelligence and automated sentiment routing.",
-    problem: "Customer feedback signals are scattered across emails, support tickets, and surveys, leading to delayed action and churn.",
-    solution: "Satisfy centralizes feedback into an AI-powered inbox that automatically categorizes sentiment and alerts product managers.",
-    features: ["Unified Feedback Inbox", "AI Sentiment Scoring", "CSAT & NPS Survey Engine", "Automated Slack Escalation", "Trend Detection"],
-    benefits: ["Identify customer churn risks 2x faster", "Automated ticket categorization", "Actionable CSAT insights"],
-    gallery: [
-      { label: "Unified Inbox", caption: "Every feedback channel in one triage queue with AI sentiment scoring." },
-      { label: "Trend Explorer", caption: "Emerging themes surfaced across tickets, surveys and reviews." },
-      { label: "Survey Builder", caption: "CSAT and NPS campaigns with targeting and scheduling." },
-      { label: "Escalation Rules", caption: "Route negative sentiment to the right Slack channel automatically." },
-    ],
+    name: "Enterprise Automation",
+    blurb:
+      "Removing the manual handoffs between systems that quietly consume operational hours.",
   },
   {
-    slug: "upcoming-saas",
-    name: "Custom Stack Studio",
-    status: "Upcoming",
-    tagline: "Next-gen vertical SaaS modules built for high-growth enterprise teams.",
-    problem: "Underserved niche operational workflows require expensive custom software development from scratch.",
-    solution: "Our product studio incubates modular, vertical SaaS components that enterprise clients can deploy instantly.",
-    features: ["Composable API Modules", "AI-Native Workflows", "White-Label Readiness", "Early-Access Developer Sandbox"],
-    benefits: ["Deploy customized enterprise tools in days", "Built on COBRR's proven cloud infrastructure"],
-    gallery: [
-      { label: "Module Catalogue", caption: "Composable building blocks ready to assemble into a product." },
-      { label: "Developer Sandbox", caption: "Early-access environment for testing modules against real data." },
-      { label: "White-Label Theming", caption: "Brand tokens applied across every module from one configuration." },
-    ],
+    name: "Cloud SaaS Products",
+    blurb:
+      "Multi-tenant platforms built on the infrastructure patterns we already run for clients.",
+  },
+  {
+    name: "Healthcare AI",
+    blurb:
+      "Patient-facing assistance and clinical record intelligence, extending the clinic systems we have delivered.",
+  },
+  {
+    name: "Educational AI",
+    blurb:
+      "Curriculum generation, assessment and analytics, building on the learning platforms already in use.",
+  },
+  {
+    name: "Logistics Intelligence",
+    blurb:
+      "Route, fleet and delivery optimisation informed by the transport tracking work we have shipped.",
+  },
+  {
+    name: "Tourism Ecosystems",
+    blurb:
+      "Membership, booking and activity platforms for tourism bodies and their operators.",
+  },
+  {
+    name: "Government Digital Platforms",
+    blurb:
+      "Secure, auditable and accessible public-sector systems.",
   },
 ];
 
@@ -1205,27 +1258,68 @@ export interface Client {
   verified: boolean;
 }
 
+/**
+ * YHAI and Rajiv Gandhi Hospital are marked verified because the company's own
+ * portfolio document names them as clients and that document was supplied for
+ * publication. The rest stay unverified until someone confirms we hold
+ * permission to display the name — being a real client and having agreed to be
+ * listed publicly are two different things.
+ */
 export const trustedBy: Client[] = [
+  { name: "YHAI TAMIL NADU", verified: true },
+  { name: "RAJIV GANDHI HOSPITAL", verified: true },
   { name: "SATISFY", verified: false },
   { name: "SUDESI A&F", verified: false },
-  { name: "YHAI", verified: false },
   { name: "TRACKER BOX", verified: false },
   { name: "UNION COLLEGE", verified: false },
   { name: "DUDUK", verified: false },
   { name: "DECYRE", verified: false },
 ];
 
+/**
+ * The three named officers of the company. Each bio states that person's core
+ * expertise as recorded in the portfolio document — no invented tenure, no
+ * former employers, no credentials we cannot substantiate.
+ */
 export const teamMembers = [
-  { name: "Arun K.", role: "Founder & Managing Director", bio: "12+ years leading enterprise software engineering & technology strategy." },
-  { name: "Deepak R.", role: "Chief Technology Officer", bio: "Ex-BigTech architect specializing in distributed cloud systems & AI." },
-  { name: "Priya S.", role: "Head of Product & Design", bio: "Passionate about research-led UI/UX and scalable design systems." },
-  { name: "Vikram M.", role: "Lead DevOps & Security Engineer", bio: "Kubernetes and SOC2 compliance specialist ensuring 99.99% uptime." },
+  {
+    name: "Rishi Vardhan S.",
+    role: "Chief Executive Officer",
+    bio: "Business strategy, product vision and project management, alongside DevOps engineering and infrastructure automation.",
+  },
+  {
+    name: "Gopinath S. R.",
+    role: "Chief Technology Officer",
+    bio: "System architecture and enterprise software, spanning full-stack development, cloud infrastructure, artificial intelligence and API engineering.",
+  },
+  {
+    name: "Sachindra P.",
+    role: "Chief Operating Officer",
+    bio: "Operations management with full-stack and frontend engineering, UI/UX design, component architecture and product delivery.",
+  },
 ];
 
+/**
+ * Only milestones the portfolio document supports. It records no dates beyond
+ * the founding year, so nothing here claims a month or a sequence we cannot
+ * evidence.
+ */
 export const companyTimeline = [
-  { year: "2026", title: "COBRR Founded", desc: "Launched as an engineering-first startup studio and enterprise software partner." },
-  { year: "2026", title: "SaaS Studio Launch", desc: "Shipped flagship SaaS products Workship and Satisfy to early adopters." },
-  { year: "2026", title: "GenAI Integration Practice", desc: "Expanded core capabilities to include LLM copilots, RAG pipelines, and vector search." },
+  {
+    year: "2026",
+    title: "Incorporated",
+    desc: "COBRR Tech Labs Private Limited registered in Coimbatore, Tamil Nadu.",
+  },
+  {
+    year: "2026",
+    title: "First platforms delivered",
+    desc: "Learning, tourism, school and clinic systems built and put into use by their operators.",
+  },
+  {
+    year: "2026",
+    title: "AI practice established",
+    desc: "RAG, agentic RAG and research agents moved from experiment into client delivery.",
+  },
 ];
 
 /** Day-to-day working culture, shown on About and Careers. */
@@ -1321,9 +1415,9 @@ export const internships = {
 };
 
 export const openRoles = [
-  { title: "Senior Full-Stack Engineer (Next.js / Node.js)", location: "Remote / Bangalore", department: "Engineering" },
-  { title: "AI/ML Solutions Engineer (Python / LangChain)", location: "Remote / Bangalore", department: "Artificial Intelligence" },
-  { title: "Cloud DevOps Architect (AWS / Kubernetes)", location: "Remote / Bangalore", department: "Infrastructure" },
+  { title: "Senior Full-Stack Engineer (Next.js / Node.js)", location: "Remote / Coimbatore", department: "Engineering" },
+  { title: "AI/ML Solutions Engineer (Python / LangChain)", location: "Remote / Coimbatore", department: "Artificial Intelligence" },
+  { title: "Cloud DevOps Architect (AWS / Kubernetes)", location: "Remote / Coimbatore", department: "Infrastructure" },
   { title: "Senior UI/UX Product Designer", location: "Remote", department: "Design" },
 ];
 

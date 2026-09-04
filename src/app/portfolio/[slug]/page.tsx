@@ -14,7 +14,7 @@ interface Props {
   params: Promise<{ slug: string }>;
 }
 
-export async function generateStaticParams() {
+export function generateStaticParams() {
   return portfolioProjects.map((p) => ({ slug: p.slug }));
 }
 
@@ -28,6 +28,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
+/**
+ * A single case study.
+ *
+ * Every optional block below renders only when the record actually carries the
+ * data: measured results, an attributed quote, product screens and a per-project
+ * stack are all absent for most projects today. The page is written so that a
+ * record with nothing but its summary, features and status still reads as a
+ * finished document rather than a page with holes in it — which is what makes
+ * it possible to publish honest records instead of padded ones.
+ */
 export default async function PortfolioDetailPage({ params }: Props) {
   const { slug } = await params;
   const proj = portfolioProjects.find((p) => p.slug === slug);
@@ -50,181 +60,177 @@ export default async function PortfolioDetailPage({ params }: Props) {
       <PageHeader
         eyebrow={`CASE STUDY · ${proj.industry.toUpperCase()}`}
         title={proj.title}
-        description={`Client: ${proj.client} · Duration: ${proj.duration}`}
+        description={
+          proj.client
+            ? `${proj.projectType} · ${proj.client}`
+            : proj.projectType
+        }
       >
         <div className="flex flex-wrap gap-4 pt-2">
           <Button variant="primary" size="lg" href="/contact">
-            Build Similar Platform
+            Build something similar
             <ArrowRight width={18} height={18} />
           </Button>
           <Button variant="ghost-light" size="lg" href="/portfolio">
-            All Portfolio Projects
+            All projects
           </Button>
         </div>
       </PageHeader>
 
-      <section className="section bg-paper border-b border-line/60">
+      <section className="section border-b border-line/60 bg-paper">
         <div className="container-page grid gap-12 lg:grid-cols-3">
-          <div className="lg:col-span-2 space-y-12">
-            {/* Impact Results Bar */}
-            <div className="rounded-2xl border border-line/80 bg-sand/80 p-6">
-              <span className="text-xs font-bold uppercase tracking-wider text-muted block mb-4">
-                PROJECT RESULTS & IMPACT METRICS
-              </span>
-              <div className="grid grid-cols-3 gap-4 text-center">
-                {proj.results.map((r) => (
-                  <div key={r.label} className="rounded-xl bg-paper p-4 border border-line/60 shadow-xs">
-                    <div className="text-2xl font-extrabold text-ink" style={{ color: proj.accent }}>
-                      {r.value}
+          <div className="space-y-12 lg:col-span-2">
+            {/* Overview */}
+            <div className="space-y-4">
+              <span className="eyebrow">Overview</span>
+              <p className="lead">{proj.summary}</p>
+            </div>
+
+            {/* Outcome, stated in prose because no figure is evidenced */}
+            <div className="space-y-4 border-t border-line/60 pt-8">
+              <span className="eyebrow">Outcome</span>
+              <h3 className="text-xl font-bold text-ink">
+                What the platform changed
+              </h3>
+              <p className="text-sm leading-relaxed text-muted">
+                {proj.benefits}
+              </p>
+            </div>
+
+            {/* Measured results, only where they exist */}
+            {proj.results && proj.results.length > 0 && (
+              <div className="rounded-2xl border border-line/80 bg-sand/80 p-6">
+                <span className="mono-label mb-4 block">Measured results</span>
+                <div className="grid grid-cols-3 gap-4 text-center">
+                  {proj.results.map((r) => (
+                    <div
+                      key={r.label}
+                      className="rounded-xl border border-line/60 bg-paper p-4 shadow-xs"
+                    >
+                      <div
+                        className="text-2xl font-extrabold"
+                        style={{ color: proj.accent }}
+                      >
+                        {r.value}
+                      </div>
+                      <div className="mt-1 text-xs font-bold text-muted">
+                        {r.label}
+                      </div>
                     </div>
-                    <div className="text-xs font-bold text-muted mt-1">{r.label}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Problem & Solution */}
-            <div className="grid gap-8 sm:grid-cols-2">
-              <div className="rounded-2xl border border-red-200 bg-red-50/40 p-6 space-y-3">
-                <span className="pill bg-red-100 text-red-700 font-bold border-red-200">THE CHALLENGE</span>
-                <h4 className="text-base font-bold text-ink">Problem Statement</h4>
-                <p className="text-xs leading-relaxed text-muted font-medium">{proj.problem}</p>
-              </div>
-
-              <div className="rounded-2xl border border-emerald-200 bg-emerald-50/40 p-6 space-y-3">
-                <span className="pill bg-emerald-100 text-emerald-700 font-bold border-emerald-200">THE SOLUTION</span>
-                <h4 className="text-base font-bold text-ink">Engineering Solution</h4>
-                <p className="text-xs leading-relaxed text-muted font-medium">{proj.solution}</p>
-              </div>
-            </div>
-
-            {/* System Architecture */}
-            <div className="space-y-4 border-t border-line/60 pt-8">
-              <span className="eyebrow">SYSTEM ARCHITECTURE</span>
-              <h3 className="text-xl font-bold text-ink">Architectural Blueprint & Cloud Design</h3>
-              <p className="text-sm leading-relaxed text-muted">{proj.architecture}</p>
-
-              <div className="rounded-2xl border border-line bg-ink p-6 text-white space-y-3 font-mono text-xs shadow-xl">
-                <div className="flex items-center justify-between text-white/50 border-b border-white/10 pb-2">
-                  <span>DEPLOYMENT MODEL</span>
-                  <span className="text-emerald-400">● 99.99% PRODUCTION SLA</span>
-                </div>
-                <div className="text-white/90">
-                  Client Architecture: {proj.technologies.join(" · ")}
+                  ))}
                 </div>
               </div>
-            </div>
+            )}
 
-            {/* Key Features Delivered */}
+            {/* Features */}
             <div className="space-y-4 border-t border-line/60 pt-8">
-              <h3 className="text-lg font-bold text-ink">Key Deliverables & Features</h3>
+              <span className="eyebrow">Core features</span>
+              <h3 className="text-xl font-bold text-ink">What was built</h3>
               <div className="grid gap-3 sm:grid-cols-2">
                 {proj.features.map((feat) => (
-                  <div key={feat} className="flex items-center gap-2.5 rounded-xl border border-line/80 bg-paper p-3.5 shadow-xs">
-                    <Check width={14} height={14} className="text-brand shrink-0" />
+                  <div
+                    key={feat}
+                    className="flex items-center gap-2.5 rounded-xl border border-line/80 bg-paper p-3.5 shadow-xs"
+                  >
+                    <Check width={14} height={14} className="shrink-0 text-brand" />
                     <span className="text-xs font-semibold text-ink">{feat}</span>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* Screenshots gallery */}
-            <div className="space-y-4 border-t border-line/60 pt-8">
-              <span className="eyebrow">PRODUCT SCREENS</span>
-              <h3 className="text-xl font-bold text-ink">Inside the platform</h3>
-              <div className="grid gap-5 sm:grid-cols-2">
-                {proj.screenshots.map((shot) => (
-                  <figure
-                    key={shot.label}
-                    className="group overflow-hidden rounded-2xl border border-line/80 bg-paper shadow-xs transition-shadow duration-300 hover:shadow-lg"
-                  >
-                    <Media
-                      src={shot.image}
-                      alt={shot.caption}
-                      label={shot.label}
-                      accent={proj.accent}
-                      sizes="(min-width: 640px) 50vw, 100vw"
-                    />
-                    <figcaption className="border-t border-line/60 p-4 text-xs leading-relaxed text-muted">
-                      {shot.caption}
-                    </figcaption>
-                  </figure>
-                ))}
-              </div>
-            </div>
-
-            {/* Engineering challenges */}
-            <div className="space-y-4 border-t border-line/60 pt-8">
-              <span className="eyebrow">CHALLENGES</span>
-              <h3 className="text-xl font-bold text-ink">
-                What made this build hard — and how we solved it
-              </h3>
-              <ol className="space-y-3">
-                {proj.challenges.map((ch, i) => (
-                  <li
-                    key={ch.title}
-                    className="flex gap-4 rounded-2xl border border-line/80 bg-paper p-5 shadow-xs"
-                  >
-                    <span
-                      className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-bold text-white"
-                      style={{ backgroundColor: proj.accent }}
+            {/* Screens, only where they exist */}
+            {proj.screenshots && proj.screenshots.length > 0 && (
+              <div className="space-y-4 border-t border-line/60 pt-8">
+                <span className="eyebrow">Product screens</span>
+                <h3 className="text-xl font-bold text-ink">Inside the platform</h3>
+                <div className="grid gap-5 sm:grid-cols-2">
+                  {proj.screenshots.map((shot) => (
+                    <figure
+                      key={shot.label}
+                      className="group overflow-hidden rounded-2xl border border-line/80 bg-paper shadow-xs transition-shadow duration-300 hover:shadow-lg"
                     >
-                      {i + 1}
-                    </span>
-                    <div>
-                      <h4 className="text-sm font-bold text-ink">{ch.title}</h4>
-                      <p className="mt-1.5 text-xs leading-relaxed text-muted">
-                        {ch.detail}
-                      </p>
-                    </div>
-                  </li>
-                ))}
-              </ol>
-            </div>
-
-            {/* Client Feedback Quote */}
-            <div className="rounded-2xl border border-line/80 bg-brand-soft/30 p-8 space-y-4">
-              <span className="pill bg-brand-soft text-brand font-bold border-brand/20">CLIENT FEEDBACK</span>
-              <blockquote className="text-sm sm:text-base font-medium leading-relaxed text-ink italic">
-                &ldquo;{proj.clientFeedback.quote}&rdquo;
-              </blockquote>
-              <div className="text-xs font-bold text-ink">
-                {proj.clientFeedback.author} — <span className="text-muted font-normal">{proj.clientFeedback.role}</span>
+                      <Media
+                        src={shot.image}
+                        alt={shot.caption}
+                        label={shot.label}
+                        accent={proj.accent}
+                        sizes="(min-width: 640px) 50vw, 100vw"
+                      />
+                      <figcaption className="border-t border-line/60 p-4 text-xs leading-relaxed text-muted">
+                        {shot.caption}
+                      </figcaption>
+                    </figure>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
+
+            {/* Attributed quote, only where one has been collected */}
+            {proj.clientFeedback && (
+              <div className="space-y-4 rounded-2xl border border-line/80 bg-brand-soft/30 p-8">
+                <span className="pill border-brand/20 bg-brand-soft font-bold text-brand">
+                  Client feedback
+                </span>
+                <blockquote className="text-sm font-medium italic leading-relaxed text-ink sm:text-base">
+                  &ldquo;{proj.clientFeedback.quote}&rdquo;
+                </blockquote>
+                <div className="text-xs font-bold text-ink">
+                  {proj.clientFeedback.author} —{" "}
+                  <span className="font-normal text-muted">
+                    {proj.clientFeedback.role}
+                  </span>
+                </div>
+              </div>
+            )}
           </div>
 
-          {/* Sticky Consultation Sidebar */}
+          {/* Specification sidebar */}
           <div className="lg:col-span-1">
-            <div className="sticky top-28 rounded-2xl border border-line/80 bg-sand/80 p-7 shadow-lg space-y-6">
-              <h4 className="text-lg font-bold text-ink">Project Specs</h4>
+            <div className="sticky top-28 space-y-6 rounded-2xl border border-line/80 bg-sand/80 p-7 shadow-lg">
+              <h4 className="text-lg font-bold text-ink">Project details</h4>
 
-              <div className="space-y-3 text-xs border-y border-line/60 py-4">
-                <div className="flex justify-between">
-                  <span className="text-muted font-medium">Industry:</span>
-                  <span className="font-bold text-ink">{proj.industry}</span>
+              <dl className="space-y-3 border-y border-line/60 py-4 text-xs">
+                <div className="flex justify-between gap-4">
+                  <dt className="font-medium text-muted">Type</dt>
+                  <dd className="text-right font-bold text-ink">
+                    {proj.projectType}
+                  </dd>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-muted font-medium">Build Duration:</span>
-                  <span className="font-bold text-ink">{proj.duration}</span>
+                <div className="flex justify-between gap-4">
+                  <dt className="font-medium text-muted">Industry</dt>
+                  <dd className="text-right font-bold text-ink">
+                    {proj.industry}
+                  </dd>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-muted font-medium">Core Stack:</span>
-                  <span className="font-bold text-brand">{proj.technologies.slice(0, 3).join(", ")}</span>
+                {proj.client && (
+                  <div className="flex justify-between gap-4">
+                    <dt className="font-medium text-muted">Client</dt>
+                    <dd className="text-right font-bold text-ink">
+                      {proj.client}
+                    </dd>
+                  </div>
+                )}
+                <div className="flex justify-between gap-4">
+                  <dt className="font-medium text-muted">Status</dt>
+                  <dd className="text-right font-bold text-ink">
+                    {proj.status}
+                  </dd>
                 </div>
-              </div>
+                {proj.technologies && proj.technologies.length > 0 && (
+                  <div className="flex justify-between gap-4">
+                    <dt className="font-medium text-muted">Stack</dt>
+                    <dd className="text-right font-bold text-brand">
+                      {proj.technologies.slice(0, 3).join(", ")}
+                    </dd>
+                  </div>
+                )}
+              </dl>
 
-              <div className="space-y-3">
-                <Button variant="primary" size="md" href="/contact" className="w-full">
-                  Book Architecture Call
-                  <ArrowRight width={16} height={16} />
-                </Button>
-              </div>
-
-              <div className="text-[0.7rem] text-muted space-y-1 pt-2">
-                <div>● Senior Engineer-Led Delivery</div>
-                <div>● Transparent Timelines & Milestones</div>
-              </div>
+              <Button variant="primary" size="md" href="/contact" className="w-full">
+                Talk to the team
+                <ArrowRight width={16} height={16} />
+              </Button>
             </div>
           </div>
         </div>
@@ -269,12 +275,8 @@ export default async function PortfolioDetailPage({ params }: Props) {
                   <p className="mt-2 flex-1 text-sm leading-relaxed text-muted">
                     {r.summary}
                   </p>
-                  <div className="mt-6 flex flex-wrap gap-1.5 border-t border-line pt-5">
-                    {r.technologies.slice(0, 3).map((t) => (
-                      <span key={t} className="pill text-[0.68rem]">
-                        {t}
-                      </span>
-                    ))}
+                  <div className="mt-6 border-t border-line pt-5">
+                    <span className="mono-label">{r.projectType}</span>
                   </div>
                 </CardLink>
               </RevealItem>

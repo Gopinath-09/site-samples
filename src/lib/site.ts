@@ -3,19 +3,41 @@
  * Single source of truth for navigation, company facts and shared content.
  */
 
+/**
+ * Every field here is taken from the company portfolio document. Nothing in
+ * this object is a placeholder, and nothing should be added to it that has not
+ * been confirmed the same way — these values are printed on contact pages and
+ * in structured data, where a wrong one sends real enquiries nowhere.
+ */
 export const company = {
   name: "COBRR",
   legalName: "COBRR TECH LABS PRIVATE LIMITED",
-  tagline: "Enterprise software & modern AI solutions, engineered for growth.",
+  tagline: "Innovate. Build. Evolve.",
   description:
-    "COBRR TECH LABS is an international technology startup building software development, AI solutions, web applications, mobile apps, SaaS products, cloud solutions, and automation.",
+    "COBRR Tech Labs is an innovation-driven software engineering company building enterprise software, cloud solutions, AI-powered platforms and automation for education, healthcare, tourism, logistics and enterprise operations.",
   email: "cobrr.tech@gmail.com",
-  phone: "+91 98765 43210",
-  whatsapp: "+91 98765 43210",
-  location: "Bangalore, India",
-  address: "Tech Hub Tower, Indiranagar, Bangalore, Karnataka, India",
+  phone: "+91 76393 55177",
+  whatsapp: "+91 76393 55177",
+  location: "Coimbatore, India",
+  address:
+    "No. 41, Sri Illam, Jayalakshmi Nagar, near Lakshmi Nagar Arch, Thondamuthur Road, Coimbatore 641046, Tamil Nadu, India",
   foundedYear: 2026,
 } as const;
+
+/**
+ * Stated vision and mission, quoted from the portfolio document rather than
+ * paraphrased, so the site and the company's own collateral cannot drift apart.
+ */
+export const vision =
+  "To become a trusted technology partner delivering intelligent digital solutions that transform businesses, institutions, and communities through innovation, AI, and engineering excellence.";
+
+export const mission: string[] = [
+  "Build scalable software products and enterprise platforms.",
+  "Deliver AI-powered business solutions.",
+  "Drive digital transformation and automation.",
+  "Enable organizations through cloud technologies.",
+  "Create long-term technology partnerships.",
+];
 
 export type NavItem = {
   label: string;
@@ -74,14 +96,15 @@ export const megaMenu: MenuGroup[] = [
     ],
   },
   {
-    title: "Products",
-    href: "/products",
-    blurb: "SaaS platforms we build and operate.",
+    title: "Platforms",
+    href: "/portfolio",
+    blurb: "Systems we have built and delivered.",
     links: [
-      { label: "All Products", href: "/products", desc: "SaaS platforms we build" },
-      { label: "Workship", href: "/products/workship", desc: "Operations platform" },
-      { label: "Satisfy", href: "/products/satisfy", desc: "CX & feedback intelligence" },
-      { label: "Custom Stack Studio", href: "/products/upcoming-saas", desc: "In the studio" },
+      { label: "All work", href: "/portfolio", desc: "Every platform we have shipped" },
+      { label: "Product roadmap", href: "/products", desc: "What we are building next" },
+      { label: "Orthomentors", href: "/portfolio/orthomentors", desc: "AI learning platform" },
+      { label: "OnPremBox", href: "/portfolio/onprembox", desc: "Company management platform" },
+      { label: "YHAI Tamil Nadu", href: "/portfolio/yhai-tamil-nadu", desc: "Tourism & membership" },
     ],
   },
   {

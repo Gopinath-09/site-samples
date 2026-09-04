@@ -8,7 +8,12 @@ import SectionHeading from "@/components/ui/SectionHeading";
 import Reveal, { RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { company } from "@/lib/site";
 import Icon from "@/components/ui/Icon";
-import { teamMembers, companyTimeline, cultureHighlights } from "@/lib/content";
+import {
+  teamMembers,
+  companyTimeline,
+  cultureHighlights,
+  verifiedProjects,
+} from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "About Us — COBRR Tech Labs",
@@ -67,16 +72,22 @@ export default function AboutPage() {
                   <div className="text-xs text-white/50">Founded</div>
                 </div>
                 <div>
-                  <div className="text-lg font-bold text-white">Bangalore, IN</div>
+                  <div className="text-lg font-bold text-white">
+                    {company.location}
+                  </div>
                   <div className="text-xs text-white/50">Headquarters</div>
                 </div>
                 <div>
-                  <div className="text-lg font-bold text-white">120+</div>
-                  <div className="text-xs text-white/50">Projects Delivered</div>
+                  <div className="text-lg font-bold text-white">
+                    {verifiedProjects.length}
+                  </div>
+                  <div className="text-xs text-white/50">Platforms delivered</div>
                 </div>
                 <div>
-                  <div className="text-lg font-bold text-white">99.99%</div>
-                  <div className="text-xs text-white/50">Production SLA</div>
+                  <div className="text-lg font-bold text-white">
+                    {teamMembers.length}
+                  </div>
+                  <div className="text-xs text-white/50">Founding officers</div>
                 </div>
               </div>
             </div>
@@ -144,7 +155,7 @@ export default function AboutPage() {
       <section className="section bg-paper border-b border-line/60">
         <div className="container-page space-y-12">
           <SectionHeading eyebrow="LEADERSHIP" title="Senior Engineering & Leadership Team." />
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {teamMembers.map((member) => (
               <div key={member.name} className="card p-6 space-y-3 border-line/80 hover:shadow-md">
                 <div className="flex h-12 w-12 items-center justify-center rounded-full bg-ink text-white font-bold text-sm">

@@ -430,6 +430,21 @@ body {
 
 /* Respect reduced motion preferences */
 @media (prefers-reduced-motion: reduce) {
+  /*
+   * The motion primitives write their starting transform inline, and a reveal
+   * that never runs strands its content: the headline lines sit fully outside
+   * their clipping box until animated, so the heading is simply not there.
+   * Relying on the component to detect reduced motion is not enough, because
+   * the server render happens before that is known. These rules beat the
+   * inline styles, so content is visible whatever the animation does or does
+   * not do — including if the JavaScript never arrives.
+   */
+  [data-reveal] {
+    transform: none !important;
+    opacity: 1 !important;
+    clip-path: none !important;
+  }
+
   .marquee-track {
     animation: none;
   }

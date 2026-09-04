@@ -998,58 +998,70 @@ export interface ProcessStep {
   number: number;
   title: string;
   description: string;
-  deliverables: string[];
 }
 
+/**
+ * The development methodology recorded in the company portfolio document, in
+ * its stated order. The descriptions say what happens at each stage; none of
+ * them claims a duration, a deliverable count or an outcome, because the
+ * document records none.
+ */
 export const processSteps: ProcessStep[] = [
   {
     step: "01",
     number: 1,
-    title: "Discovery",
-    description: "We map business goals, technical constraints, success metrics, and security requirements.",
-    deliverables: ["Project Vision Spec", "Technical Scope Document", "Resource & Timeline Plan"],
+    title: "Requirement analysis",
+    description:
+      "Establishing what the system has to do, who it is for, and which constraints are real rather than assumed.",
   },
   {
     step: "02",
     number: 2,
-    title: "Planning",
-    description: "Architectural blueprints, database schema design, and API contract specifications are defined.",
-    deliverables: ["System Architecture Diagram", "Database ERD Model", "API Endpoint Specs"],
+    title: "Business consultation",
+    description:
+      "Testing the requirement against how the organisation actually operates, and agreeing what is in scope.",
   },
   {
     step: "03",
     number: 3,
-    title: "UI/UX Design",
-    description: "User flows, wireframes, and interactive Figma prototypes are crafted and user-tested.",
-    deliverables: ["Interactive Figma Prototypes", "Component Design System", "User Flow Maps"],
+    title: "Architecture design",
+    description:
+      "Deciding the structure — data model, services, integrations — before any of it is expensive to change.",
   },
   {
     step: "04",
     number: 4,
-    title: "Development",
-    description: "Agile 2-week sprints with continuous integration, senior code reviews, and working software demos.",
-    deliverables: ["Sprint Code Releases", "Automated Test Suites", "Bi-weekly Sprint Demos"],
+    title: "UI/UX design",
+    description:
+      "Structuring the interface around the task, then designing the screens and their states.",
   },
   {
     step: "05",
     number: 5,
-    title: "Testing",
-    description: "Rigorous QA testing including unit tests, end-to-end integration, performance, and security audits.",
-    deliverables: ["QA Test Reports", "Security Vulnerability Scan", "Performance Bottleneck Audit"],
+    title: "Agile development",
+    description:
+      "Building in increments, with working software to look at rather than status to take on trust.",
   },
   {
     step: "06",
     number: 6,
-    title: "Deployment",
-    description: "Zero-downtime production launch with automated cloud scripts, DNS cutover, and monitoring.",
-    deliverables: ["Production Infrastructure", "DNS Cutover Runbook", "Monitoring Dashboards"],
+    title: "Quality assurance",
+    description:
+      "Testing against the requirement and the edge cases, on the environments the system will actually run in.",
   },
   {
     step: "07",
     number: 7,
-    title: "Maintenance",
-    description: "Continuous 24/7 SLA monitoring, security patching, feature enhancements, and database tuning.",
-    deliverables: ["SLA Response Support", "Routine Dependency Patches", "Monthly Performance Audit"],
+    title: "Deployment",
+    description:
+      "Releasing to production with the pipeline, monitoring and rollback path already in place.",
+  },
+  {
+    step: "08",
+    number: 8,
+    title: "Support and enhancement",
+    description:
+      "Operating the system after launch and continuing to develop it, which is where most of its life is spent.",
   },
 ];
 

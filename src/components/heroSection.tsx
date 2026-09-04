@@ -1,5 +1,6 @@
 import Button from "@/components/ui/Button";
 import HeroScene from "@/components/graphics/HeroScene";
+import Reveal, { RevealLines } from "@/components/ui/Reveal";
 import { ArrowRight } from "@/components/ui/icons";
 import { company } from "@/lib/site";
 import { services, verifiedProjects } from "@/lib/content";
@@ -59,18 +60,22 @@ export default function HeroSection() {
 
           <div className="relative">
             <h1 className="text-center text-[clamp(2.15rem,4.6vw,4rem)] font-medium leading-[1.08] tracking-[-0.02em] text-white [text-shadow:0_0_60px_rgba(140,200,255,0.28)]">
-              Software that
-              <br />
-              outlives its first release.
+              <RevealLines
+                lines={["Software that", "outlives its first release."]}
+              />
             </h1>
 
-            <p className="mx-auto mt-7 max-w-md text-center text-sm leading-relaxed text-white/55">
-              We are an engineering studio in Coimbatore building enterprise
-              platforms, cloud systems and AI for education, healthcare, tourism
-              and logistics.
-            </p>
+            {/* Delays are keyed to the headline: the supporting line arrives as
+                the second line of type settles, and the actions just after. */}
+            <Reveal delay={0.45}>
+              <p className="mx-auto mt-7 max-w-md text-center text-sm leading-relaxed text-white/55">
+                We are an engineering studio in Coimbatore building enterprise
+                platforms, cloud systems and AI for education, healthcare,
+                tourism and logistics.
+              </p>
+            </Reveal>
 
-            <div className="mt-10 flex flex-wrap justify-center gap-3">
+            <Reveal delay={0.6} className="mt-10 flex flex-wrap justify-center gap-3">
               <Button variant="ghost-light" size="lg" href="/contact">
                 Start a project
                 <ArrowRight width={18} height={18} />
@@ -78,7 +83,7 @@ export default function HeroSection() {
               <Button variant="ghost-light" size="lg" href="/portfolio">
                 See our work
               </Button>
-            </div>
+            </Reveal>
           </div>
         </div>
       </div>

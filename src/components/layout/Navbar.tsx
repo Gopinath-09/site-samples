@@ -63,6 +63,15 @@ export default function Navbar() {
     return () => window.removeEventListener("keydown", onKey);
   }, [megaOpen]);
 
+  /**
+   * The header is transparent until it scrolls, so at the top of the home page
+   * it sits directly on the hero's ink band and has to invert. This is coupled
+   * to the hero's background: if `HeroSection` ever stops being dark, the
+   * controls here go white on white and the menu icon disappears. Change both
+   * together.
+   */
+  const overDarkHero = pathname === "/" && !scrolled && !megaOpen;
+
   const isActive = (href: string, exact = false) =>
     href === "/"
       ? pathname === "/"
@@ -121,7 +130,7 @@ export default function Navbar() {
         {/* Action CTA — navigation itself lives in the brand mega menu */}
         <div className="flex items-center gap-3">
           <Button
-            variant="dark"
+            variant={overDarkHero ? "light" : "dark"}
             size="sm"
             href="/contact"
             className="hidden sm:inline-flex"
@@ -134,7 +143,12 @@ export default function Navbar() {
           <button
             onClick={() => setMobileOpen(true)}
             aria-label="Open navigation menu"
-            className="flex h-10 w-10 items-center justify-center rounded-xl border border-line bg-sand text-ink transition-colors lg:hidden"
+            className={cn(
+              "flex h-10 w-10 items-center justify-center rounded-xl border transition-colors lg:hidden",
+              overDarkHero
+                ? "border-white/20 bg-white/10 text-white"
+                : "border-line bg-sand text-ink",
+            )}
           >
             <MenuIcon width={20} height={20} />
           </button>

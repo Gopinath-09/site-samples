@@ -34,6 +34,10 @@
   --color-brand-strong: #1b3ec2;
   --color-brand-soft: #eaefff;
 
+  /* Lifted accent for use on ink. The cobalt above only reaches about 2.5:1
+     against the dark surface, so it is not legible there. */
+  --color-brand-light: #5b83ff;
+
   /* Secondary accent — warm copper, used sparingly for emphasis */
   --color-copper: #c1863c;
 
@@ -603,6 +607,10 @@ body {
   .band-dark .mono-label,
   .band-dark .marker-title {
     color: var(--color-muted-dark);
+  }
+
+  .band-dark .marker-index {
+    color: var(--color-brand-light);
   }
 }
 

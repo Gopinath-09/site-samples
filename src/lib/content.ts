@@ -36,177 +36,304 @@ export interface Service {
   processSteps: string[];
   /** Questions prospects actually ask before commissioning this service. */
   faqs: { question: string; answer: string }[];
+  /**
+   * Which cell this service takes in the home page bento. `wide` spans four
+   * columns of six and `full` spans four with a call to action beside it, so the
+   * grid stays balanced without the layout hard-coding an order.
+   */
+  span?: "wide" | "full";
+  /** Selects the drawn visual in `ServiceVisual`. */
+  visual:
+    | "ai"
+    | "stack"
+    | "cloud"
+    | "mobile"
+    | "design"
+    | "transform";
 }
 
+/**
+ * The six disciplines the company portfolio document lists. The previous ten
+ * were invented, and several described work nobody here had been asked to do.
+ * Every technology named below appears in the documented company stack.
+ */
 export const services: Service[] = [
   {
-    slug: "ai-solutions",
-    title: "AI Solutions",
+    slug: "artificial-intelligence",
+    title: "Artificial Intelligence",
     icon: "sparkle",
-    summary: "Applied AI grounded in your operational data — LLMs, RAG, document intelligence, and autonomous agents.",
-    description: "We build production-grade Artificial Intelligence systems that integrate directly into business workflows, eliminating manual overhead and empowering smarter decision-making.",
-    points: ["LLMs & RAG Systems", "Predictive Analytics", "Workflow Automation"],
-    benefits: ["Boost operational efficiency by up to 60%", "Instant access to proprietary knowledge bases", "Automated document and data extraction"],
-    features: ["Custom LLM fine-tuning", "Vector Database RAG pipelines", "Multi-agent task orchestration", "SOC2/HIPAA compliant AI guardrails"],
-    technologies: ["OpenAI", "Gemini", "Claude", "LangChain", "Pinecone", "Python"],
-    processSteps: ["Use Case Identification", "Data Preparation", "Model Selection & RAG Setup", "Production Integration & Monitoring"],
+    visual: "ai",
+    summary: "Retrieval, agents and assistants that do real work on your data.",
+    description:
+      "We build AI that is wired into a business rather than bolted onto it: retrieval over your own documents, agents that carry out multi-step tasks, and assistants that answer from systems your team already trusts.",
+    points: [
+      "Retrieval-augmented generation over your own corpus",
+      "Agentic workflows that complete multi-step tasks",
+      "Deep research agents for long-running investigation",
+      "Internal assistants grounded in company systems",
+    ],
+    benefits: [
+      "Answers traceable to a source rather than invented",
+      "Manual research and triage collapsed into minutes",
+      "Assistants that improve as your document base grows",
+    ],
+    features: [
+      "RAG & Agentic RAG",
+      "Deep Research Agent",
+      "Internal Software AI Assistant",
+      "Conversational AI",
+      "Predictive Analytics",
+      "Document Intelligence",
+    ],
+    technologies: ["Python", "RAG", "Agentic RAG", "Vector Databases", "Node.js"],
+    processSteps: [
+      "Identify the decisions the AI is meant to support",
+      "Prepare and index the source material",
+      "Build retrieval and evaluate answer quality",
+      "Add agentic steps only where they earn their complexity",
+      "Ship behind guardrails and monitor in production",
+    ],
     faqs: [
-      { question: "Do you train custom models or use existing ones?", answer: "For the large majority of business problems, retrieval over your own data with a strong foundation model outperforms a custom-trained model at a fraction of the cost. We recommend fine-tuning only when we can show it beats that baseline on your evaluation set." },
-      { question: "How do you stop the AI from making things up?", answer: "Answers are grounded in retrieved source documents, every response carries citations we validate before display, and the system is instructed to say when the context does not contain an answer. We also ship an evaluation harness so accuracy is measured, not assumed." },
-      { question: "Will our data be used to train someone else's model?", answer: "No. We use enterprise API tiers with training disabled, and for sensitive workloads we can deploy models inside your own cloud tenancy so data never leaves your infrastructure." },
+      {
+        question: "Will it make things up?",
+        answer:
+          "Retrieval grounds every answer in your own material, and responses cite what they drew on, so an answer can be checked rather than trusted blindly.",
+      },
+      {
+        question: "Does our data leave our environment?",
+        answer:
+          "That is an architectural decision we make with you up front. Deployments can be scoped so documents and vectors stay inside infrastructure you control.",
+      },
     ],
   },
   {
-    slug: "web-applications",
-    title: "Web Development",
-    icon: "code",
-    summary: "Fast, accessible, and scalable web platforms — customer portals, dashboards, and internal web applications.",
-    description: "We engineer lightning-fast web applications built on Next.js, React, and TypeScript that achieve top Core Web Vitals and scale seamlessly.",
-    points: ["Core Web Vitals Optimised", "Design Systems", "WCAG Accessibility"],
-    benefits: ["Sub-second page load times", "High conversion rates & SEO visibility", "Maintainable, clean component architecture"],
-    features: ["Server-Side Rendering & ISR", "Responsive Design", "Micro-frontend Architecture", "PWA Support"],
-    technologies: ["React", "Next.js", "TypeScript", "Tailwind CSS", "GraphQL"],
-    processSteps: ["UI/UX Prototyping", "Frontend Architecture", "API Integration", "Performance Optimisation & Launch"],
+    slug: "enterprise-software",
+    title: "Enterprise Software",
+    icon: "layers",
+    visual: "stack",
+    span: "wide",
+    summary: "ERP, CRM and custom platforms that hold up under real operations.",
+    description:
+      "The systems a business actually runs on: admissions and fees, patients and prescriptions, members and bookings, stock and purchase orders. We build them to survive years of daily use, not a launch demo.",
+    points: [
+      "Custom platforms shaped around how the work is actually done",
+      "ERP and CRM systems with role-based access throughout",
+      "API-first services that other systems can build on",
+      "Reporting that answers the questions operators ask",
+    ],
+    benefits: [
+      "One system of record instead of scattered spreadsheets",
+      "Manual re-keying between departments removed",
+      "Architecture that survives the next five years of change",
+    ],
+    features: [
+      "Custom Software",
+      "ERP & CRM Systems",
+      "SaaS Platforms",
+      "API Development",
+      "Role-Based Access",
+      "Dashboard Analytics",
+    ],
+    technologies: [
+      "Next.js",
+      "React",
+      "Node.js",
+      "Java",
+      ".NET",
+      "Python",
+      "PostgreSQL",
+      "MySQL",
+      "MongoDB",
+    ],
+    processSteps: [
+      "Map the operation before proposing any software",
+      "Design the data model the business actually has",
+      "Build the core workflow end to end first",
+      "Layer reporting and administration on top",
+      "Hand over with documentation people can follow",
+    ],
     faqs: [
-      { question: "How long does a typical web application take?", answer: "A focused MVP is usually 8–12 weeks; a full platform with integrations and multiple user roles typically runs 4–6 months. We give you a milestone plan after discovery rather than a number on day one." },
-      { question: "Can you work with our existing backend or design system?", answer: "Yes. We regularly build frontends against existing APIs and extend established design systems. Where the existing contract is the constraint, we will say so and propose the smallest change that unblocks the work." },
-      { question: "How do you handle performance and SEO?", answer: "Server rendering, image and font optimisation, and a Core Web Vitals budget are part of the build, not a later phase. We measure against real field data before launch and after." },
+      {
+        question: "Can it replace a system we already run?",
+        answer:
+          "Usually, and rarely all at once. We tend to run the new system alongside the old one for the workflows it has taken over, then migrate the rest once it has proven itself.",
+      },
+    ],
+  },
+  {
+    slug: "cloud-solutions",
+    title: "Cloud Solutions",
+    icon: "cloud",
+    visual: "cloud",
+    summary: "Infrastructure, containers and delivery pipelines that stay boring.",
+    description:
+      "Cloud work whose whole purpose is to stop being interesting: reproducible environments, deployments that are routine rather than an event, and infrastructure someone other than the person who built it can operate.",
+    points: [
+      "Containerised services with reproducible builds",
+      "Continuous integration and delivery from day one",
+      "Environment parity between local, staging and production",
+      "Migration from ageing or hand-managed servers",
+    ],
+    benefits: [
+      "Releases become routine rather than an event",
+      "Capacity that follows demand instead of guesswork",
+      "Infrastructure described in code, not in someone's memory",
+    ],
+    features: [
+      "Cloud Migration",
+      "CI/CD Pipelines",
+      "Container Orchestration",
+      "Environment Management",
+      "Monitoring & Alerting",
+      "One-Click Scaling",
+    ],
+    technologies: ["AWS", "VPS", "Docker", "Kubernetes", "Jenkins", "GitHub", "GitLab"],
+    processSteps: [
+      "Audit what is running and what it actually needs",
+      "Containerise and make builds reproducible",
+      "Automate the path from commit to production",
+      "Add monitoring before it is needed, not after",
+      "Document the runbook and hand it over",
+    ],
+    faqs: [
+      {
+        question: "Do we have to be on a hyperscaler?",
+        answer:
+          "No. We run workloads on AWS and on plain VPS infrastructure, and the right answer depends on your scale, budget and compliance position rather than on fashion.",
+      },
     ],
   },
   {
     slug: "mobile-applications",
-    title: "Mobile App Development",
+    title: "Mobile Applications",
     icon: "phone",
-    summary: "Native-quality iOS and Android applications built for speed, offline reliability, and delightful UX.",
-    description: "We craft cross-platform and native mobile applications that deliver smooth 60fps performance, push notifications, and offline-first data sync.",
-    points: ["Cross-Platform", "Offline-First", "App Store Delivery"],
-    benefits: ["Single codebase for iOS & Android", "Offline functionality for remote users", "Biometric authentication"],
-    features: ["React Native & Flutter", "Native Device API Integration", "Push Notifications", "App Store & Play Store CI/CD"],
-    technologies: ["React Native", "TypeScript", "Node.js", "Firebase", "Redux"],
-    processSteps: ["Mobile UX Wireframing", "Cross-Platform Build", "Device Testing", "Store Submission"],
-    faqs: [
-      { question: "Native or cross-platform — which should we choose?", answer: "React Native covers the large majority of business apps with one codebase and near-native feel. We recommend native when the product depends on heavy graphics, deep OS integration, or specialised hardware." },
-      { question: "Do you handle App Store and Play Store submission?", answer: "Yes, including store listings, review guideline compliance, signing certificates, and the first release. We hand the accounts and credentials to you — they remain yours." },
-      { question: "What about updates after launch?", answer: "We set up over-the-air updates for JavaScript-layer changes so most fixes ship without a store review cycle, and manage staged native releases for the rest." },
+    visual: "mobile",
+    summary: "Apps for the people doing the work, not just the people reporting on it.",
+    description:
+      "Mobile software for the field: drivers, parents, staff and members. The screens are built around what someone needs while standing up, holding something else, on a patchy connection.",
+    points: [
+      "Apps designed around a single task done quickly",
+      "Offline tolerance where connectivity cannot be assumed",
+      "Push notification and alerting flows",
+      "Shared backends with the web platform, not a separate silo",
     ],
-  },
-  {
-    slug: "saas-development",
-    title: "SaaS Development",
-    icon: "layers",
-    summary: "Multi-tenant B2B SaaS platforms with subscription billing, tenant isolation, and analytics built-in.",
-    description: "We build scalable SaaS products from zero to production — handling multi-tenant databases, usage metering, authentication, and zero-downtime releases.",
-    points: ["Multi-Tenancy Architecture", "Usage & Subscription Billing", "Zero-Downtime Releases"],
-    benefits: ["Rapid time-to-market for SaaS MVPs", "Predictable multi-tenant isolation", "Automated billing via Stripe/Paddle"],
-    features: ["Granular RBAC permissions", "Stripe Subscription Billing", "Custom Domain Routing", "Audit Log Trail"],
-    technologies: ["Next.js", "Node.js", "PostgreSQL", "Redis", "Stripe API"],
-    processSteps: ["Tenant Architecture", "MVP Feature Build", "Billing Integration", "Beta & Public Launch"],
-    faqs: [
-      { question: "How do you isolate data between tenants?", answer: "We default to row-level security with a tenant identifier enforced at the database layer, so isolation cannot be bypassed by an application bug. Regulated customers who require separate schemas or databases are supported by the same architecture." },
-      { question: "Can you integrate billing and subscription management?", answer: "Yes — Stripe or Paddle, including plans, usage-based metering, trials, proration and dunning. Billing state is reconciled against your own database rather than trusted from webhooks alone." },
-      { question: "Who owns the product once it launches?", answer: "You do — source code, infrastructure definitions and accounts, in full. We can continue as your engineering team or hand over to your own hires with documentation and a transition period." },
+    benefits: [
+      "Information reaches people where the work happens",
+      "Fewer phone calls to the office for routine updates",
+      "One backend serving both web and mobile",
     ],
-  },
-  {
-    slug: "cloud-engineering",
-    title: "Cloud Solutions",
-    icon: "cloud",
-    summary: "Resilient, cost-optimised cloud infrastructure across AWS, Azure, and Google Cloud Platform.",
-    description: "We architect Infrastructure as Code (IaC), containerized microservices, and automated failover systems that keep your platforms operating 24/7.",
-    points: ["Infrastructure as Code", "Auto-Scaling & Failover", "Cost Optimisation"],
-    benefits: ["99.99% uptime guarantees", "Up to 40% cloud expenditure reduction", "Automated disaster recovery"],
-    features: ["Terraform & CloudFormation", "Kubernetes (EKS/AKS/GKE)", "Serverless Architectures", "Cloud Security Audit"],
-    technologies: ["AWS", "Azure", "Google Cloud", "Terraform", "Kubernetes", "Docker"],
-    processSteps: ["Cloud Audit & Strategy", "IaC Scripting", "Migration & Testing", "Continuous Cloud Monitoring"],
+    features: [
+      "Android & iOS Delivery",
+      "Cross-Platform Builds",
+      "Push Notifications",
+      "Offline-Tolerant Flows",
+      "Location & Tracking",
+      "Role-Based Views",
+    ],
+    technologies: ["React", "Node.js", "Python", "PostgreSQL", "MongoDB"],
+    processSteps: [
+      "Establish the one job the app must do well",
+      "Prototype the primary flow before building",
+      "Build against the real backend early",
+      "Test on the devices and networks users actually have",
+      "Ship, then iterate on observed behaviour",
+    ],
     faqs: [
-      { question: "Can you migrate us without downtime?", answer: "In most cases yes, using parallel running and staged traffic cutover. Where a brief window is genuinely unavoidable we tell you upfront and schedule it around your business hours." },
-      { question: "Will this reduce our cloud bill?", answer: "Usually, and we start by measuring rather than promising. Right-sizing, storage lifecycle policies and reserved capacity are the common wins; we report the actual before-and-after figures." },
-      { question: "Do we get locked into one cloud provider?", answer: "Infrastructure is defined in Terraform and workloads are containerised, which keeps portability realistic. We use managed services where they earn their keep and flag the lock-in trade-off when we do." },
+      {
+        question: "Do we need separate Android and iOS builds?",
+        answer:
+          "Not usually. A cross-platform build covers most cases; we recommend going native only where a feature genuinely requires it.",
+      },
     ],
   },
   {
     slug: "ui-ux-design",
     title: "UI/UX Design",
-    icon: "sparkle",
-    summary: "User-centered product design that translates complex software requirements into intuitive, elegant interfaces.",
-    description: "Our designers work hand-in-hand with developers to build interactive wireframes, component design systems, and user flows that users love.",
-    points: ["Product Discovery", "Design Systems", "Usability Testing"],
-    benefits: ["Reduced user onboarding friction", "Consistent brand identity across apps", "Faster developer handover"],
-    features: ["Figma Design Libraries", "Interactive Prototypes", "Micro-interaction Specs", "Accessibility Audits"],
-    technologies: ["Figma", "Design Tokens", "Tailwind CSS", "Framer Motion"],
-    processSteps: ["User Research", "Wireframing", "UI Kit & Prototype", "Handover & Design QA"],
-    faqs: [
-      { question: "Do you design without building?", answer: "Yes — research, prototypes and a documented design system are a standalone engagement. Because our designers sit next to engineers, what we hand over is buildable rather than aspirational." },
-      { question: "How much user research is involved?", answer: "Enough to de-risk the decisions that matter. That is typically five to eight interviews with real users plus a review of your existing analytics — not a six-week research phase before anything is drawn." },
-      { question: "Will the design work for accessibility?", answer: "We design to WCAG 2.2 AA: contrast, focus states, keyboard paths and screen-reader semantics are specified in the handover, then verified during design QA on the built product." },
-    ],
-  },
-  {
-    slug: "devops",
-    title: "DevOps",
-    icon: "gear",
-    summary: "Automated CI/CD pipelines, container orchestration, and real-time observability to ship code safely.",
-    description: "We transform release engineering with continuous integration, automated test suites, zero-downtime deployment strategies, and APM monitoring.",
-    points: ["CI/CD Automation", "Full Observability", "Release Safety"],
-    benefits: ["Deploy code multiple times per day", "Instant automated rollback", "Proactive error tracking"],
-    features: ["GitHub Actions / GitLab CI", "Prometheus & Grafana", "Datadog / Sentry Monitoring", "Blue-Green Deployments"],
-    technologies: ["Docker", "Kubernetes", "GitHub Actions", "Jenkins", "Grafana"],
-    processSteps: ["Pipeline Assessment", "Scripting & Automation", "Monitoring Setup", "Team Enablement"],
-    faqs: [
-      { question: "We deploy manually today. Where do we start?", answer: "With a reproducible build and an automated test gate — everything else depends on those. Most teams get to one-click deploys within the first few weeks, then progressively add environments and rollback." },
-      { question: "Do we need Kubernetes?", answer: "Often not. Managed container services handle most workloads with far less operational overhead. We recommend Kubernetes when you genuinely need its scheduling and multi-service complexity, and say so when you do not." },
-      { question: "Will our team be able to run this after you leave?", answer: "That is the point of the engagement. Pipelines are documented, runbooks are written with your engineers, and we pair through the first few real incidents rather than handing over a black box." },
-    ],
-  },
-  {
-    slug: "it-consulting",
-    title: "IT Consulting",
-    icon: "cpu",
-    summary: "Strategic advice on system architecture, legacy modernization, and technical due diligence.",
-    description: "Senior engineering guidance to navigate complex technical choices, eliminate technical debt, and plan sustainable technology roadmaps.",
-    points: ["Architecture Audits", "Tech Due Diligence", "Modernization Roadmaps"],
-    benefits: ["Clear risk mitigation for software investments", "Actionable architectural recommendations", "Unbiased vendor evaluation"],
-    features: ["System Health Audits", "Security Threat Modeling", "Refactoring Strategies", "CTO Advisory"],
-    technologies: ["Enterprise Architecture", "Microservices", "Cloud Native", "Domain Driven Design"],
-    processSteps: ["Discovery & Code Review", "Gap Analysis", "Strategic Roadmap", "Executive Presentation"],
-    faqs: [
-      { question: "What do we actually receive at the end?", answer: "A written assessment of the current architecture, a prioritised roadmap with effort and risk against each item, and a presentation your leadership team can act on. No slide-only deliverables without the underlying analysis." },
-      { question: "Can you review work built by another vendor?", answer: "Yes, and we do it regularly. The review covers architecture, code quality, security posture and operational readiness, reported factually — our goal is an accurate picture, not a case for replacing anyone." },
-      { question: "Do we have to hire you for the implementation?", answer: "No. The roadmap is written so your own team or another partner can execute it. Many clients use us for the assessment and keep delivery in house." },
-    ],
-  },
-  {
-    slug: "maintenance-support",
-    title: "Software Maintenance",
-    icon: "shield",
-    summary: "SLA-backed 24/7 support, proactive security patching, performance tuning, and incident monitoring.",
-    description: "We provide ongoing care for mission-critical software assets — keeping libraries updated, resolving incidents promptly, and optimizing database queries.",
-    points: ["24/7 SLA Support", "Security Patching", "Performance Tuning"],
-    benefits: ["Zero surprise downtime", "Prompt emergency response", "Continuous platform hardening"],
-    features: ["SLA Response Guarantees", "Dependency Security Updates", "Database Query Optimization", "Backups & Recovery"],
-    technologies: ["PostgreSQL", "Redis", "Docker", "Sentry", "AWS CloudWatch"],
-    processSteps: ["Onboarding & Runbooks", "Monitoring Setup", "Routine Hardening", "Monthly Reporting"],
-    faqs: [
-      { question: "Can you support software you did not build?", answer: "Yes. We begin with a codebase and infrastructure audit, write the runbooks that are usually missing, and stabilise monitoring before taking on response commitments." },
-      { question: "What response times do you commit to?", answer: "Severity-based SLAs agreed in advance — typically one hour for production-down, one business day for standard issues. Response performance is reported monthly against the commitment." },
-      { question: "Is new feature work included?", answer: "Retainers include a monthly allocation for enhancements alongside maintenance. Larger features are scoped separately so ongoing support is never squeezed out by project work." },
-    ],
-  },
-  {
-    slug: "business-automation",
-    title: "Business Automation",
     icon: "grid",
-    summary: "Automated business workflows that connect internal systems, APIs, spreadsheets, and databases.",
-    description: "We eliminate repetitive manual data entry by building custom integration bots, automated email pipelines, and real-time data sync tools.",
-    points: ["Workflow Automation", "API Integration", "Data Extraction"],
-    benefits: ["Save thousands of manual hours annually", "Eliminate human data entry errors", "Real-time system synchronization"],
-    features: ["Custom Webhooks & APIs", "RPA Bot Automation", "ERP/CRM Synchronization", "Automated PDF Generation"],
-    technologies: ["Node.js", "Python", "Zapier / Make", "PostgreSQL", "REST APIs"],
-    processSteps: ["Workflow Mapping", "Automation Design", "Integration Testing", "Deployment & Monitoring"],
+    visual: "design",
+    summary: "Interfaces judged by whether the work gets done, not by how they look.",
+    description:
+      "Research, structure and interface design for systems people use all day. The measure of success is a task completed without hesitation, not a screenshot that photographs well.",
+    points: [
+      "Research with the people who will actually use it",
+      "Information architecture before visual design",
+      "Design systems that keep later screens consistent",
+      "Accessible contrast, focus states and keyboard paths",
+    ],
+    benefits: [
+      "Less training required for new staff",
+      "Fewer support calls caused by confusing screens",
+      "A component library that speeds up everything after",
+    ],
+    features: [
+      "UX Research",
+      "Wireframing",
+      "Interface Design",
+      "Design Systems",
+      "Prototyping",
+      "Accessibility Review",
+    ],
+    technologies: ["Figma", "React", "Next.js", "Tailwind CSS"],
+    processSteps: [
+      "Understand the task and who performs it",
+      "Structure the information before styling it",
+      "Wireframe and test the flow cheaply",
+      "Design the interface and its states",
+      "Codify it as a reusable system",
+    ],
     faqs: [
-      { question: "Which processes are worth automating first?", answer: "High-frequency, rule-based work with a clear input and output — invoice handling, data entry between systems, routine reporting. We map volume against effort and start where payback is fastest." },
-      { question: "What if our tools have no API?", answer: "Most have more integration surface than expected: exports, webhooks, or a database we can read safely. Where nothing exists, we automate at the interface layer and are explicit about the added fragility." },
-      { question: "What happens when an automation fails?", answer: "Every workflow has explicit failure handling — retries with backoff, a dead-letter queue, and an alert to a named owner. Silent failure is the one outcome we design hardest against." },
+      {
+        question: "Can you work with our existing brand?",
+        answer:
+          "Yes. Where a brand already exists we build the design system within it rather than around it, so the result still looks like you.",
+      },
+    ],
+  },
+  {
+    slug: "digital-transformation",
+    title: "Digital Transformation",
+    icon: "gear",
+    visual: "transform",
+    span: "full",
+    summary: "Turning manual routine into systems that run themselves.",
+    description:
+      "The unglamorous work of finding where hours disappear — re-keying, chasing, reconciling — and replacing it with something automatic. Usually the highest return of anything on this list.",
+    points: [
+      "Audit of where manual effort is actually being spent",
+      "Automation of the handoffs between existing systems",
+      "Digitisation of paper and spreadsheet processes",
+      "Modernisation of systems that have outlived their design",
+    ],
+    benefits: [
+      "Hours returned to the people doing the work",
+      "Fewer errors from copying data between systems",
+      "A record of what happened, produced automatically",
+    ],
+    features: [
+      "Process Audit",
+      "Workflow Automation",
+      "System Integration",
+      "Legacy Modernisation",
+      "Reporting Automation",
+      "Change Support",
+    ],
+    technologies: ["Python", "Node.js", "Docker", "PostgreSQL", "REST & Webhooks"],
+    processSteps: [
+      "Requirement analysis",
+      "Business consultation",
+      "Architecture design",
+      "UI/UX design",
+      "Agile development",
+      "Quality assurance",
+      "Deployment",
+      "Support and enhancement",
+    ],
+    faqs: [
+      {
+        question: "Where should we start?",
+        answer:
+          "With whichever process consumes the most hours for the least judgement. That is almost always where automation pays back fastest, and it builds the confidence for the harder work after.",
+      },
     ],
   },
 ];

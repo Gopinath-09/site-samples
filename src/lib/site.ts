@@ -83,16 +83,15 @@ export const megaMenu: MenuGroup[] = [
   {
     title: "Services",
     href: "/services",
-    blurb: "Ten engineering disciplines, one standard.",
+    blurb: "Six disciplines, one standard.",
     links: [
       { label: "All Services", href: "/services", desc: "Services list" },
-      { label: "AI Solutions", href: "/services/ai-solutions", desc: "LLMs, RAG & automation" },
-      { label: "Web Development", href: "/services/web-applications", desc: "Fast web platforms" },
-      { label: "Mobile App Development", href: "/services/mobile-applications", desc: "iOS & Android" },
-      { label: "SaaS Development", href: "/services/saas-development", desc: "Multi-tenant products" },
-      { label: "Cloud Solutions", href: "/services/cloud-engineering", desc: "Resilient cloud" },
+      { label: "Artificial Intelligence", href: "/services/artificial-intelligence", desc: "RAG, agents & assistants" },
+      { label: "Enterprise Software", href: "/services/enterprise-software", desc: "ERP, CRM & platforms" },
+      { label: "Cloud Solutions", href: "/services/cloud-solutions", desc: "Infrastructure & delivery" },
+      { label: "Mobile Applications", href: "/services/mobile-applications", desc: "Android & iOS" },
       { label: "UI/UX Design", href: "/services/ui-ux-design", desc: "Research-led design" },
-      { label: "DevOps", href: "/services/devops", desc: "CI/CD & observability" },
+      { label: "Digital Transformation", href: "/services/digital-transformation", desc: "Automation & modernisation" },
     ],
   },
   {
@@ -176,11 +175,12 @@ export const footerNav: { title: string; items: NavItem[] }[] = [
   {
     title: "Services",
     items: [
-      { label: "AI Solutions", href: "/services/ai-solutions" },
-      { label: "Web Development", href: "/services/web-applications" },
-      { label: "Mobile Apps", href: "/services/mobile-applications" },
-      { label: "SaaS Development", href: "/services/saas-development" },
-      { label: "Cloud Solutions", href: "/services/cloud-engineering" },
+      { label: "Artificial Intelligence", href: "/services/artificial-intelligence" },
+      { label: "Enterprise Software", href: "/services/enterprise-software" },
+      { label: "Cloud Solutions", href: "/services/cloud-solutions" },
+      { label: "Mobile Applications", href: "/services/mobile-applications" },
+      { label: "UI/UX Design", href: "/services/ui-ux-design" },
+      { label: "Digital Transformation", href: "/services/digital-transformation" },
     ],
   },
   {

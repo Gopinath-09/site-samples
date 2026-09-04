@@ -24,7 +24,7 @@ export default function Home() {
       <WhoWeAre />
 
       {/* 4. Services (Interactive 10 Cards) */}
-      <CoreServices limit={10} />
+      <CoreServices />
 
       {/* 5. Products (SaaS Highlights) */}
       <FeaturedProducts />

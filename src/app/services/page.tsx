@@ -26,7 +26,7 @@ export default function ServicesPage() {
         </Button>
       </PageHeader>
 
-      <CoreServices limit={10} showHeading={false} />
+      <CoreServices showHeading={false} />
       <EngineeringProcess />
       <FinalCta />
     </>

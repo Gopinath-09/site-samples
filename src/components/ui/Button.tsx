@@ -4,7 +4,7 @@ import type React from "react";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 
-type Variant = "primary" | "dark" | "light" | "outline" | "ghost-light";
+type Variant = "primary" | "dark" | "light" | "outline" | "ghost-light" | "link";
 type Size = "sm" | "md" | "lg";
 
 const variantClass: Record<Variant, string> = {
@@ -13,6 +13,7 @@ const variantClass: Record<Variant, string> = {
   light: "btn-light",
   outline: "btn-outline",
   "ghost-light": "btn-ghost-light",
+  link: "btn-link",
 };
 
 const sizeClass: Record<Size, string> = {

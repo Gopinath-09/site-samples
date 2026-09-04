@@ -39,19 +39,17 @@ export default function HeroSection() {
         <div className="bg-grid-dark absolute inset-0 opacity-25" />
       </div>
 
-      <div className="relative container-page pt-28 lg:pt-32">
-        {/* Section marker — the document's opening line */}
-        <div className="marker">
-          <span className="marker-index">01</span>
-          <span className="marker-title">Enterprise Software Engineering</span>
-          <span className="marker-rule" />
-          <span className="marker-title hidden sm:inline">
-            {company.location}
-          </span>
-        </div>
-
-        {/* Framed statement */}
-        <div className="relative mt-10 rounded-[2rem] border border-white/[0.09] px-5 py-14 sm:rounded-[2.75rem] sm:px-10 lg:py-20">
+      <div className="relative container-page pt-24 lg:pt-28">
+        {/*
+          One centred column inside a glass frame, following the reference's
+          placement: statement, supporting line, then a single action. The
+          section marker that used to sit above the frame is gone — it put a
+          rule and two labels between the header and the headline, which is
+          exactly the space the reference leaves empty so the statement lands
+          on its own. Nothing it carried was lost: the location is in the fact
+          strip below.
+        */}
+        <div className="relative rounded-[2rem] border border-white/[0.09] px-5 py-20 sm:rounded-[2.75rem] sm:px-10 lg:py-28">
           {/* A faint inner light, so the frame reads as glass rather than a box */}
           <div
             className="pointer-events-none absolute inset-0 rounded-[inherit] bg-[radial-gradient(70%_120%_at_50%_0%,rgba(120,190,255,0.07),transparent_70%)]"
@@ -68,19 +66,27 @@ export default function HeroSection() {
             {/* Delays are keyed to the headline: the supporting line arrives as
                 the second line of type settles, and the actions just after. */}
             <Reveal delay={0.45}>
-              <p className="mx-auto mt-7 max-w-md text-center text-sm leading-relaxed text-white/55">
+              <p className="mx-auto mt-7 max-w-sm text-center text-sm leading-relaxed text-white/55">
                 We are an engineering studio in Coimbatore building enterprise
                 platforms, cloud systems and AI for education, healthcare,
                 tourism and logistics.
               </p>
             </Reveal>
 
-            <Reveal delay={0.6} className="mt-10 flex flex-wrap justify-center gap-3">
+            {/*
+              One action, with the second offered as text beneath it. Two pills
+              side by side split the attention the primary is meant to hold —
+              the reference carries a single button for the same reason.
+            */}
+            <Reveal
+              delay={0.6}
+              className="mt-11 flex flex-col items-center gap-3"
+            >
               <Button variant="ghost-light" size="lg" href="/contact">
                 Start a project
                 <ArrowRight width={18} height={18} />
               </Button>
-              <Button variant="ghost-light" size="lg" href="/portfolio">
+              <Button variant="link" size="sm" href="/portfolio">
                 See our work
               </Button>
             </Reveal>

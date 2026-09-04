@@ -70,8 +70,21 @@
   color-scheme: dark;
 }
 
-* {
-  border-color: var(--color-line);
+/*
+ * The default border colour, so a bare `border` utility picks up the theme
+ * rather than the browser's currentColor.
+ *
+ * It has to be inside a layer. Unlayered rules beat every layered one no matter
+ * how specific the layered selector is, so as plain CSS this quietly overrode
+ * `border-color` on every component class in `@layer components` — no button
+ * variant's border was ever the colour it declared. In `base` it sits below
+ * `components`, where a class that states a border colour wins, which is what
+ * the variants were written expecting.
+ */
+@layer base {
+  * {
+    border-color: var(--color-line);
+  }
 }
 
 html {
@@ -278,6 +291,24 @@ body {
     background: #fff;
     color: var(--color-ink);
     border-color: #fff;
+  }
+
+  /*
+   * A text action. Same click behaviour as any other button, none of the
+   * chrome — for the second action in a pair, where two pills would split the
+   * attention the first one is supposed to hold.
+   */
+  .btn-link {
+    background: transparent;
+    border-color: transparent;
+    color: rgba(255, 255, 255, 0.58);
+    padding-inline: 0.25rem;
+    box-shadow: none;
+  }
+
+  .btn-link:hover {
+    background: transparent;
+    color: #fff;
   }
 
   .btn-lg {

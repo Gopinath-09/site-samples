@@ -7,13 +7,7 @@ import { cn } from "@/lib/utils";
 import { primaryNav, megaMenu, megaFeature } from "@/lib/site";
 import Button from "@/components/ui/Button";
 import Logo from "@/components/layout/Logo";
-import {
-  ArrowRight,
-  ArrowUpRight,
-  ChevronDown,
-  Close,
-  Menu as MenuIcon,
-} from "@/components/ui/icons";
+import { ArrowRight, ArrowUpRight, Close, Menu as MenuIcon } from "@/components/ui/icons";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -133,64 +127,7 @@ export default function Navbar() {
           </button>
         </div>
 
-        {/*
-          Desktop navigation. The mega menu still holds everything, but a header
-          that shows only a logo asks the visitor to discover that it is a menu
-          at all. These three are the routes most people arrive wanting, and
-          Services opens the same panel the mark does.
-        */}
-        <div className="hidden items-center gap-1 lg:flex">
-          <div
-            className="relative"
-            onMouseEnter={openMega}
-            onMouseLeave={scheduleClose}
-          >
-            <button
-              onClick={() => go("/services")}
-              onFocus={openMega}
-              aria-expanded={megaOpen}
-              aria-controls="brand-mega-menu"
-              className={cn(
-                "flex cursor-pointer items-center gap-1.5 rounded-full px-4 py-2 text-sm font-medium transition-colors duration-200",
-                overDarkHero
-                  ? "text-white/70 hover:text-white"
-                  : "text-muted hover:text-fg",
-                isActive("/services") && (overDarkHero ? "text-white" : "text-fg"),
-              )}
-            >
-              Services
-              <ChevronDown
-                width={14}
-                height={14}
-                className={cn(
-                  "transition-transform duration-300",
-                  megaOpen && "rotate-180",
-                )}
-              />
-            </button>
-          </div>
-
-          {[
-            { label: "Work", href: "/portfolio" },
-            { label: "About", href: "/about" },
-          ].map((item) => (
-            <button
-              key={item.href}
-              onClick={() => go(item.href)}
-              className={cn(
-                "cursor-pointer rounded-full px-4 py-2 text-sm font-medium transition-colors duration-200",
-                overDarkHero
-                  ? "text-white/70 hover:text-white"
-                  : "text-muted hover:text-fg",
-                isActive(item.href) && (overDarkHero ? "text-white" : "text-fg"),
-              )}
-            >
-              {item.label}
-            </button>
-          ))}
-        </div>
-
-        {/* Action CTA — the rest of the navigation lives in the brand mega menu */}
+        {/* Action CTA — navigation itself lives in the brand mega menu */}
         <div className="flex items-center gap-3">
           <Button
             variant={overDarkHero ? "light" : "dark"}

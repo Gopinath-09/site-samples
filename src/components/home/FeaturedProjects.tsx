@@ -1,4 +1,4 @@
-import { verifiedProjects } from "@/lib/content";
+import { verifiedProjects, placeholderClips } from "@/lib/content";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Button from "@/components/ui/Button";
 import CardLink from "@/components/ui/CardLink";
@@ -70,7 +70,13 @@ export default function FeaturedProjects({
                 className="group h-full"
               >
                 <article className="relative flex h-full min-h-[19rem] flex-col justify-between overflow-hidden bg-paper p-7">
-                  <HoverMedia seed={i} />
+                  {/* Real capture when a project has some; otherwise an
+                      abstract clip, which reads as motion rather than as a
+                      recording of this particular system. */}
+                  <HoverMedia
+                    seed={i}
+                    video={proj.video ?? placeholderClips[i % placeholderClips.length]}
+                  />
 
                   <div className="relative flex items-start justify-between gap-4">
                     <span className="mono-label">

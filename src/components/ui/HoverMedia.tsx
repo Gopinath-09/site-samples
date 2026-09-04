@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import RoadmapVisual from "@/components/graphics/RoadmapVisual";
 
 /**
@@ -11,11 +11,9 @@ import RoadmapVisual from "@/components/graphics/RoadmapVisual";
  * A gradient scrim sits over the media so the heading and copy stay readable
  * whatever is playing underneath.
  *
- * Give it `video` and it plays that file, starting only on hover so a grid of
- * these does not decode a dozen streams at once. Without one it falls back to
- * the drawn panel, which animates on hover through the same CSS the roadmap
- * uses. The fallback is not a stand-in for missing footage so much as the
- * honest state: none of these has a running product to film yet.
+ * Playback starts on hover rather than on load, so a grid of these never
+ * decodes a dozen streams at once. Without a `video` it falls back to the drawn
+ * panel, which animates through the same CSS the roadmap uses.
  *
  * Purely decorative, so it is hidden from assistive technology — the cell's
  * heading and description carry everything a screen reader needs.
@@ -24,28 +22,42 @@ export default function HoverMedia({
   video,
   seed = 0,
 }: {
-  /** Path under `public/`, e.g. `/roadmap/ai-agents.mp4`. */
+  /** Path under `public/`, e.g. `/roadmap/placeholder-flow.mp4`. */
   video?: string;
   seed?: number;
 }) {
   const ref = useRef<HTMLVideoElement>(null);
 
+  /*
+   * The listeners go on the hovered ancestor, not on this layer.
+   * This layer is `pointer-events-none` so it cannot swallow the click meant
+   * for the card, and an element that takes no pointer events also receives no
+   * mouseenter — handlers here would simply never fire.
+   */
+  useEffect(() => {
+    const el = ref.current;
+    const host = el?.closest(".group");
+    if (!el || !host) return;
+
+    // A rejected play() is normal: autoplay policy, or the pointer left before
+    // the file was ready. There is nothing useful to do about it.
+    const play = () => void el.play().catch(() => {});
+    const stop = () => {
+      el.pause();
+      el.currentTime = 0;
+    };
+
+    host.addEventListener("mouseenter", play);
+    host.addEventListener("mouseleave", stop);
+    return () => {
+      host.removeEventListener("mouseenter", play);
+      host.removeEventListener("mouseleave", stop);
+    };
+  }, [video]);
+
   return (
     <div
       aria-hidden
-      onMouseEnter={() => {
-        const el = ref.current;
-        if (!el) return;
-        // A rejected play() is normal — autoplay policy, or the pointer left
-        // before the file was ready. There is nothing useful to do about it.
-        void el.play().catch(() => {});
-      }}
-      onMouseLeave={() => {
-        const el = ref.current;
-        if (!el) return;
-        el.pause();
-        el.currentTime = 0;
-      }}
       className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100"
     >
       {video ? (

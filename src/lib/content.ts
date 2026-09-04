@@ -533,6 +533,11 @@ export interface PortfolioProject {
    * placeholder frame, so real screenshots drop in later as a data change.
    */
   screenshots?: { label: string; caption: string; image?: string }[];
+  /**
+   * Screen capture of the system running, shown on hover. None exists yet, so
+   * the wall falls back to an abstract clip; set this and it takes precedence.
+   */
+  video?: string;
 }
 
 /**
@@ -810,6 +815,22 @@ export interface Product {
  */
 export const products: Product[] = [];
 
+/**
+ * Abstract clips standing in for footage we do not have. They are generated
+ * rather than filmed, and deliberately non-representational: a visitor reads
+ * them as motion, not as a recording of a particular product. That distinction
+ * is the point — stock footage of somebody else's dashboard in this slot would
+ * be a claim rather than a placeholder.
+ *
+ * Replace per record with real capture as it becomes available; a record's own
+ * `video` always wins over these.
+ */
+export const placeholderClips = [
+  "/roadmap/placeholder-flow.mp4",
+  "/roadmap/placeholder-cells.mp4",
+  "/roadmap/placeholder-scan.mp4",
+] as const;
+
 export interface RoadmapItem {
   name: string;
   blurb: string;
@@ -829,41 +850,49 @@ export interface RoadmapItem {
 export const productRoadmap: RoadmapItem[] = [
   {
     name: "AI Agents",
+    video: "/roadmap/placeholder-flow.mp4",
     blurb:
       "Autonomous agents that carry out multi-step work inside a business, rather than answering one question at a time.",
   },
   {
     name: "Enterprise Automation",
+    video: "/roadmap/placeholder-cells.mp4",
     blurb:
       "Removing the manual handoffs between systems that quietly consume operational hours.",
   },
   {
     name: "Cloud SaaS Products",
+    video: "/roadmap/placeholder-scan.mp4",
     blurb:
       "Multi-tenant platforms built on the infrastructure patterns we already run for clients.",
   },
   {
     name: "Healthcare AI",
+    video: "/roadmap/placeholder-flow.mp4",
     blurb:
       "Patient-facing assistance and clinical record intelligence, extending the clinic systems we have delivered.",
   },
   {
     name: "Educational AI",
+    video: "/roadmap/placeholder-cells.mp4",
     blurb:
       "Curriculum generation, assessment and analytics, building on the learning platforms already in use.",
   },
   {
     name: "Logistics Intelligence",
+    video: "/roadmap/placeholder-scan.mp4",
     blurb:
       "Route, fleet and delivery optimisation informed by the transport tracking work we have shipped.",
   },
   {
     name: "Tourism Ecosystems",
+    video: "/roadmap/placeholder-flow.mp4",
     blurb:
       "Membership, booking and activity platforms for tourism bodies and their operators.",
   },
   {
     name: "Government Digital Platforms",
+    video: "/roadmap/placeholder-cells.mp4",
     blurb:
       "Secure, auditable and accessible public-sector systems.",
   },

@@ -627,6 +627,8 @@ export const portfolioProjects: PortfolioProject[] = [
     benefits:
       "Enhanced member engagement, streamlined tourism operations and scalable digital infrastructure.",
     status: "Developed with phased rollout readiness.",
+    /* Screen capture of the live platform at yhaitamilnadu.org. */
+    video: "/projects/yhai-tamil-nadu.mp4",
     accent: "#6366f1",
     verified: true,
   },
@@ -886,9 +888,11 @@ export const productRoadmap: RoadmapItem[] = [
   },
   {
     name: "Tourism Ecosystems",
-    video: "/roadmap/placeholder-flow.mp4",
+    /* Not footage of this direction, which does not exist yet, but of the
+       platform it extends — hence the blurb naming YHAI explicitly. */
+    video: "/projects/yhai-tamil-nadu.mp4",
     blurb:
-      "Membership, booking and activity platforms for tourism bodies and their operators.",
+      "Membership, booking and activity platforms for tourism bodies, extending the YHAI Tamil Nadu platform we run today.",
   },
   {
     name: "Government Digital Platforms",

@@ -74,8 +74,14 @@ export default function HoverMedia({
         <RoadmapVisual seed={seed} />
       )}
 
-      {/* Scrim: the text sits on top of this, so it has to stay readable */}
-      <div className="absolute inset-0 bg-linear-to-t from-paper via-paper/80 to-paper/30" />
+      {/*
+        Scrim. Two of them: the vertical one keeps the heading and description
+        legible over whatever is playing, and the flat one holds the top of the
+        frame back, because the index and sector labels sit up there over what
+        is often the brightest part of a screen capture.
+      */}
+      <div className="absolute inset-0 bg-linear-to-t from-paper via-paper/80 to-paper/40" />
+      <div className="absolute inset-0 bg-paper/15" />
     </div>
   );
 }

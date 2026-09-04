@@ -1,52 +1,114 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
 import { differentiators } from "@/lib/content";
-import SectionHeading from "@/components/ui/SectionHeading";
-import { RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { cn } from "@/lib/utils";
 
 /**
- * Why COBRR.
+ * Why COBRR, as a pinned heading against a scrolling list.
  *
- * Takes the reference's treatment for its equivalent section: a category label,
- * the point stated as a full sentence at display size, and the explanation
- * pushed to the foot of the card. The gap between the claim and its support is
- * doing the work — it gives the sentence room to be read as a statement rather
- * than as a heading skimmed on the way to a paragraph.
+ * The left column stays put while the seven points move past it, so the
+ * heading has time to land and the reader always knows where they are in the
+ * set. Only the point crossing the middle of the viewport is lit; the rest are
+ * held back, which turns a list that would otherwise be read all at once into
+ * one that is read in order.
  *
- * There are seven points and the grid is two columns, so the last one spans
- * both and closes the section rather than sitting beside an empty cell. Which
- * entry does that is a property of the data, not of its position.
+ * The active point is found with an IntersectionObserver rather than a scroll
+ * handler, so nothing runs on the main thread between intersections. The root
+ * margin crops the viewport to a narrow band across its middle, which means at
+ * most one point qualifies at a time and "active" needs no distance maths.
  */
 export default function WhyChoose() {
+  const [active, setActive] = useState(0);
+  const items = useRef<(HTMLElement | null)[]>([]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          const i = items.current.indexOf(entry.target as HTMLElement);
+          if (i !== -1) setActive(i);
+        }
+      },
+      // Only the middle 10% of the viewport counts as "here".
+      { rootMargin: "-45% 0px -45% 0px", threshold: 0 },
+    );
+
+    const observed = items.current.filter(Boolean) as HTMLElement[];
+    observed.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <section className="section bg-sand" id="why-cobrr">
-      <div className="container-page">
-        <SectionHeading
-          eyebrow="Why COBRR"
-          title="The difference is in how we work."
-          description="Seven things we hold to. None of them is a number we cannot show you."
-        />
+      <div className="container-page grid gap-14 lg:grid-cols-[minmax(0,24rem)_1fr] lg:gap-24">
+        {/* Pinned side */}
+        <div className="lg:sticky lg:top-32 lg:self-start">
+          <span className="eyebrow">Why COBRR</span>
+          <h2 className="heading-lg mt-5 text-balance text-fg">
+            The difference is in how we work.
+          </h2>
+          <p className="mt-6 max-w-sm text-sm leading-relaxed text-muted">
+            Seven things we hold to. None of them is a number we cannot show
+            you.
+          </p>
 
-        <RevealGroup className="mt-14 grid gap-4 lg:grid-cols-2">
-          {differentiators.map((d) => (
-            <RevealItem
+          {/* Position in the set, and how far through it we are */}
+          <div className="mt-10 hidden items-center gap-4 lg:flex">
+            <span className="mono-figure text-sm text-fg">
+              {String(active + 1).padStart(2, "0")}
+            </span>
+            <span className="relative h-px flex-1 bg-line">
+              <span
+                className="absolute inset-y-0 left-0 bg-brand transition-[width] duration-500 ease-out"
+                style={{
+                  width: `${((active + 1) / differentiators.length) * 100}%`,
+                }}
+              />
+            </span>
+            <span className="mono-figure text-sm text-muted">
+              {String(differentiators.length).padStart(2, "0")}
+            </span>
+          </div>
+        </div>
+
+        {/* Scrolling side */}
+        <ol className="space-y-16 lg:space-y-24">
+          {differentiators.map((d, i) => (
+            <li
               key={d.label}
-              className={cn("h-full", d.wide && "lg:col-span-2")}
+              ref={(el) => {
+                items.current[i] = el;
+              }}
+              className={cn(
+                "border-t pt-8 transition-all duration-500 ease-out",
+                i === active
+                  ? "border-brand/60 opacity-100"
+                  : "border-line opacity-45",
+              )}
             >
-              <article className="flex h-full flex-col justify-between rounded-3xl border border-line bg-paper p-8 transition-colors duration-300 hover:border-white/20 lg:min-h-[19rem] lg:p-10">
-                <div>
-                  <span className="mono-label">{d.label}</span>
-                  <h3 className="mt-5 text-balance text-xl font-medium leading-snug tracking-[-0.01em] text-fg lg:text-2xl">
-                    {d.title}
-                  </h3>
-                </div>
+              <div className="flex items-baseline gap-4">
+                <span
+                  className={cn(
+                    "mono-figure text-sm transition-colors duration-500",
+                    i === active ? "text-brand" : "text-muted",
+                  )}
+                >
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <span className="mono-label">{d.label}</span>
+              </div>
 
-                <p className="mt-10 max-w-2xl text-sm leading-relaxed text-muted">
-                  {d.description}
-                </p>
-              </article>
-            </RevealItem>
+              <h3 className="mt-5 text-balance text-2xl font-medium leading-snug tracking-[-0.01em] text-fg lg:text-3xl">
+                {d.title}
+              </h3>
+              <p className="mt-4 max-w-2xl text-sm leading-relaxed text-muted lg:text-base">
+                {d.description}
+              </p>
+            </li>
           ))}
-        </RevealGroup>
+        </ol>
       </div>
     </section>
   );

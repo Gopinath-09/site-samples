@@ -3,6 +3,7 @@ import SectionHeading from "@/components/ui/SectionHeading";
 import Button from "@/components/ui/Button";
 import CardLink from "@/components/ui/CardLink";
 import { RevealGroup, RevealItem } from "@/components/ui/Reveal";
+import HoverMedia from "@/components/ui/HoverMedia";
 import { ArrowRight, ArrowUpRight } from "@/components/ui/icons";
 import { cn } from "@/lib/utils";
 
@@ -68,8 +69,10 @@ export default function FeaturedProjects({
                 ariaLabel={proj.title}
                 className="group h-full"
               >
-                <article className="flex h-full min-h-[19rem] flex-col justify-between bg-paper p-7 transition-colors duration-300 group-hover:bg-sand">
-                  <div className="flex items-start justify-between gap-4">
+                <article className="relative flex h-full min-h-[19rem] flex-col justify-between overflow-hidden bg-paper p-7">
+                  <HoverMedia seed={i} />
+
+                  <div className="relative flex items-start justify-between gap-4">
                     <span className="mono-label">
                       {String(i + 1).padStart(2, "0")}
                     </span>
@@ -82,7 +85,7 @@ export default function FeaturedProjects({
                     </span>
                   </div>
 
-                  <div className="mt-10">
+                  <div className="relative mt-10">
                     {/* Named clients are the closest thing we have to the
                         reference's logo row, so they lead the cell. */}
                     {proj.client && (
@@ -103,7 +106,7 @@ export default function FeaturedProjects({
                     </p>
                   </div>
 
-                  <div className="mt-7 flex items-end justify-between gap-4 border-t border-line pt-5">
+                  <div className="relative mt-7 flex items-end justify-between gap-4 border-t border-line pt-5">
                     <span className="text-[0.7rem] leading-relaxed text-muted">
                       {proj.status}
                     </span>

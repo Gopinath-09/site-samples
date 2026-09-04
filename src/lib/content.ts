@@ -1069,51 +1069,73 @@ export const processSteps: ProcessStep[] = [
 /* 7. WHY CHOOSE US DATASET (8 Icon Cards matching prompt)                    */
 /* -------------------------------------------------------------------------- */
 export interface Differentiator {
+  /** The company's own term for this, used as the card's category label. */
+  label: string;
+  /** The point itself, stated as a sentence rather than a noun phrase. */
   title: string;
   description: string;
   icon: IconKey;
+  /** Spans both columns, closing the grid. Exactly one entry should set it. */
+  wide?: boolean;
 }
 
+/**
+ * The seven reasons the company portfolio document gives, in its order. The
+ * previous eight were invented and several were unverifiable claims about
+ * uptime and team seniority. Each entry here restates the document's term as
+ * something a reader can actually act on, and none asserts a figure, a
+ * certification or an award, because we hold none of those.
+ */
 export const differentiators: Differentiator[] = [
   {
-    title: "Experienced Team",
-    description: "Senior software engineers, AI researchers, and cloud architects who own outcomes end-to-end.",
-    icon: "code",
+    label: "AI-first development",
+    title: "AI is in the build, not bolted on afterwards.",
+    description:
+      "Retrieval, agents and assistants are designed into the system alongside everything else, grounded in your own material so answers can be traced to a source rather than invented.",
+    icon: "sparkle",
   },
   {
-    title: "Scalable Architecture",
-    description: "Clean domain boundaries and microservices built to support 10x growth without rewrites.",
+    label: "Enterprise architecture",
+    title: "The structure is decided before it gets expensive to change.",
+    description:
+      "Data model, services and integrations are settled early, because the cost of getting them wrong is paid every month afterwards rather than once at the start.",
     icon: "layers",
   },
   {
-    title: "Agile Development",
-    description: "Iterative 2-week sprints with full visibility — working software delivered early and often.",
-    icon: "gear",
+    label: "Cloud-native applications",
+    title: "Deployment should be routine, not an event.",
+    description:
+      "Containerised services, reproducible builds and a pipeline from commit to production, so releasing is something that happens on a Tuesday rather than something the team braces for.",
+    icon: "cloud",
   },
   {
-    title: "Modern Technologies",
-    description: "Battle-tested modern stack (Next.js, Node.js, Python, AWS, Docker) chosen for long-term supportability.",
-    icon: "cpu",
-  },
-  {
-    title: "Secure Development",
-    description: "Threat modeling, OWASP hardening, SOC2 & HIPAA-conscious architecture built into delivery.",
+    label: "Secure software engineering",
+    title: "Access is granted by role, not by convention.",
+    description:
+      "Permissions, audit trails and data handling are part of the design rather than a later pass, which is the only way they survive contact with a system that keeps growing.",
     icon: "shield",
   },
   {
-    title: "Quality Assurance",
-    description: "Automated unit, integration, and performance testing before any code reaches production.",
+    label: "Agile delivery",
+    title: "You see working software, not status updates.",
+    description:
+      "Work arrives in increments you can open and use. Progress is something you observe directly instead of something you take on trust from a report.",
     icon: "chart",
   },
   {
-    title: "Dedicated Support",
-    description: "SLA-backed 24/7 maintenance, rapid incident response, and proactive system hardening.",
-    icon: "phone",
+    label: "Industry-focused solutions",
+    title: "The sector's constraints shape the system.",
+    description:
+      "A school, a clinic and a fleet do not want the same software wearing different labels. What each sector must do — and must be able to prove it did — belongs in the architecture.",
+    icon: "building",
   },
   {
-    title: "On-Time Delivery",
-    description: "Transparent project management, predictable timelines, and no unexpected budget overruns.",
-    icon: "building",
+    label: "End-to-end product development",
+    title: "One team from the requirement to the years after launch.",
+    description:
+      "Analysis, architecture, design, build, testing, deployment and support are the same eight-stage process run by the same people, so nothing is lost at a handover that never happens.",
+    icon: "gear",
+    wide: true,
   },
 ];
 

@@ -1585,3 +1585,54 @@ export const hasProof = {
   testimonials: verifiedTestimonials.length > 0,
   metrics: verifiedMetrics.length > 0,
 };
+
+/* -------------------------------------------------------------------------- */
+/* 15. PROBLEMS WE SOLVE                                                      */
+/* -------------------------------------------------------------------------- */
+/**
+ * Positioning stated as the situation a visitor is actually in, rather than as
+ * a list of capabilities. Each entry names a problem, says how we answer it,
+ * and points at the discipline that does the work.
+ *
+ * Every answer below describes something the company already does — the
+ * services and the delivered portfolio both back them. None of them claims a
+ * result, because a result belongs to a project, not to a pitch.
+ */
+export interface Problem {
+  /** The situation, phrased as the visitor would put it. */
+  question: string;
+  answer: string;
+  ctaLabel: string;
+  href: string;
+}
+
+export const problemsWeSolve: Problem[] = [
+  {
+    question: "Your product outgrew its first version.",
+    answer:
+      "What was built to prove an idea is now carrying real load, and every change costs more than the last. We modernise the architecture underneath without stopping the system people depend on, so the next five years are cheaper than the last two.",
+    ctaLabel: "Modernise my product",
+    href: "/services/digital-transformation",
+  },
+  {
+    question: "You need to launch and win early traction.",
+    answer:
+      "Scope is the whole problem: everything sounds essential until someone has to build it. We cut the first release down to the part that proves the idea, ship it on foundations that will not need replacing, and add the rest once real usage says what matters.",
+    ctaLabel: "Launch my product",
+    href: "/services/enterprise-software",
+  },
+  {
+    question: "Your team is doing by hand what software should do.",
+    answer:
+      "Re-keying between systems, chasing approvals, assembling the same report every week. We find where the hours actually go and automate the handoffs, which is usually the highest-return work available to a business.",
+    ctaLabel: "Automate the routine",
+    href: "/services/digital-transformation",
+  },
+  {
+    question: "Your data cannot answer anyone's questions.",
+    answer:
+      "The information exists, but it is spread across documents and systems nobody can query. We build retrieval over your own material so answers come back traceable to a source, rather than a model inventing something plausible.",
+    ctaLabel: "Put AI to work",
+    href: "/services/artificial-intelligence",
+  },
+];

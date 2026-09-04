@@ -3,6 +3,7 @@ import TrustedBy from "@/components/home/TrustedBy";
 import WhoWeAre from "@/components/home/WhoWeAre";
 import CoreServices from "@/components/home/CoreServices";
 import FeaturedProducts from "@/components/home/FeaturedProducts";
+import ProblemsWeSolve from "@/components/home/ProblemsWeSolve";
 import TechnologiesSection from "@/components/home/TechnologiesSection";
 import EngineeringProcess from "@/components/home/EngineeringProcess";
 import FeaturedProjects from "@/components/home/FeaturedProjects";
@@ -14,40 +15,43 @@ import FinalCta from "@/components/home/FinalCta";
 export default function Home() {
   return (
     <>
-      {/* 1. Hero Section */}
+      {/* 01 — Hero */}
       <HeroSection />
 
-      {/* 2. Trusted By / Clients */}
+      {/* 02 — Clients we can name */}
       <TrustedBy />
 
-      {/* 3. Who We Are (Overview, Mission, Vision, Core Values) */}
+      {/* 03 — Who we are */}
       <WhoWeAre />
 
-      {/* 4. Services (Interactive 10 Cards) */}
+      {/* 04 — Core services */}
       <CoreServices />
 
-      {/* 5. Products (SaaS Highlights) */}
+      {/* 05 — Problems we solve */}
+      <ProblemsWeSolve />
+
+      {/* 06 — Product roadmap */}
       <FeaturedProducts />
 
-      {/* 6. Technologies (Categorized Frontend, Backend, DB, Cloud, AI, DevOps) */}
+      {/* 07 — Technologies */}
       <TechnologiesSection />
 
-      {/* 7. Development Process (7 Steps Timeline) */}
+      {/* 08 — How we work */}
       <EngineeringProcess />
 
-      {/* 8. Featured Projects (Portfolio Showcase) */}
+      {/* 09 — Delivered systems */}
       <FeaturedProjects limit={6} />
 
-      {/* 9. Why Choose Us (8 Icon Cards) */}
+      {/* 10 — Why COBRR */}
       <WhyChoose />
 
-      {/* 10. Testimonials Carousel */}
+      {/* 11 — Testimonials (hidden until one is verified) */}
       <Testimonials limit={8} />
 
-      {/* 11. Frequently Asked Questions */}
+      {/* 12 — FAQ */}
       <FaqSection />
 
-      {/* 12. Final Call to Action */}
+      {/* 13 — Closing call to action */}
       <FinalCta />
     </>
   );

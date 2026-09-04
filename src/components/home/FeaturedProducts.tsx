@@ -7,48 +7,59 @@ import { ArrowRight } from "@/components/ui/icons";
 /**
  * What COBRR is building next.
  *
- * This section used to showcase three SaaS products that did not exist. There
- * is no commercially available product to show, so rather than dress the
- * roadmap up as inventory it is labelled as direction and nothing more — the
- * heading, the eyebrow and the closing note all say so explicitly, because a
- * roadmap presented ambiguously reads as a catalogue.
+ * Uses the reference's "featured wins" treatment: a wall of cells sharing
+ * hairline rules rather than a set of separate cards, so the group reads as one
+ * ruled table of contents. Negative-margin borders would leave doubled lines
+ * between cells, so the grid draws them instead — the container is the line
+ * colour and a one-pixel gap lets it through.
  *
- * If a real product ships, add it to `products` in `content.ts` and replace
- * this section with a proper showcase.
+ * What this section deliberately does not borrow is the reference's content.
+ * Those cells carry client logos, funding figures and outcomes; a roadmap has
+ * none of those, and dressing intent up in the furniture of proof is exactly
+ * the overclaim this site has been stripped of. The cells carry a number, the
+ * direction and a plain status instead.
  */
 export default function FeaturedProducts() {
   return (
     <section className="section bg-paper" id="products">
-      <SectionHeading
-        className="container-page"
-        align="center"
-        eyebrow="Product roadmap"
-        title="What we're building next."
-        description="Directions we are investing in, drawn from the systems we already run for clients. These are areas of active development, not products available today."
-      />
+      <div className="container-page">
+        <SectionHeading
+          eyebrow="Product roadmap"
+          title="What we're building next."
+          description="Directions we are investing in, drawn from the systems we already run for clients. These are in active development, not products available today."
+        />
 
-      <RevealGroup className="container-page mt-14 grid gap-px border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
-        {productRoadmap.map((item, i) => (
-          <RevealItem key={item.name}>
-            <div className="flex h-full flex-col bg-paper p-6">
-              <span className="mono-label">
-                {String(i + 1).padStart(2, "0")}
-              </span>
-              <h3 className="mt-4 text-base font-bold text-fg">{item.name}</h3>
-              <p className="mt-2 text-xs leading-relaxed text-muted">
-                {item.blurb}
-              </p>
-            </div>
-          </RevealItem>
-        ))}
-      </RevealGroup>
+        <RevealGroup className="mt-14 grid gap-px border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
+          {productRoadmap.map((item, i) => (
+            <RevealItem key={item.name}>
+              <div className="group flex h-full min-h-[15rem] flex-col justify-between bg-paper p-7 transition-colors duration-300 hover:bg-sand">
+                <div className="flex items-start justify-between gap-3">
+                  <span className="mono-label">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <span className="mono-label text-brand/70 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                    In dev
+                  </span>
+                </div>
 
-      <div className="container-page mt-10 flex flex-col items-center gap-4 text-center">
-        <p className="mono-label">In development — not yet available</p>
-        <Button variant="outline" href="/portfolio">
-          See what we have already shipped
-          <ArrowRight width={18} height={18} />
-        </Button>
+                <div>
+                  <h3 className="text-base font-bold text-fg">{item.name}</h3>
+                  <p className="mt-2.5 text-xs leading-relaxed text-muted">
+                    {item.blurb}
+                  </p>
+                </div>
+              </div>
+            </RevealItem>
+          ))}
+        </RevealGroup>
+
+        <div className="mt-10 flex flex-col items-center gap-4 text-center">
+          <p className="mono-label">In development — not yet available</p>
+          <Button variant="outline" href="/portfolio">
+            See what we have already shipped
+            <ArrowRight width={18} height={18} />
+          </Button>
+        </div>
       </div>
     </section>
   );

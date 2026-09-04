@@ -35,7 +35,7 @@ export default function HeroSection() {
     <section className="band-dark relative overflow-hidden">
       {/* Backdrop: a cool light source overhead, over the engineering grid */}
       <div className="absolute inset-0" aria-hidden>
-        <div className="absolute inset-0 bg-[radial-gradient(95%_70%_at_50%_-12%,#17456e_0%,#0b1730_44%,#070a14_100%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(85%_65%_at_62%_-8%,#1a5a86_0%,#0b1a33_46%,#070a14_100%)]" />
         <div className="bg-grid-dark absolute inset-0 opacity-25" />
       </div>
 

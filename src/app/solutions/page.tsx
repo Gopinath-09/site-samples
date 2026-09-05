@@ -51,11 +51,11 @@ export default function SolutionsPage() {
                       />
                     </div>
 
-                    <h3 className="mt-5 text-lg font-bold text-fg group-hover:text-brand transition-colors">
+                    <h3 className="heading-md mt-5 font-bold text-fg group-hover:text-brand transition-colors">
                       {sol.name}
                     </h3>
 
-                    <p className="mt-2 text-xs leading-relaxed text-muted">
+                    <p className="body-sm mt-2 leading-relaxed text-muted">
                       {sol.description}
                     </p>
 

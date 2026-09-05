@@ -89,10 +89,10 @@ export default async function PortfolioDetailPage({ params }: Props) {
             {/* Outcome, stated in prose because no figure is evidenced */}
             <div className="space-y-4 border-t border-line/60 pt-8">
               <span className="eyebrow">Outcome</span>
-              <h3 className="text-xl font-bold text-fg">
+              <h3 className="heading-md font-bold text-fg">
                 What the platform changed
               </h3>
-              <p className="text-sm leading-relaxed text-muted">
+              <p className="body leading-relaxed text-muted">
                 {proj.benefits}
               </p>
             </div>
@@ -125,7 +125,7 @@ export default async function PortfolioDetailPage({ params }: Props) {
             {/* Features */}
             <div className="space-y-4 border-t border-line/60 pt-8">
               <span className="eyebrow">Core features</span>
-              <h3 className="text-xl font-bold text-fg">What was built</h3>
+              <h3 className="heading-md font-bold text-fg">What was built</h3>
               <div className="grid gap-3 sm:grid-cols-2">
                 {proj.features.map((feat) => (
                   <div
@@ -143,7 +143,7 @@ export default async function PortfolioDetailPage({ params }: Props) {
             {proj.screenshots && proj.screenshots.length > 0 && (
               <div className="space-y-4 border-t border-line/60 pt-8">
                 <span className="eyebrow">Product screens</span>
-                <h3 className="text-xl font-bold text-fg">Inside the platform</h3>
+                <h3 className="heading-md font-bold text-fg">Inside the platform</h3>
                 <div className="grid gap-5 sm:grid-cols-2">
                   {proj.screenshots.map((shot) => (
                     <figure
@@ -188,7 +188,7 @@ export default async function PortfolioDetailPage({ params }: Props) {
           {/* Specification sidebar */}
           <div className="lg:col-span-1">
             <div className="sticky top-28 space-y-6 rounded-2xl border border-line/80 bg-sand/80 p-7 shadow-lg">
-              <h4 className="text-lg font-bold text-fg">Project details</h4>
+              <h4 className="heading-md font-bold text-fg">Project details</h4>
 
               <dl className="space-y-3 border-y border-line/60 py-4 text-xs">
                 <div className="flex justify-between gap-4">
@@ -269,10 +269,10 @@ export default async function PortfolioDetailPage({ params }: Props) {
                       className="text-muted transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
                     />
                   </div>
-                  <h3 className="mt-5 text-lg font-semibold leading-snug text-fg">
+                  <h3 className="heading-md mt-5 font-semibold leading-snug text-fg">
                     {r.title}
                   </h3>
-                  <p className="mt-2 flex-1 text-sm leading-relaxed text-muted">
+                  <p className="body mt-2 flex-1 leading-relaxed text-muted">
                     {r.summary}
                   </p>
                   <div className="mt-6 border-t border-line pt-5">

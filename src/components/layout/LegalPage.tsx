@@ -31,7 +31,7 @@ export default function LegalPage({
               <Reveal key={s.heading}>
                 {/* scroll-mt clears the fixed header when linked to directly */}
                 <div id={s.id} className="scroll-mt-28">
-                  <h2 className="heading-md flex items-baseline gap-3">
+                  <h2 className="heading-lg flex items-baseline gap-3">
                     <span className="font-mono text-sm text-brand">
                       {String(i + 1).padStart(2, "0")}
                     </span>

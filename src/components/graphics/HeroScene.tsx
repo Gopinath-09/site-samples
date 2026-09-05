@@ -65,9 +65,9 @@ export default function HeroScene({ className }: { className?: string }) {
       <defs>
         {/* Key light, sitting behind and to the right of the main structure */}
         <radialGradient id="hs-key" cx="62%" cy="30%" r="52%">
-          <stop offset="0%" stopColor="#3d86c4" stopOpacity="0.5" />
-          <stop offset="55%" stopColor="#12325a" stopOpacity="0.2" />
-          <stop offset="100%" stopColor="#070a14" stopOpacity="0" />
+          <stop offset="0%" stopColor="#3a3a42" stopOpacity="0.55" />
+          <stop offset="55%" stopColor="#17171b" stopOpacity="0.25" />
+          <stop offset="100%" stopColor="#000000" stopOpacity="0" />
         </radialGradient>
 
         <linearGradient id="hs-path" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -78,8 +78,8 @@ export default function HeroScene({ className }: { className?: string }) {
         </linearGradient>
 
         <linearGradient id="hs-top" x1="0%" y1="0%" x2="60%" y2="100%">
-          <stop offset="0%" stopColor="#1e4874" stopOpacity="0.95" />
-          <stop offset="100%" stopColor="#0b1830" stopOpacity="0.95" />
+          <stop offset="0%" stopColor="#1d1d22" stopOpacity="0.95" />
+          <stop offset="100%" stopColor="#0a0a0d" stopOpacity="0.95" />
         </linearGradient>
 
         <filter id="hs-blur" x="-30%" y="-30%" width="160%" height="160%">

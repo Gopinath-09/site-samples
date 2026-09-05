@@ -63,9 +63,9 @@ export default async function BlogPostPage(props: PageProps<"/blog/[slug]">) {
           <aside className="space-y-6">
             {/* Author card */}
             <div className="card p-6">
-              <h3 className="text-xs font-semibold uppercase tracking-widest text-muted">Author</h3>
-              <p className="mt-2 font-semibold text-fg">{post.author}</p>
-              <p className="mt-1 text-sm text-muted">{post.date} · {post.read}</p>
+              <h3 className="heading-md font-semibold uppercase tracking-widest text-muted">Author</h3>
+              <p className="body mt-2 font-semibold text-fg">{post.author}</p>
+              <p className="body mt-1 text-muted">{post.date} · {post.read}</p>
               <span
                 className={`mt-3 inline-flex items-center rounded-full border px-2.5 py-1 text-xs font-semibold ${categoryClass(post.category)}`}
               >
@@ -75,8 +75,8 @@ export default async function BlogPostPage(props: PageProps<"/blog/[slug]">) {
 
             {/* Share nudge */}
             <div className="card bg-sand p-6">
-              <h3 className="font-semibold text-fg">Found this useful?</h3>
-              <p className="mt-2 text-sm text-muted">
+              <h3 className="heading-md font-semibold text-fg">Found this useful?</h3>
+              <p className="body mt-2 text-muted">
                 Share it with your team or reach out if you would like to discuss any of these ideas.
               </p>
               <Button variant="outline" href="/contact" className="mt-5 w-full">
@@ -92,7 +92,7 @@ export default async function BlogPostPage(props: PageProps<"/blog/[slug]">) {
       {related.length > 0 && (
         <section className="section bg-sand">
           <div className="container-page">
-            <h2 className="heading-md">More from the blog</h2>
+            <h2 className="heading-lg">More from the blog</h2>
             <RevealGroup className="mt-8 grid gap-6 md:grid-cols-3">
               {related.map((r) => (
                 <RevealItem key={r.slug} className="h-full">
@@ -106,8 +106,8 @@ export default async function BlogPostPage(props: PageProps<"/blog/[slug]">) {
                     >
                       {r.category}
                     </span>
-                    <h3 className="mt-4 text-base font-semibold leading-snug text-fg">{r.title}</h3>
-                    <p className="mt-2 flex-1 text-sm text-muted line-clamp-3">{r.excerpt}</p>
+                    <h3 className="heading-md mt-4 font-semibold leading-snug text-fg">{r.title}</h3>
+                    <p className="body mt-2 flex-1 text-muted line-clamp-3">{r.excerpt}</p>
                     <div className="mt-5 flex items-center gap-1 text-sm font-semibold text-brand">
                       Read
                       <ArrowUpRight

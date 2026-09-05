@@ -178,10 +178,10 @@ export default function Navbar() {
                   <span className="text-[0.68rem] font-bold uppercase tracking-[0.18em] text-white/45">
                     {megaFeature.eyebrow}
                   </span>
-                  <h2 className="mt-5 text-2xl font-bold tracking-tight text-white">
+                  <h2 className="heading-lg mt-5 font-bold tracking-tight text-white">
                     {megaFeature.title}
                   </h2>
-                  <p className="mt-3 text-sm leading-relaxed text-white/60">
+                  <p className="body mt-3 leading-relaxed text-white/60">
                     {megaFeature.blurb}
                   </p>
                 </div>
@@ -210,7 +210,7 @@ export default function Navbar() {
                         className="text-brand opacity-0 transition-opacity group-hover/title:opacity-100"
                       />
                     </button>
-                    <p className="mt-3 text-[0.8rem] leading-snug text-muted">
+                    <p className="body-sm mt-3 leading-snug text-muted">
                       {group.blurb}
                     </p>
                     <ul className="mt-5 space-y-0.5 border-l border-line">
@@ -243,7 +243,7 @@ export default function Navbar() {
             {/* Footer band */}
             <div className="border-t border-line/70 bg-sand/60">
               <div className="container-page flex flex-col gap-4 py-5 sm:flex-row sm:items-center sm:justify-between">
-                <p className="text-sm text-muted">
+                <p className="body text-muted">
                   Have a project in mind? We reply within one business day.
                 </p>
                 <Button variant="dark" size="sm" href="/contact" className="shrink-0">

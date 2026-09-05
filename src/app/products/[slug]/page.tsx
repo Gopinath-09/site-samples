@@ -68,7 +68,7 @@ export default async function ProductDetailPage(
           <Reveal>
             <div className="card h-full p-8">
               <span className="pill text-copper">The problem</span>
-              <p className="mt-5 text-lg leading-relaxed text-fg">
+              <p className="body mt-5 leading-relaxed text-fg">
                 {product.problem}
               </p>
             </div>
@@ -78,7 +78,7 @@ export default async function ProductDetailPage(
               <span className="pill border-white/15 bg-white/10 text-white">
                 Our solution
               </span>
-              <p className="mt-5 text-lg leading-relaxed text-white/90">
+              <p className="body mt-5 leading-relaxed text-white/90">
                 {product.solution}
               </p>
             </div>
@@ -91,7 +91,7 @@ export default async function ProductDetailPage(
         <div className="container-page">
           <span className="eyebrow">Features</span>
           <Reveal>
-            <h2 className="heading-md mt-4">Everything the team needs, in one place.</h2>
+            <h2 className="heading-lg mt-4">Everything the team needs, in one place.</h2>
           </Reveal>
           <RevealGroup className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {product.features.map((f) => (
@@ -114,12 +114,12 @@ export default async function ProductDetailPage(
           <div>
             <span className="eyebrow">Benefits</span>
             <Reveal>
-              <h2 className="heading-md mt-4">
+              <h2 className="heading-lg mt-4">
                 What changes once {product.name} is in place.
               </h2>
             </Reveal>
             <Reveal delay={0.05}>
-              <p className="mt-5 leading-relaxed text-muted">
+              <p className="body mt-5 leading-relaxed text-muted">
                 Outcomes teams report after adopting the platform — measured
                 against how they worked before, not against a feature list.
               </p>
@@ -133,7 +133,7 @@ export default async function ProductDetailPage(
                   <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-brand text-sm font-bold text-white">
                     {String(i + 1).padStart(2, "0")}
                   </span>
-                  <p className="pt-1.5 text-sm font-semibold leading-snug text-fg">
+                  <p className="body pt-1.5 font-semibold leading-snug text-fg">
                     {b}
                   </p>
                 </div>
@@ -150,7 +150,7 @@ export default async function ProductDetailPage(
             <div>
               <span className="eyebrow">Gallery</span>
               <Reveal>
-                <h2 className="heading-md mt-4">A look inside {product.name}.</h2>
+                <h2 className="heading-lg mt-4">A look inside {product.name}.</h2>
               </Reveal>
             </div>
             <Button variant="outline" href="/contact" className="shrink-0">
@@ -185,7 +185,7 @@ export default async function ProductDetailPage(
           <Reveal>
             <div>
               <span className="eyebrow">Architecture highlights</span>
-              <h2 className="heading-md mt-4">Engineered to scale safely.</h2>
+              <h2 className="heading-lg mt-4">Engineered to scale safely.</h2>
               <ul className="mt-6 space-y-4">
                 {[
                   ["Multi-tenant core", "Strict tenant isolation with per-tenant configuration."],
@@ -210,8 +210,8 @@ export default async function ProductDetailPage(
           <Reveal direction="left">
             <div className="card p-8">
               <span className="pill">Pricing</span>
-              <h3 className="mt-5 heading-md">Flexible plans</h3>
-              <p className="mt-3 text-sm text-muted">
+              <h3 className="heading-md mt-5">Flexible plans</h3>
+              <p className="body mt-3 text-muted">
                 Pricing is tailored to your team size and needs. Get in touch for
                 a plan that fits.
               </p>

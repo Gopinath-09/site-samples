@@ -102,10 +102,10 @@ export default function BlogList({ posts }: { posts: BlogPost[] }) {
                   </span>
                   <span className="text-xs text-muted">{p.read}</span>
                 </div>
-                <h2 className="mt-5 text-xl font-semibold leading-snug text-fg">
+                <h2 className="heading-lg mt-5 font-semibold leading-snug text-fg">
                   {p.title}
                 </h2>
-                <p className="mt-3 flex-1 text-sm leading-relaxed text-muted">
+                <p className="body mt-3 flex-1 leading-relaxed text-muted">
                   {p.excerpt}
                 </p>
                 <div className="mt-6 flex items-center justify-between border-t border-line pt-5">

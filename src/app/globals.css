@@ -16,38 +16,41 @@
    * "the dark colour" for overlays and deep panels.
    */
 
-  /* Surfaces, deepest first */
-  --color-ink: #05070e;
-  /* deepest well — emphasis panels, overlays */
-  --color-ink-soft: #0e1424;
+  /*
+   * Surfaces are neutral black, not navy. Every step below is grey — the only
+   * hue on the site now comes from the accent and the drawn graphics, so a
+   * screen of it reads as black rather than as very dark blue.
+   */
+  --color-ink: #000000;
+  /* true black — deepest wells and overlays */
+  --color-ink-soft: #0c0c0e;
   /* elevated dark surface */
-  --color-ink-line: #1e2740;
+  --color-ink-line: #26262b;
   /* borders inside dark panels */
-  --color-paper: #0a0e1a;
+  --color-paper: #08080a;
   /* the page itself */
-  --color-sand: #0f1526;
+  --color-sand: #0e0e11;
   /* alternate section band, one step lifted */
-  --color-sand-deep: #151d31;
+  --color-sand-deep: #16161a;
   /* a further step, for nested surfaces */
-  --color-line: #1e2740;
+  --color-line: #26262b;
   /* hairline borders */
 
-  /* Text */
-  --color-fg: #eef2f8;
+  /* Text — neutral greys, so nothing reads as tinted against the black */
+  --color-fg: #f4f4f5;
   /* primary text on every surface */
-  --color-muted: #8e9bb5;
-  /* secondary text */
-  --color-muted-dark: #93a0bd;
+  --color-muted: #a1a1aa;
+  /* secondary text, about 8:1 on the page colour */
+  --color-muted-dark: #a1a1aa;
   /* secondary text inside the darkest panels */
 
   /*
-   * Brand. The cobalt below reaches only about 2.5:1 on these surfaces, so the
-   * lifted blue is now the accent that text and icons use, and the cobalt is
-   * kept for solid fills where the text sits on top of it.
+   * Brand. The accent is the one place colour is allowed, which is what makes
+   * it read as deliberate against neutral surroundings.
    */
   --color-brand: #5b83ff;
   --color-brand-strong: #2450e6;
-  --color-brand-soft: #16203f;
+  --color-brand-soft: #17171c;
   --color-brand-light: #9bb6ff;
 
   /* Secondary accent — warm copper, used sparingly for emphasis */
@@ -159,29 +162,66 @@ body {
     justify-content: center;
   }
 
-  .heading-xl {
-    font-size: clamp(2.25rem, 5vw, 3.75rem);
-    line-height: 1.04;
-    letter-spacing: -0.03em;
-    font-weight: 600;
+  /*
+   * The type scale. Four heading steps and two body steps, and nothing outside
+   * them — the site previously carried thirteen different heading treatments
+   * and five paragraph sizes, which is what made pages feel unrelated even
+   * while sharing a palette.
+   *
+   * Only the top two steps scale with the viewport. A card heading and a
+   * paragraph are read at the same distance whatever the screen, so fixing them
+   * is what makes the size genuinely uniform rather than uniform per breakpoint.
+   */
+
+  /* Hero only — the one line per site that carries the first impression. */
+  .heading-display {
+    font-size: clamp(2.15rem, 4.6vw, 4rem);
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    font-weight: 500;
   }
 
-  .heading-lg {
-    font-size: clamp(1.9rem, 3.6vw, 2.85rem);
+  /* Page titles. */
+  .heading-xl {
+    font-size: clamp(2rem, 3.4vw, 2.9rem);
     line-height: 1.08;
     letter-spacing: -0.025em;
     font-weight: 600;
   }
 
-  .heading-md {
-    font-size: clamp(1.35rem, 2.2vw, 1.6rem);
-    line-height: 1.2;
-    letter-spacing: -0.015em;
+  /* Section titles. */
+  .heading-lg {
+    font-size: clamp(1.75rem, 2.8vw, 2.35rem);
+    line-height: 1.12;
+    letter-spacing: -0.02em;
     font-weight: 600;
   }
 
+  /* Card, item and panel titles. */
+  .heading-md {
+    font-size: 1.125rem;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+    font-weight: 600;
+  }
+
+  /* Section intros, standing between a heading and body copy. */
   .lead {
-    font-size: clamp(1.05rem, 1.4vw, 1.2rem);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    color: var(--color-muted);
+  }
+
+  /* Default paragraph. */
+  .body {
+    font-size: 0.9375rem;
+    line-height: 1.65;
+    color: var(--color-muted);
+  }
+
+  /* Meta, captions and secondary lines. */
+  .body-sm {
+    font-size: 0.8125rem;
     line-height: 1.6;
     color: var(--color-muted);
   }

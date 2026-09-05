@@ -23,7 +23,7 @@ export default function SuccessMetrics() {
                   decimals={m.decimals}
                 />
               </div>
-              <p className="mt-3 text-sm text-muted-dark">{m.label}</p>
+              <p className="body mt-3 text-muted-dark">{m.label}</p>
             </RevealItem>
           ))}
         </RevealGroup>

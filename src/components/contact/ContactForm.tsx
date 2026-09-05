@@ -79,8 +79,8 @@ export default function ContactForm() {
         <span className="flex h-14 w-14 items-center justify-center rounded-full bg-brand-soft text-brand">
           <Check width={26} height={26} />
         </span>
-        <h3 className="mt-6 heading-md">Thank you — message received.</h3>
-        <p className="mt-3 max-w-sm text-sm text-muted">
+        <h3 className="heading-md mt-6">Thank you — message received.</h3>
+        <p className="body mt-3 max-w-sm text-muted">
           Our team will get back to you within one business day. In the meantime,
           feel free to explore our work.
         </p>
@@ -176,14 +176,14 @@ export default function ContactForm() {
           )}
         />
         {errors.message && (
-          <p className="mt-1.5 text-xs font-medium text-red-500">{errors.message}</p>
+          <p className="body-sm mt-1.5 font-medium text-red-500">{errors.message}</p>
         )}
       </div>
 
       <Button type="submit" variant="primary" size="lg" className="mt-6 w-full sm:w-auto">
         Send message
       </Button>
-      <p className="mt-4 text-xs text-muted">
+      <p className="body-sm mt-4 text-muted">
         By submitting, you agree to our privacy policy. We never share your data.
       </p>
     </form>
@@ -230,7 +230,7 @@ function Field({
             : "border-line focus:border-brand focus:ring-2 focus:ring-brand/15",
         )}
       />
-      {error && <p className="mt-1.5 text-xs font-medium text-red-500">{error}</p>}
+      {error && <p className="body-sm mt-1.5 font-medium text-red-500">{error}</p>}
     </div>
   );
 }

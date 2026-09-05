@@ -107,7 +107,7 @@ export default function FeaturedProjects({
                     >
                       {proj.title}
                     </h3>
-                    <p className="mt-2.5 text-xs leading-relaxed text-muted line-clamp-3">
+                    <p className="body-sm mt-2.5 leading-relaxed text-muted line-clamp-3">
                       {proj.summary}
                     </p>
                   </div>

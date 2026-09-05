@@ -74,8 +74,8 @@ export default function IndustriesPage() {
                     <Check width={14} height={14} />
                   </span>
                   <div>
-                    <h3 className="font-semibold text-fg">{c.title}</h3>
-                    <p className="mt-1.5 text-sm leading-relaxed text-muted">
+                    <h3 className="heading-md font-semibold text-fg">{c.title}</h3>
+                    <p className="body mt-1.5 leading-relaxed text-muted">
                       {c.body}
                     </p>
                   </div>

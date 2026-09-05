@@ -110,7 +110,7 @@ export default function Footer() {
           >
             Explore <span className="tracking-[0.14em] text-brand">COBRR</span>
           </button>
-          <p className="mt-5 max-w-sm text-sm leading-relaxed text-muted-dark">
+          <p className="body mt-5 max-w-sm leading-relaxed text-muted-dark">
             {company.legalName}. Enterprise software, AI solutions, cloud
             infrastructure and scalable digital platforms.
           </p>
@@ -148,7 +148,7 @@ export default function Footer() {
             >
               Newsletter
             </label>
-            <p className="mt-2 text-sm leading-relaxed text-muted-dark">
+            <p className="body mt-2 leading-relaxed text-muted-dark">
               Engineering notes and product updates. No more than once a month.
             </p>
             <div className="mt-4 flex gap-2">
@@ -176,7 +176,7 @@ export default function Footer() {
         <div className="grid grid-cols-2 gap-8 sm:grid-cols-4">
           {footerNav.map((group) => (
             <div key={group.title}>
-              <h3 className="text-xs font-semibold uppercase tracking-widest text-muted-dark">
+              <h3 className="heading-md font-semibold uppercase tracking-widest text-muted-dark">
                 {group.title}
               </h3>
               <ul className="mt-5 space-y-3">
@@ -197,7 +197,7 @@ export default function Footer() {
       {/* Legal bar */}
       <div className="relative">
         <div className="container-page flex flex-col gap-4 py-6 text-sm text-muted-dark md:flex-row md:items-center md:justify-between">
-          <p>
+          <p className="body-sm">
             © {year} {company.legalName}. All rights reserved.
           </p>
           <div className="flex gap-6">

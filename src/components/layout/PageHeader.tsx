@@ -24,9 +24,13 @@ export default function PageHeader({
   return (
     <section className="relative overflow-hidden bg-ink text-white">
       <div className="bg-grid-dark absolute inset-0 opacity-40" aria-hidden />
+      {/*
+        A neutral lift in the corner rather than a wash of the accent. The
+        accent belongs on marks and rules, not on the surface behind a page
+        title — at this size it tinted the whole header blue.
+      */}
       <div
-        className="absolute right-0 top-0 h-72 w-96 rounded-full opacity-20 blur-3xl"
-        style={{ background: "var(--color-brand)" }}
+        className="absolute right-0 top-0 h-72 w-96 rounded-full bg-white/10 opacity-30 blur-3xl"
         aria-hidden
       />
       <div

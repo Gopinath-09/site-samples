@@ -35,7 +35,7 @@ export default function HeroSection() {
     <section className="band-dark relative overflow-hidden">
       {/* Backdrop: a cool light source overhead, over the engineering grid */}
       <div className="absolute inset-0" aria-hidden>
-        <div className="absolute inset-0 bg-[radial-gradient(85%_65%_at_62%_-8%,#1a5a86_0%,#0b1a33_46%,#070a14_100%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(85%_65%_at_62%_-8%,#1c1c21_0%,#0d0d10_46%,#000000_100%)]" />
         <div className="bg-grid-dark absolute inset-0 opacity-25" />
       </div>
 
@@ -52,12 +52,12 @@ export default function HeroSection() {
         <div className="relative rounded-[2rem] border border-white/[0.09] px-5 py-20 sm:rounded-[2.75rem] sm:px-10 lg:py-28">
           {/* A faint inner light, so the frame reads as glass rather than a box */}
           <div
-            className="pointer-events-none absolute inset-0 rounded-[inherit] bg-[radial-gradient(70%_120%_at_50%_0%,rgba(120,190,255,0.07),transparent_70%)]"
+            className="pointer-events-none absolute inset-0 rounded-[inherit] bg-[radial-gradient(70%_120%_at_50%_0%,rgba(255,255,255,0.05),transparent_70%)]"
             aria-hidden
           />
 
           <div className="relative">
-            <h1 className="text-center text-[clamp(2.15rem,4.6vw,4rem)] font-medium leading-[1.08] tracking-[-0.02em] text-white [text-shadow:0_0_60px_rgba(140,200,255,0.28)]">
+            <h1 className="heading-xl text-center font-medium leading-[1.08] tracking-[-0.02em] text-white [text-shadow:0_0_60px_rgba(255,255,255,0.18)]">
               <RevealLines
                 lines={["Software that", "outlives its first release."]}
               />
@@ -66,7 +66,7 @@ export default function HeroSection() {
             {/* Delays are keyed to the headline: the supporting line arrives as
                 the second line of type settles, and the actions just after. */}
             <Reveal delay={0.45}>
-              <p className="mx-auto mt-7 max-w-sm text-center text-sm leading-relaxed text-white/55">
+              <p className="body mx-auto mt-7 max-w-sm text-center leading-relaxed text-white/55">
                 We are an engineering studio in Coimbatore building enterprise
                 platforms, cloud systems and AI for education, healthcare,
                 tourism and logistics.

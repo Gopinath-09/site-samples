@@ -80,7 +80,7 @@ export default function IndustriesServed() {
             <h3 className="heading-md mt-6 text-balance text-fg">
               {ind.headline}
             </h3>
-            <p className="mt-4 text-sm leading-relaxed text-muted">
+            <p className="body mt-4 leading-relaxed text-muted">
               {ind.description}
             </p>
 
@@ -105,7 +105,7 @@ export default function IndustriesServed() {
 
           <div className="grid gap-10 sm:grid-cols-2 sm:gap-12">
             <div>
-              <h4 className="mono-label border-b border-line pb-3">
+              <h4 className="heading-md mono-label border-b border-line pb-3">
                 Challenges
               </h4>
               <ul className="mt-5 space-y-4">
@@ -119,7 +119,7 @@ export default function IndustriesServed() {
             </div>
 
             <div>
-              <h4 className="mono-label border-b border-line pb-3">
+              <h4 className="heading-md mono-label border-b border-line pb-3">
                 How we solve them
               </h4>
               <ul className="mt-5 space-y-4">

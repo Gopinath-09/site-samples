@@ -19,10 +19,10 @@ export default function TrustedBy() {
         {/* Left — framing */}
         <div className="lg:sticky lg:top-28 lg:self-start">
           <span className="eyebrow">Trusted by</span>
-          <h2 className="heading-md mt-4 text-balance">
+          <h2 className="heading-lg mt-4 text-balance">
             Teams that shipped with us.
           </h2>
-          <p className="mt-4 max-w-sm text-sm leading-relaxed text-muted">
+          <p className="body mt-4 max-w-sm leading-relaxed text-muted">
             From tourism and youth development to hospital patient services —
             organisations run the platforms we build.
           </p>

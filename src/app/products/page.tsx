@@ -96,8 +96,8 @@ export default function ProductsPage() {
                     <Check width={16} height={16} />
                   </span>
                   <div>
-                    <h3 className="font-semibold text-fg">{pt.title}</h3>
-                    <p className="mt-1.5 text-sm leading-relaxed text-muted">
+                    <h3 className="heading-md font-semibold text-fg">{pt.title}</h3>
+                    <p className="body mt-1.5 leading-relaxed text-muted">
                       {pt.body}
                     </p>
                   </div>
@@ -116,7 +116,7 @@ export default function ProductsPage() {
             <h2 className="heading-lg mt-4 text-white">
               Want one of these built for your organisation?
             </h2>
-            <p className="mt-5 text-base leading-relaxed text-white/65">
+            <p className="body mt-5 leading-relaxed text-white/65">
               Several roadmap directions are already being built as client
               engagements. If one matches a problem you have, that is usually the
               fastest route to having it.
@@ -127,7 +127,7 @@ export default function ProductsPage() {
               Start a conversation
               <ArrowRight width={18} height={18} />
             </Button>
-            <p className="text-sm text-white/40 md:text-right">
+            <p className="body text-white/40 md:text-right">
               Response within 1 business day
             </p>
           </div>

@@ -71,8 +71,8 @@ export default function FeaturedProducts() {
                 </div>
 
                 <div className="relative">
-                  <h3 className="text-xl font-semibold text-fg">{item.name}</h3>
-                  <p className="mt-3 max-w-md text-sm leading-relaxed text-muted">
+                  <h3 className="heading-md font-semibold text-fg">{item.name}</h3>
+                  <p className="body mt-3 max-w-md leading-relaxed text-muted">
                     {item.blurb}
                   </p>
                 </div>

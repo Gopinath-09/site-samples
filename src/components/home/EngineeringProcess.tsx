@@ -53,10 +53,10 @@ export default function EngineeringProcess() {
                   </div>
 
                   <div className="md:flex md:items-baseline md:gap-10">
-                    <h3 className="text-xl font-semibold text-fg md:w-64 md:shrink-0">
+                    <h3 className="heading-md font-semibold text-fg md:w-64 md:shrink-0">
                       {s.title}
                     </h3>
-                    <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted md:mt-0">
+                    <p className="body mt-2 max-w-2xl leading-relaxed text-muted md:mt-0">
                       {s.description}
                     </p>
                   </div>

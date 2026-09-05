@@ -18,7 +18,7 @@ export default function FinalCta() {
               <span className="eyebrow eyebrow-center" style={{ color: "#7f9dff" }}>
                 Start the conversation
               </span>
-              <h2 className="heading-xl mt-5 text-balance text-white">
+              <h2 className="heading-lg mt-5 text-balance text-white">
                 Ready to build software you can rely on?
               </h2>
               <p className="lead mt-6 text-muted-dark">
@@ -38,7 +38,7 @@ export default function FinalCta() {
           </div>
         </Reveal>
       </div>
-      <h1 className="text-wave absolute bottom-5 left-1/2 z-49 -translate-x-1/2 text-left text-5xl font-extrabold tracking-[0.15em] md:text-7xl">
+      <h1 className="heading-xl text-wave absolute bottom-5 left-1/2 z-49 -translate-x-1/2 text-left font-extrabold tracking-[0.15em]">
         COBRR
       </h1>
     </section>

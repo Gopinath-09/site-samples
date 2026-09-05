@@ -49,10 +49,10 @@ export default function BlogPage() {
                   >
                     {featured.category}
                   </span>
-                  <h2 className="mt-6 text-2xl font-bold leading-snug text-white md:text-3xl">
+                  <h2 className="heading-lg mt-6 font-bold leading-snug text-white">
                     {featured.title}
                   </h2>
-                  <p className="mt-4 text-sm leading-relaxed text-white/60">
+                  <p className="body mt-4 leading-relaxed text-white/60">
                     {featured.excerpt}
                   </p>
                   <div className="mt-8 flex items-center gap-2 text-sm font-semibold text-white/80">
@@ -93,7 +93,7 @@ export default function BlogPage() {
             <h3 className="heading-md mt-4">
               Engineering insights, delivered when they matter.
             </h3>
-            <p className="mt-3 text-sm text-muted">
+            <p className="body mt-3 text-muted">
               We write when we have something worth saying — not on a publishing schedule. Follow us for deep technical articles and occasional company news.
             </p>
             <div className="mt-8 flex justify-center">

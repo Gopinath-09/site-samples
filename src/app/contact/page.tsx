@@ -82,8 +82,8 @@ export default function ContactPage() {
           {/* Left: contact info */}
           <Reveal>
             <div>
-              <h2 className="heading-md">Reach us directly</h2>
-              <p className="mt-4 leading-relaxed text-muted">
+              <h2 className="heading-lg">Reach us directly</h2>
+              <p className="body mt-4 leading-relaxed text-muted">
                 Prefer email or a quick call? Use any channel below, or complete
                 the form and we will route your message to the right team.
               </p>
@@ -99,7 +99,7 @@ export default function ContactPage() {
                       <Button variant="outline" size="sm" href={ch.href} external>
                         {ch.value}
                       </Button>
-                      <p className="mt-1.5 text-xs text-muted">{ch.desc}</p>
+                      <p className="body-sm mt-1.5 text-muted">{ch.desc}</p>
                     </dd>
                   </div>
                 ))}
@@ -110,10 +110,10 @@ export default function ContactPage() {
                 <div key={o.city} className="mt-6 card bg-sand p-6">
                   <div className="flex items-start justify-between gap-4">
                     <div>
-                      <h3 className="font-semibold text-fg">
+                      <h3 className="heading-md font-semibold text-fg">
                         {o.city}, {o.country}
                       </h3>
-                      <p className="mt-1 text-sm text-muted">{o.address}</p>
+                      <p className="body mt-1 text-muted">{o.address}</p>
                     </div>
                     <span className="shrink-0 rounded-full bg-brand-soft px-2.5 py-1 text-xs font-semibold text-brand">
                       {o.type}
@@ -127,7 +127,7 @@ export default function ContactPage() {
 
               {/* Social channels */}
               <div className="mt-6">
-                <h3 className="text-xs font-semibold uppercase tracking-widest text-muted">
+                <h3 className="heading-md font-semibold uppercase tracking-widest text-muted">
                   Follow us
                 </h3>
                 <ul className="mt-4 flex flex-wrap gap-2">
@@ -154,8 +154,8 @@ export default function ContactPage() {
                     1d
                   </span>
                   <div>
-                    <p className="font-semibold text-fg">One-business-day reply</p>
-                    <p className="text-sm text-muted">
+                    <p className="body font-semibold text-fg">One-business-day reply</p>
+                    <p className="body text-muted">
                       We reply to every genuine enquiry. No auto-responses, no black holes.
                     </p>
                   </div>
@@ -177,8 +177,8 @@ export default function ContactPage() {
           <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <span className="eyebrow">Find us</span>
-              <h2 className="heading-md mt-3">{company.location}</h2>
-              <p className="mt-2 max-w-md text-sm text-muted">{company.address}</p>
+              <h2 className="heading-lg mt-3">{company.location}</h2>
+              <p className="body mt-2 max-w-md text-muted">{company.address}</p>
             </div>
             <Button
               variant="outline"
@@ -210,15 +210,15 @@ export default function ContactPage() {
       {/* Pre-call FAQs */}
       <section className="section bg-sand">
         <div className="container-page max-w-3xl">
-          <h2 className="heading-md">Before you reach out</h2>
-          <p className="mt-3 text-muted">
+          <h2 className="heading-lg">Before you reach out</h2>
+          <p className="body mt-3 text-muted">
             Quick answers to the questions we hear most often.
           </p>
           <div className="mt-8 space-y-4">
             {faqs.map((faq) => (
               <div key={faq.q} className="card p-6">
-                <h3 className="font-semibold text-fg">{faq.q}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted">{faq.a}</p>
+                <h3 className="heading-md font-semibold text-fg">{faq.q}</h3>
+                <p className="body mt-2 leading-relaxed text-muted">{faq.a}</p>
               </div>
             ))}
           </div>
@@ -233,7 +233,7 @@ export default function ContactPage() {
             <h2 className="heading-lg mt-4 text-white">
               Ready to scope your next platform?
             </h2>
-            <p className="mt-5 text-base leading-relaxed text-white/65">
+            <p className="body mt-5 leading-relaxed text-white/65">
               Whether you have a fully-formed brief or just an early idea — we are
               happy to start a conversation and help you figure out what to build next.
             </p>
@@ -243,7 +243,7 @@ export default function ContactPage() {
               Email us directly
               <ArrowRight width={18} height={18} />
             </Button>
-            <p className="text-sm text-white/40 md:text-right">
+            <p className="body text-white/40 md:text-right">
               {company.legalName}
             </p>
           </div>

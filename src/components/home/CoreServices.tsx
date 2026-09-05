@@ -64,7 +64,7 @@ export default function CoreServices({
 
                   <div className="flex flex-1 flex-col p-6">
                     <div className="flex items-start justify-between gap-3">
-                      <h3 className="text-lg font-semibold text-fg">
+                      <h3 className="heading-md font-semibold text-fg">
                         {service.title}
                       </h3>
                       <ArrowUpRight
@@ -73,7 +73,7 @@ export default function CoreServices({
                         className="mt-1 shrink-0 text-muted transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-fg"
                       />
                     </div>
-                    <p className="mt-2 text-sm leading-relaxed text-muted">
+                    <p className="body mt-2 leading-relaxed text-muted">
                       {service.summary}
                     </p>
                   </div>
@@ -87,7 +87,7 @@ export default function CoreServices({
             <div className="flex h-full flex-col justify-between rounded-3xl border border-line bg-sand p-6">
               <div>
                 <span className="mono-label">Not sure which?</span>
-                <p className="mt-4 text-sm leading-relaxed text-muted">
+                <p className="body mt-4 leading-relaxed text-muted">
                   Most engagements start as one discipline and end up using three.
                   Describe the problem and we will tell you what it actually needs.
                 </p>

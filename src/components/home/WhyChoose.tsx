@@ -49,7 +49,7 @@ export default function WhyChoose() {
           <h2 className="heading-lg mt-5 text-balance text-fg">
             The difference is in how we work.
           </h2>
-          <p className="mt-6 max-w-sm text-sm leading-relaxed text-muted">
+          <p className="body mt-6 max-w-sm leading-relaxed text-muted">
             Seven things we hold to. None of them is a number we cannot show
             you.
           </p>
@@ -100,10 +100,10 @@ export default function WhyChoose() {
                 <span className="mono-label">{d.label}</span>
               </div>
 
-              <h3 className="mt-5 text-balance text-2xl font-medium leading-snug tracking-[-0.01em] text-fg lg:text-3xl">
+              <h3 className="heading-md mt-5 text-balance font-medium leading-snug tracking-[-0.01em] text-fg">
                 {d.title}
               </h3>
-              <p className="mt-4 max-w-2xl text-sm leading-relaxed text-muted lg:text-base">
+              <p className="body mt-4 max-w-2xl leading-relaxed text-muted">
                 {d.description}
               </p>
             </li>

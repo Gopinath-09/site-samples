@@ -63,7 +63,7 @@ export default function FaqSection({
                       transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
                       className="overflow-hidden"
                     >
-                      <p className="pb-5 pr-10 text-sm leading-relaxed text-muted">
+                      <p className="body pb-5 pr-10 leading-relaxed text-muted">
                         {f.answer}
                       </p>
                     </motion.div>

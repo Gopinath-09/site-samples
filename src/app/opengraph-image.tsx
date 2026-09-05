@@ -11,7 +11,7 @@ export const alt = `${company.legalName} — ${company.tagline}`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-const INK = "#0a0e1a";
+const INK = "#08080a";
 const BRAND = "#2450e6";
 const LINE = "rgba(255,255,255,0.10)";
 
@@ -26,7 +26,7 @@ export default function OpengraphImage() {
           flexDirection: "column",
           justifyContent: "space-between",
           background: INK,
-          backgroundImage: `radial-gradient(110% 85% at 72% 0%, #16224a 0%, #0c1024 45%, ${INK} 100%)`,
+          backgroundImage: `radial-gradient(110% 85% at 72% 0%, #1c1c21 0%, #0d0d10 45%, ${INK} 100%)`,
           padding: 72,
           fontFamily: "sans-serif",
         }}

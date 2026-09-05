@@ -40,10 +40,10 @@ export default function WhoWeAre() {
           <Reveal>
             <div className="rounded-2xl border border-line/80 bg-sand/60 p-8 space-y-4">
               <span className="pill bg-brand-soft text-brand font-bold border-brand/20">OUR MISSION</span>
-              <h3 className="text-xl font-bold text-fg">
+              <h3 className="heading-md font-bold text-fg">
                 To Engineer Software & AI Platforms That Power Tomorrow&apos;s Tech Leaders.
               </h3>
-              <p className="text-sm leading-relaxed text-muted">
+              <p className="body leading-relaxed text-muted">
                 Our mission is to give ambitious startups and forward-thinking enterprises the architectural foundation, rapid execution, and technical clarity required to launch and scale world-class digital products.
               </p>
             </div>
@@ -52,10 +52,10 @@ export default function WhoWeAre() {
           <Reveal delay={0.05}>
             <div className="rounded-2xl border border-line/80 bg-ink p-8 text-white space-y-4 shadow-xl">
               <span className="pill bg-white/10 text-white font-bold border-white/20">OUR VISION</span>
-              <h3 className="text-xl font-bold text-white">
+              <h3 className="heading-md font-bold text-white">
                 To Be the World&apos;s Most Trusted Technology & AI Engineering Partner.
               </h3>
-              <p className="text-sm leading-relaxed text-white/75">
+              <p className="body leading-relaxed text-white/75">
                 We envision a technology landscape where software is built with discipline, AI empowers human workflows, and long-term partnership replaces short-sighted vendor relationships.
               </p>
             </div>
@@ -64,7 +64,7 @@ export default function WhoWeAre() {
 
         {/* Core Values Grid */}
         <div>
-          <h3 className="text-xs font-bold uppercase tracking-wider text-muted mb-6">
+          <h3 className="heading-md font-bold uppercase tracking-wider text-muted mb-6">
             OUR CORE VALUES
           </h3>
           <RevealGroup className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -76,8 +76,8 @@ export default function WhoWeAre() {
                     <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-soft text-brand mb-4">
                       <IconComp width={20} height={20} />
                     </div>
-                    <h4 className="text-base font-bold text-fg">{val.title}</h4>
-                    <p className="mt-2 text-xs leading-relaxed text-muted">{val.desc}</p>
+                    <h4 className="heading-md font-bold text-fg">{val.title}</h4>
+                    <p className="body-sm mt-2 leading-relaxed text-muted">{val.desc}</p>
                   </div>
                 </RevealItem>
               );

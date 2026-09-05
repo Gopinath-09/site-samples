@@ -70,10 +70,10 @@ export default function TechnologiesPage() {
           <div className="mt-14 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
             {technologies.map((group) => (
               <div key={group.category} className="card p-7">
-                <h3 className="text-base font-bold uppercase tracking-wider text-brand">
+                <h3 className="heading-md font-bold uppercase tracking-wider text-brand">
                   {group.category}
                 </h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted">{group.description}</p>
+                <p className="body mt-2 leading-relaxed text-muted">{group.description}</p>
                 <ul className="mt-5 flex flex-wrap gap-2">
                   {group.items.map((tech) => (
                     <li key={tech.name} className="flex items-center gap-1.5">
@@ -106,8 +106,8 @@ export default function TechnologiesPage() {
             {principles.map((p) => (
               <RevealItem key={p.title} className="h-full">
                 <div className="card h-full p-7">
-                  <h3 className="text-lg font-semibold text-fg">{p.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted">{p.body}</p>
+                  <h3 className="heading-md font-semibold text-fg">{p.title}</h3>
+                  <p className="body mt-2 leading-relaxed text-muted">{p.body}</p>
                 </div>
               </RevealItem>
             ))}

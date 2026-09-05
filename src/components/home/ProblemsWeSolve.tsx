@@ -89,7 +89,7 @@ export default function ProblemsWeSolve() {
                 <h3 className="heading-md mt-4 text-balance text-fg">
                   {p.question}
                 </h3>
-                <p className="mt-4 max-w-2xl text-sm leading-relaxed text-muted">
+                <p className="body mt-4 max-w-2xl leading-relaxed text-muted">
                   {p.answer}
                 </p>
                 <Button variant="outline" size="sm" href={p.href} className="mt-6">
@@ -160,7 +160,7 @@ export default function ProblemsWeSolve() {
                   exit={{ opacity: 0, y: -12 }}
                   transition={{ duration: 0.45, ease: EASE, delay: 0.12 }}
                 >
-                  <p className="mt-8 max-w-2xl text-base leading-relaxed text-muted lg:text-lg">
+                  <p className="body mt-8 max-w-2xl leading-relaxed text-muted">
                     {current.answer}
                   </p>
                   <Button

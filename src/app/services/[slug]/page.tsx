@@ -45,16 +45,16 @@ export default async function ServiceDetailPage(
           <div>
             <span className="eyebrow">Overview</span>
             <Reveal>
-              <h2 className="heading-md mt-4">
+              <h2 className="heading-lg mt-4">
                 Outcomes engineered around your goals.
               </h2>
             </Reveal>
             <Reveal delay={0.05}>
-              <p className="lead mt-5 text-base">{service.description}</p>
+              <p className="lead mt-5">{service.description}</p>
             </Reveal>
 
             {/* Benefits */}
-            <h3 className="mt-10 text-sm font-bold uppercase tracking-wider text-muted">
+            <h3 className="heading-md mt-10 font-bold uppercase tracking-wider text-muted">
               What you gain
             </h3>
             <RevealGroup className="mt-5 grid gap-3">
@@ -77,7 +77,7 @@ export default async function ServiceDetailPage(
               <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-ink text-white">
                 <Icon name={service.icon} width={22} height={22} />
               </span>
-              <h3 className="mt-6 text-lg font-semibold text-fg">Focus areas</h3>
+              <h3 className="heading-md mt-6 font-semibold text-fg">Focus areas</h3>
               <ul className="mt-4 space-y-3">
                 {service.points.map((p) => (
                   <li key={p} className="flex items-start gap-3 text-sm text-muted">
@@ -101,7 +101,7 @@ export default async function ServiceDetailPage(
         <div className="container-page grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
           <div>
             <span className="eyebrow">Capabilities</span>
-            <h2 className="heading-md mt-4">What&apos;s included</h2>
+            <h2 className="heading-lg mt-4">What&apos;s included</h2>
             <RevealGroup className="mt-8 grid gap-4 sm:grid-cols-2">
               {service.features.map((f) => (
                 <RevealItem key={f} className="h-full">
@@ -109,7 +109,7 @@ export default async function ServiceDetailPage(
                     <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-ink text-white">
                       <Check width={15} height={15} />
                     </span>
-                    <p className="mt-4 text-sm font-semibold leading-snug text-fg">
+                    <p className="body mt-4 font-semibold leading-snug text-fg">
                       {f}
                     </p>
                   </div>
@@ -121,10 +121,10 @@ export default async function ServiceDetailPage(
           <Reveal direction="left">
             <div className="card p-8">
               <span className="eyebrow">Technologies used</span>
-              <h3 className="mt-3 text-lg font-semibold text-fg">
+              <h3 className="heading-md mt-3 font-semibold text-fg">
                 The stack behind this service
               </h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted">
+              <p className="body mt-2 leading-relaxed text-muted">
                 Chosen for operational maturity and long-term supportability —
                 not novelty.
               </p>
@@ -150,7 +150,7 @@ export default async function ServiceDetailPage(
       <section className="section bg-paper">
         <div className="container-page">
           <span className="eyebrow">How we work</span>
-          <h2 className="heading-md mt-4 max-w-2xl">
+          <h2 className="heading-lg mt-4 max-w-2xl">
             A clear path from first conversation to production.
           </h2>
           <RevealGroup className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -160,7 +160,7 @@ export default async function ServiceDetailPage(
                   <span className="text-xs font-bold tracking-widest text-brand">
                     {String(i + 1).padStart(2, "0")}
                   </span>
-                  <h3 className="mt-3 text-base font-semibold leading-snug text-fg">
+                  <h3 className="heading-md mt-3 font-semibold leading-snug text-fg">
                     {step}
                   </h3>
                   {i < service.processSteps.length - 1 && (
@@ -188,7 +188,7 @@ export default async function ServiceDetailPage(
       {/* Related services */}
       <section className="section bg-paper">
         <div className="container-page">
-          <h2 className="heading-md">Related services</h2>
+          <h2 className="heading-lg">Related services</h2>
           <RevealGroup className="mt-8 grid gap-6 md:grid-cols-3">
             {related.map((r) => (
               <RevealItem key={r.slug} className="h-full">

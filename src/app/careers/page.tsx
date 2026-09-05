@@ -96,8 +96,8 @@ export default function CareersPage() {
                   <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-soft text-brand">
                     <Icon name={p.icon} width={20} height={20} />
                   </span>
-                  <h3 className="mt-5 text-lg font-semibold text-fg">{p.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted">{p.body}</p>
+                  <h3 className="heading-md mt-5 font-semibold text-fg">{p.title}</h3>
+                  <p className="body mt-2 leading-relaxed text-muted">{p.body}</p>
                 </div>
               </RevealItem>
             ))}
@@ -123,10 +123,10 @@ export default function CareersPage() {
                     </span>
                     <span className="pill text-[0.68rem]">{step.duration}</span>
                   </div>
-                  <h3 className="mt-4 text-base font-semibold text-fg">
+                  <h3 className="heading-md mt-4 font-semibold text-fg">
                     {step.title}
                   </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted">
+                  <p className="body mt-2 leading-relaxed text-muted">
                     {step.description}
                   </p>
                 </div>
@@ -145,7 +145,7 @@ export default function CareersPage() {
             <h2 className="heading-lg mt-4 text-white">
               Six months. Real production work.
             </h2>
-            <p className="mt-5 text-base leading-relaxed text-white/65">
+            <p className="body mt-5 leading-relaxed text-white/65">
               {internships.intro}
             </p>
             <ul className="mt-8 space-y-3">
@@ -168,8 +168,8 @@ export default function CareersPage() {
             {internships.tracks.map((t) => (
               <RevealItem key={t.name} className="h-full">
                 <div className="h-full rounded-2xl border border-white/12 bg-white/4 p-6 transition-colors duration-300 hover:border-brand/50 hover:bg-white/8">
-                  <h3 className="text-base font-semibold text-white">{t.name}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-white/60">
+                  <h3 className="heading-md font-semibold text-white">{t.name}</h3>
+                  <p className="body mt-2 leading-relaxed text-white/60">
                     {t.focus}
                   </p>
                 </div>
@@ -223,8 +223,8 @@ export default function CareersPage() {
           </RevealGroup>
 
           <div className="mt-10 rounded-2xl border border-dashed border-line bg-sand p-8 text-center">
-            <h3 className="text-lg font-semibold text-fg">Don&apos;t see your role?</h3>
-            <p className="mt-2 text-sm text-muted">
+            <h3 className="heading-md font-semibold text-fg">Don&apos;t see your role?</h3>
+            <p className="body mt-2 text-muted">
               We are always interested in hearing from exceptional engineers and designers.
               Send us an open application and tell us how you could contribute.
             </p>
@@ -244,7 +244,7 @@ export default function CareersPage() {
             <h2 className="heading-lg mt-4 text-white">
               We hire for judgement, not just skills.
             </h2>
-            <p className="mt-5 text-base leading-relaxed text-white/65">
+            <p className="body mt-5 leading-relaxed text-white/65">
               A strong résumé gets you an interview. Demonstrated product thinking,
               attention to system design trade-offs, and a collaborative attitude
               get you an offer. We look for people who will still be here — and
@@ -256,7 +256,7 @@ export default function CareersPage() {
               Start a conversation
               <ArrowRight width={18} height={18} />
             </Button>
-            <p className="text-sm text-white/40 md:text-right">
+            <p className="body text-white/40 md:text-right">
               We reply to every genuine application
             </p>
           </div>

@@ -13,6 +13,7 @@ import SectionHeading from "@/components/ui/SectionHeading";
 import Button from "@/components/ui/Button";
 import { ArrowRight } from "@/components/ui/icons";
 import { EASE } from "@/components/ui/Reveal";
+import ProblemDiagram from "@/components/graphics/ProblemDiagram";
 
 /**
  * Positioning, staged one problem at a time.
@@ -116,9 +117,10 @@ export default function ProblemsWeSolve() {
         <div className="container-page">
           {heading}
 
-          <div className="mt-16 grid gap-12 lg:grid-cols-[auto_1fr] lg:gap-16">
+          <div className="mt-14 grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-20">
+            <div className="min-w-0">
             {/* The counter rolls as the stage advances */}
-            <div className="relative h-24 w-24 shrink-0 overflow-hidden">
+            <div className="relative mb-6 h-14 w-24 overflow-hidden">
               <AnimatePresence mode="popLayout" initial={false}>
                 <motion.span
                   key={active}
@@ -126,14 +128,13 @@ export default function ProblemsWeSolve() {
                   animate={{ y: "0%", opacity: 1 }}
                   exit={{ y: "-100%", opacity: 0 }}
                   transition={{ duration: 0.5, ease: EASE }}
-                  className="mono-figure absolute inset-0 text-7xl font-medium leading-none text-brand"
+                  className="mono-figure absolute inset-0 text-5xl font-medium leading-none text-brand"
                 >
                   {String(active + 1).padStart(2, "0")}
                 </motion.span>
               </AnimatePresence>
             </div>
 
-            <div className="min-w-0">
               {/* Statement — masked out and in on every change */}
               <div className="overflow-hidden pb-[0.12em]">
                 <AnimatePresence mode="wait" initial={false}>
@@ -190,6 +191,15 @@ export default function ProblemsWeSolve() {
                   {String(problemsWeSolve.length).padStart(2, "0")}
                 </span>
               </div>
+            </div>
+
+            {/*
+              The figure. Keyed on the active problem so React remounts it and
+              the drawing replays, which is cheaper than teaching every shape an
+              exit state it would only use once.
+            */}
+            <div className="hidden aspect-4/3 w-full lg:block">
+              <ProblemDiagram key={active} kind={current.diagram} />
             </div>
           </div>
         </div>

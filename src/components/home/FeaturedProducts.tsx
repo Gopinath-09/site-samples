@@ -21,8 +21,14 @@ import { ArrowRight } from "@/components/ui/icons";
  * you actually pointed at.
  */
 
-/** Matches the reference's 0.55s slide. */
-const SLIDE = "duration-[550ms] ease-[cubic-bezier(0.22,1,0.36,1)]";
+/*
+ * Slower than the reference's slide, and a different move: the figure recedes
+ * while the description rises through it, with a rule drawing across the top of
+ * the panel. Nine hundred milliseconds is long for a hover, which is the point
+ * — at three across, a quick snap on every pass of the cursor turns the grid
+ * into a flicker.
+ */
+const SLOW = "duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)]";
 
 export default function FeaturedProducts() {
   return (
@@ -54,50 +60,66 @@ export default function FeaturedProducts() {
           />
         </div>
 
-        <RevealGroup className="mt-12 grid gap-px border border-line bg-line sm:grid-cols-2">
+        <RevealGroup className="mt-12 grid gap-px border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
           {productRoadmap.map((item, i) => (
             <RevealItem key={item.name}>
               <article className="group flex h-full flex-col overflow-hidden bg-paper">
-                {/* Fixed head — this is what stays put while the panel moves */}
-                <div className="flex items-start justify-between gap-4 p-8 pb-6">
-                  <div>
-                    <span className="mono-label">
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <h3 className="heading-md mt-3 text-fg">{item.name}</h3>
-                  </div>
+                <div className="p-6 pb-5">
+                  <span className="mono-label">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <h3 className="heading-md mt-3 text-fg">{item.name}</h3>
                 </div>
 
-                {/* Two-frame track: figure at rest, description on hover */}
-                <div className="relative mt-auto h-56 overflow-hidden border-t border-line">
-                  <div
-                    className={`flex h-full w-[200%] transition-transform group-hover:-translate-x-1/2 ${SLIDE}`}
-                  >
-                    <div className="h-full w-1/2 shrink-0">
-                      <RoadmapVisual seed={i} />
-                    </div>
+                {/* One well, two states: the figure recedes, the words rise. */}
+                <div className="relative mt-auto h-40 overflow-hidden border-t border-line">
+                  {/* The rule draws across as the panel changes */}
+                  <span
+                    className={`absolute inset-x-0 top-0 z-20 h-px origin-left scale-x-0 bg-brand transition-transform group-hover:scale-x-100 ${SLOW}`}
+                    aria-hidden
+                  />
 
-                    <div className="flex h-full w-1/2 shrink-0 flex-col justify-between bg-paper p-8">
-                      <p className="body">{item.blurb}</p>
-                      <span className="mono-label flex items-center gap-2 text-brand">
-                        In development
-                        <ArrowRight width={14} height={14} />
-                      </span>
-                    </div>
+                  <div
+                    className={`absolute inset-0 opacity-100 transition-all group-hover:scale-105 group-hover:opacity-0 ${SLOW}`}
+                  >
+                    <RoadmapVisual seed={i} />
+                  </div>
+
+                  <div
+                    className={`absolute inset-0 flex translate-y-4 flex-col justify-between bg-paper p-6 opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100 ${SLOW}`}
+                  >
+                    <p className="body-sm">{item.blurb}</p>
+                    <span className="mono-label flex items-center gap-2 text-brand">
+                      In development
+                      <ArrowRight width={13} height={13} />
+                    </span>
                   </div>
                 </div>
               </article>
             </RevealItem>
           ))}
+          {/*
+            Eight directions across three columns leave one cell empty, and an
+            empty cell in a grid that draws its own rules shows as a grey block.
+            The closing note fills it instead of sitting below the grid, so the
+            wall ends square.
+          */}
+          <RevealItem>
+            <div className="flex h-full flex-col justify-between bg-sand p-6">
+              <div>
+                <span className="mono-label">Status</span>
+                <p className="body-sm mt-3">
+                  Every direction here is in active development. None is a
+                  product you can buy today.
+                </p>
+              </div>
+              <Button variant="outline" size="sm" href="/portfolio" className="mt-6 self-start">
+                See what we have shipped
+                <ArrowRight width={15} height={15} />
+              </Button>
+            </div>
+          </RevealItem>
         </RevealGroup>
-
-        <div className="mt-10 flex flex-col items-center gap-4 text-center">
-          <p className="mono-label">In development — not yet available</p>
-          <Button variant="outline" href="/portfolio">
-            See what we have already shipped
-            <ArrowRight width={18} height={18} />
-          </Button>
-        </div>
       </div>
     </section>
   );

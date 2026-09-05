@@ -16,8 +16,8 @@
  * heading and copy carry the meaning.
  */
 
-const STROKE = "rgba(155, 200, 255, 0.28)";
-const SOFT = "rgba(155, 200, 255, 0.12)";
+const STROKE = "rgba(240, 213, 155, 0.28)";
+const SOFT = "rgba(240, 213, 155, 0.12)";
 
 export default function RoadmapVisual({ seed = 0 }: { seed?: number }) {
   // Small deterministic variation so adjacent rows do not look identical.
@@ -35,13 +35,13 @@ export default function RoadmapVisual({ seed = 0 }: { seed?: number }) {
     >
       <defs>
         <linearGradient id={`rv-glow-${seed}`} x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stopColor="#5b83ff" stopOpacity="0" />
-          <stop offset="55%" stopColor="#9bdcff" stopOpacity="0.95" />
-          <stop offset="100%" stopColor="#5b83ff" stopOpacity="0" />
+          <stop offset="0%" stopColor="#e3b964" stopOpacity="0" />
+          <stop offset="55%" stopColor="#f5e2b8" stopOpacity="0.95" />
+          <stop offset="100%" stopColor="#e3b964" stopOpacity="0" />
         </linearGradient>
         <radialGradient id={`rv-bg-${seed}`} cx="35%" cy="18%" r="85%">
-          <stop offset="0%" stopColor="#1b3f68" stopOpacity="0.5" />
-          <stop offset="100%" stopColor="#0a0e1a" stopOpacity="0" />
+          <stop offset="0%" stopColor="#2a2113" stopOpacity="0.5" />
+          <stop offset="100%" stopColor="#08080a" stopOpacity="0" />
         </radialGradient>
       </defs>
 
@@ -65,7 +65,7 @@ export default function RoadmapVisual({ seed = 0 }: { seed?: number }) {
           width={i === 1 ? 58 : 44}
           height="6"
           rx="3"
-          fill={i === 1 ? "rgba(91,131,255,0.45)" : SOFT}
+          fill={i === 1 ? "rgba(227,185,100,0.45)" : SOFT}
         />
       ))}
 
@@ -88,7 +88,7 @@ export default function RoadmapVisual({ seed = 0 }: { seed?: number }) {
             width={270 * w}
             height="8"
             rx="4"
-            fill="rgba(155,200,255,0.35)"
+            fill="rgba(240,213,155,0.35)"
           />
         </g>
       ))}
@@ -102,7 +102,7 @@ export default function RoadmapVisual({ seed = 0 }: { seed?: number }) {
         strokeWidth="2"
         strokeLinecap="round"
       />
-      <circle className="rv-dot" cx="120" cy="216" r="3.5" fill="#cfe9ff" />
+      <circle className="rv-dot" cx="120" cy="216" r="3.5" fill="#fbf0d6" />
 
       {/* Frame */}
       <rect

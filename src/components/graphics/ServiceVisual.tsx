@@ -9,9 +9,9 @@ import type { Service } from "@/lib/content";
  * carry the meaning — so every one is hidden from assistive technology.
  */
 
-const STROKE = "rgba(155, 200, 255, 0.30)";
-const STROKE_SOFT = "rgba(155, 200, 255, 0.14)";
-const GLOW = "#5b83ff";
+const STROKE = "rgba(240, 213, 155, 0.30)";
+const STROKE_SOFT = "rgba(240, 213, 155, 0.14)";
+const GLOW = "#e3b964";
 
 function Frame({ children }: { children: React.ReactNode }) {
   return (
@@ -44,12 +44,12 @@ function AiVisual() {
           strokeWidth="1"
         />
       ))}
-      <rect x={134} y={49} width={52} height={52} rx={12} fill="rgba(91,131,255,0.08)" />
+      <rect x={134} y={49} width={52} height={52} rx={12} fill="rgba(227,185,100,0.08)" />
       <text
         x={160}
         y={82}
         textAnchor="middle"
-        fill="#9bb6ff"
+        fill="#f0d59b"
         fontFamily="var(--font-mono)"
         fontSize="20"
         fontWeight="500"
@@ -85,8 +85,8 @@ function StackVisual() {
     <Frame>
       <defs>
         <radialGradient id="sv-hex" cx="42%" cy="30%" r="70%">
-          <stop offset="0%" stopColor="#2c5f96" stopOpacity="0.45" />
-          <stop offset="100%" stopColor="#0b1424" stopOpacity="0" />
+          <stop offset="0%" stopColor="#6b5326" stopOpacity="0.45" />
+          <stop offset="100%" stopColor="#100d08" stopOpacity="0" />
         </radialGradient>
       </defs>
       <rect width="320" height="150" fill="url(#sv-hex)" />
@@ -94,7 +94,7 @@ function StackVisual() {
         <polygon
           key={i}
           points={hex(c.x, c.y, R - 2)}
-          fill={c.lit ? "rgba(91,131,255,0.10)" : "rgba(255,255,255,0.015)"}
+          fill={c.lit ? "rgba(227,185,100,0.10)" : "rgba(255,255,255,0.015)"}
           stroke={c.lit ? STROKE : STROKE_SOFT}
           strokeWidth="1"
         />
@@ -136,7 +136,7 @@ function CloudVisual() {
           strokeWidth="1"
         />
       ))}
-      <circle cx={190} cy={75} r={30} fill="rgba(91,131,255,0.10)" stroke={STROKE} strokeWidth="1" />
+      <circle cx={190} cy={75} r={30} fill="rgba(227,185,100,0.10)" stroke={STROKE} strokeWidth="1" />
       <circle cx={190} cy={75} r={5} fill={GLOW} />
       <circle cx={190} cy={75} r={46} fill="none" stroke={STROKE_SOFT} strokeWidth="1" />
     </Frame>
@@ -148,12 +148,12 @@ function MobileVisual() {
   return (
     <Frame>
       <rect x={122} y={26} width={62} height={104} rx={12} fill="rgba(255,255,255,0.02)" stroke={STROKE_SOFT} strokeWidth="1" />
-      <rect x={152} y={16} width={66} height={118} rx={13} fill="rgba(11,20,36,0.9)" stroke={STROKE} strokeWidth="1" />
+      <rect x={152} y={16} width={66} height={118} rx={13} fill="rgba(12,10,6,0.9)" stroke={STROKE} strokeWidth="1" />
       <rect x={172} y={24} width={26} height={4} rx={2} fill={STROKE_SOFT} />
       {[44, 60, 76].map((y) => (
         <rect key={y} x={162} y={y} width={46} height={6} rx={3} fill="rgba(255,255,255,0.06)" />
       ))}
-      <rect x={162} y={96} width={46} height={20} rx={6} fill="rgba(91,131,255,0.18)" stroke={STROKE} strokeWidth="1" />
+      <rect x={162} y={96} width={46} height={20} rx={6} fill="rgba(227,185,100,0.18)" stroke={STROKE} strokeWidth="1" />
     </Frame>
   );
 }
@@ -162,15 +162,15 @@ function MobileVisual() {
 function DesignVisual() {
   return (
     <Frame>
-      <rect x={78} y={30} width={164} height={90} rx={10} fill="rgba(11,20,36,0.92)" stroke={STROKE} strokeWidth="1" />
+      <rect x={78} y={30} width={164} height={90} rx={10} fill="rgba(12,10,6,0.92)" stroke={STROKE} strokeWidth="1" />
       <rect x={104} y={46} width={112} height={7} rx={3.5} fill="rgba(255,255,255,0.30)" />
       <rect x={92} y={62} width={136} height={5} rx={2.5} fill="rgba(255,255,255,0.10)" />
       <line x1={78} y1={84} x2={242} y2={84} stroke={STROKE_SOFT} strokeWidth="1" />
       <line x1={160} y1={84} x2={160} y2={120} stroke={STROKE_SOFT} strokeWidth="1" />
-      <text x={119} y={106} textAnchor="middle" fill="rgba(155,182,255,0.75)" fontFamily="var(--font-mono)" fontSize="9">
+      <text x={119} y={106} textAnchor="middle" fill="rgba(240,213,155,0.6)" fontFamily="var(--font-mono)" fontSize="9">
         Default
       </text>
-      <text x={201} y={106} textAnchor="middle" fill="#9bb6ff" fontFamily="var(--font-mono)" fontSize="9" fontWeight="600">
+      <text x={201} y={106} textAnchor="middle" fill="#f0d59b" fontFamily="var(--font-mono)" fontSize="9" fontWeight="600">
         Bold
       </text>
     </Frame>
@@ -185,7 +185,7 @@ function TransformVisual() {
       <defs>
         <linearGradient id="sv-curve" x1="0%" y1="0%" x2="100%" y2="0%">
           <stop offset="0%" stopColor={GLOW} stopOpacity="0.15" />
-          <stop offset="100%" stopColor="#9bdcff" stopOpacity="1" />
+          <stop offset="100%" stopColor="#f5e2b8" stopOpacity="1" />
         </linearGradient>
         <filter id="sv-blur" x="-30%" y="-30%" width="160%" height="160%">
           <feGaussianBlur stdDeviation="7" />
@@ -196,8 +196,8 @@ function TransformVisual() {
       ))}
       <path d={d} fill="none" stroke="url(#sv-curve)" strokeWidth="10" filter="url(#sv-blur)" opacity="0.7" />
       <path d={d} fill="none" stroke="url(#sv-curve)" strokeWidth="2" strokeLinecap="round" />
-      <circle cx={236} cy={34} r={12} fill="rgba(155,220,255,0.16)" />
-      <circle cx={236} cy={34} r={4.5} fill="#cfe9ff" />
+      <circle cx={236} cy={34} r={12} fill="rgba(245,226,184,0.16)" />
+      <circle cx={236} cy={34} r={4.5} fill="#fbf0d6" />
     </Frame>
   );
 }

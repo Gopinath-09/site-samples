@@ -21,9 +21,9 @@ import { EASE } from "@/components/ui/Reveal";
  * statement and answer beside it carry the meaning.
  */
 
-const STROKE = "rgba(155, 200, 255, 0.34)";
-const SOFT = "rgba(155, 200, 255, 0.14)";
-const LIT = "#9bb6ff";
+const STROKE = "rgba(240, 213, 155, 0.34)";
+const SOFT = "rgba(240, 213, 155, 0.14)";
+const LIT = "#f0d59b";
 
 /** Paths draw themselves in; shapes fade up. Both share the site easing. */
 const draw = {
@@ -122,7 +122,7 @@ function Launch() {
           width={104}
           height={62}
           rx={8}
-          fill={b.lit ? "rgba(91,131,255,0.14)" : "rgba(255,255,255,0.025)"}
+          fill={b.lit ? "rgba(227,185,100,0.14)" : "rgba(255,255,255,0.025)"}
           stroke={b.lit ? LIT : SOFT}
           strokeWidth="1"
           variants={pop}
@@ -137,7 +137,7 @@ function Launch() {
         width={104}
         height={62}
         rx={8}
-        fill="rgba(91,131,255,0.2)"
+        fill="rgba(227,185,100,0.2)"
         stroke={LIT}
         strokeWidth="1.25"
         initial={{ opacity: 0, y: 110 }}
@@ -203,7 +203,7 @@ function Automate() {
           cx={x}
           cy={236}
           r={9}
-          fill="rgba(91,131,255,0.18)"
+          fill="rgba(227,185,100,0.18)"
           stroke={LIT}
           strokeWidth="1"
           variants={pop}
@@ -215,7 +215,7 @@ function Automate() {
       <motion.circle
         cy={236}
         r={4}
-        fill="#cfe9ff"
+        fill="#fbf0d6"
         initial={{ opacity: 0, cx: 92 }}
         animate={{
           opacity: [0, 1, 1, 0],
@@ -285,7 +285,7 @@ function Retrieval() {
         cx={278}
         cy={170}
         r={17}
-        fill="rgba(91,131,255,0.16)"
+        fill="rgba(227,185,100,0.16)"
         stroke={LIT}
         strokeWidth="1"
         variants={pop}
@@ -308,7 +308,7 @@ function Retrieval() {
           width={104}
           height={68}
           rx={7}
-          fill="rgba(91,131,255,0.1)"
+          fill="rgba(227,185,100,0.1)"
           stroke={LIT}
           strokeWidth="1"
         />

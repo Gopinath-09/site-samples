@@ -71,14 +71,14 @@ export default function HeroScene({ className }: { className?: string }) {
         </radialGradient>
 
         <linearGradient id="hs-path" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stopColor="#38bdf8" stopOpacity="0" />
-          <stop offset="28%" stopColor="#5bc8ff" stopOpacity="0.7" />
-          <stop offset="58%" stopColor="#a8e6ff" stopOpacity="1" />
-          <stop offset="100%" stopColor="#5b83ff" stopOpacity="0" />
+          <stop offset="0%" stopColor="#c9962f" stopOpacity="0" />
+          <stop offset="28%" stopColor="#e3b964" stopOpacity="0.7" />
+          <stop offset="58%" stopColor="#f5e2b8" stopOpacity="1" />
+          <stop offset="100%" stopColor="#e3b964" stopOpacity="0" />
         </linearGradient>
 
         <linearGradient id="hs-top" x1="0%" y1="0%" x2="60%" y2="100%">
-          <stop offset="0%" stopColor="#1d1d22" stopOpacity="0.95" />
+          <stop offset="0%" stopColor="#1d1b16" stopOpacity="0.95" />
           <stop offset="100%" stopColor="#0a0a0d" stopOpacity="0.95" />
         </linearGradient>
 
@@ -110,7 +110,7 @@ export default function HeroScene({ className }: { className?: string }) {
       />
 
       {CHIPS.map((chip, i) => {
-        const edge = `rgba(168, 226, 255, ${0.22 + chip.lit * 0.6})`;
+        const edge = `rgba(245, 226, 184, ${0.22 + chip.lit * 0.6})`;
         return (
           <g key={i}>
             {/* Glow pooling beneath the form */}
@@ -119,13 +119,13 @@ export default function HeroScene({ className }: { className?: string }) {
               cy={chip.cy + chip.d + chip.h + 12}
               rx={chip.w * 1.25}
               ry={chip.d * 0.6}
-              fill="#4aa8e0"
+              fill="#c9962f"
               opacity={0.18 * chip.lit}
               filter="url(#hs-blur-sm)"
             />
 
-            <polygon points={leftFace(chip)} fill="#070c18" opacity="0.95" />
-            <polygon points={rightFace(chip)} fill="#0c1526" opacity="0.95" />
+            <polygon points={leftFace(chip)} fill="#080703" opacity="0.95" />
+            <polygon points={rightFace(chip)} fill="#0d0b07" opacity="0.95" />
 
             <polygon
               points={topFace(chip)}

@@ -45,13 +45,15 @@
   /* secondary text inside the darkest panels */
 
   /*
-   * Brand. The accent is the one place colour is allowed, which is what makes
-   * it read as deliberate against neutral surroundings.
+   * Brand. Gold, taken from the mark, and the only hue on the site — which is
+   * what lets a single accent carry the whole identity against neutral black.
+   * The lit value leads because gold at full saturation drops below 4.5:1 on
+   * these surfaces; this one sits near 9:1.
    */
-  --color-brand: #5b83ff;
-  --color-brand-strong: #2450e6;
-  --color-brand-soft: #17171c;
-  --color-brand-light: #9bb6ff;
+  --color-brand: #e3b964;
+  --color-brand-strong: #c9962f;
+  --color-brand-soft: #1b1710;
+  --color-brand-light: #f0d59b;
 
   /* Secondary accent — warm copper, used sparingly for emphasis */
   --color-copper: #c1863c;

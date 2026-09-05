@@ -1,5 +1,6 @@
 import Button from "@/components/ui/Button";
 import HeroScene from "@/components/graphics/HeroScene";
+import BackgroundVideo from "@/components/ui/BackgroundVideo";
 import Reveal, { RevealLines } from "@/components/ui/Reveal";
 import { ArrowRight } from "@/components/ui/icons";
 import { company } from "@/lib/site";
@@ -33,10 +34,21 @@ const facts = [
 export default function HeroSection() {
   return (
     <section className="band-dark relative overflow-hidden">
-      {/* Backdrop: a cool light source overhead, over the engineering grid */}
+      {/*
+        Backdrop, in layers: ambient footage, then a scrim, then the grid. The
+        scrim is what makes the statement legible over moving imagery — without
+        it the headline's contrast changes as the footage does, which is the
+        usual reason background video fails.
+      */}
       <div className="absolute inset-0" aria-hidden>
-        <div className="absolute inset-0 bg-[radial-gradient(85%_65%_at_62%_-8%,#1c1c21_0%,#0d0d10_46%,#000000_100%)]" />
-        <div className="bg-grid-dark absolute inset-0 opacity-25" />
+        <BackgroundVideo
+          src="/hero/ambient.mp4"
+          poster="/hero/ambient-poster.jpg"
+          className="absolute inset-0 h-full w-full"
+        />
+        <div className="absolute inset-0 bg-black/55" />
+        <div className="absolute inset-0 bg-[radial-gradient(75%_60%_at_50%_45%,transparent_0%,rgba(0,0,0,0.72)_100%)]" />
+        <div className="bg-grid-dark absolute inset-0 opacity-20" />
       </div>
 
       <div className="relative container-page pt-24 lg:pt-28">
@@ -57,7 +69,7 @@ export default function HeroSection() {
           />
 
           <div className="relative">
-            <h1 className="heading-xl text-center font-medium leading-[1.08] tracking-[-0.02em] text-white [text-shadow:0_0_60px_rgba(255,255,255,0.18)]">
+            <h1 className="heading-display text-center text-white [text-shadow:0_0_70px_rgba(0,0,0,0.65)]">
               <RevealLines
                 lines={["Software that", "outlives its first release."]}
               />

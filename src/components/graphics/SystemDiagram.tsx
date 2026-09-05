@@ -115,9 +115,9 @@ const PALETTE: Record<
     nodeFill: "rgba(255,255,255,0.04)",
     nodeStroke: "rgba(255,255,255,0.20)",
     nodeText: "rgba(255,255,255,0.88)",
-    accentFill: "rgba(56,102,240,0.22)",
-    accentStroke: "#5b83ff",
-    accentText: "#a8c0ff",
+    accentFill: "rgba(201,150,47,0.22)",
+    accentStroke: "#e3b964",
+    accentText: "#f0d59b",
   },
 };
 

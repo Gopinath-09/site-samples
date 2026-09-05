@@ -29,7 +29,7 @@ function Stars({ value, max = 5 }: { value: number; max?: number }) {
 
 // Avatar gradient palette — deterministic per card index.
 const AVATARS: [string, string][] = [
-  ["#2450e6", "#6d8bff"],
+  ["#c9962f", "#6d8bff"],
   ["#c1863c", "#e6b877"],
   ["#7c5cff", "#a78bfa"],
   ["#0ea5a0", "#5eead4"],

@@ -4,9 +4,15 @@ Written so a fresh session can continue without re-deriving any of this. Read
 this before touching the site; it records what is true, what was decided and
 why, and the traps in this particular stack.
 
-Branch: `redesign/home` (27 commits ahead of `main`).
+Branch: `redesign/home` (28 commits ahead of `main`).
 `main` holds `b7626b6 Checkpoint: full site build before home page redesign` —
 the revert point for the entire redesign.
+
+**Nothing has been committed since `1fd8559` (this file's own commit).**
+Everything in §4a (the brand mark) and the current hero implementation exists
+only as uncommitted working-tree changes: `git status --short` shows
+`globals.css`, `heroSection.tsx`, `Logo.tsx`, `Navbar.tsx` modified and
+`src/components/brand/` untracked. Commit before assuming any of it is safe.
 
 ---
 
@@ -156,7 +162,7 @@ Home page order (`src/app/page.tsx`):
 
 | # | Section | Component | Device |
 |---|---|---|---|
-| 01 | Hero | `heroSection.tsx` | Ambient video + drawn scene, centred statement, fact strip |
+| 01 | Hero | `heroSection.tsx` | Full-bleed looping video (drifts + a breathing gold pool behind the statement), centred statement, drawn scene, fact strip floated as one glass card over it |
 | 02 | Clients | `TrustedBy` | Hairline wall; hides if no verified client |
 | 03 | Who we are | `WhoWeAre` | |
 | 04 | Core services | `CoreServices` | Bento grid, drawn visual per card |
@@ -181,7 +187,12 @@ before photography exists), `HoverMedia` (video/figure revealed on hover),
 
 ### Assets in `public/`
 
-- `hero/ambient.mp4` + poster — generated gold gradient, 104KB
+- `hero/ambient.mp4` + poster — **generated**, five gold lights orbiting in
+  closed loops so the loop point is seamless, no crossfade. Not real footage.
+- `hero/Hero1.mp4` (88MB), `hero/Hero2.mp4` (19MB) — **untracked, unused.**
+  Dropped into the repo but never wired into `heroSection.tsx`; nothing in
+  code references them. Confirm with the user what these are before either
+  deleting them or swapping them in for the generated clip — see §7.
 - `projects/yhai-tamil-nadu.mp4` — **real capture** of the live YHAI platform
 - `roadmap/placeholder-*.mp4` — generated abstract clips, deliberately
   non-representational so they cannot read as product footage
@@ -189,6 +200,50 @@ before photography exists), `HoverMedia` (video/figure revealed on hover),
 
 Videos were generated with `ffmpeg-static` installed into the scratchpad, not
 into this project.
+
+### 4a. The brand mark — `src/components/brand/`
+
+`CobrrMark.tsx` (the monogram) and `CobrrLockup.tsx` (mark + wordmark) replace
+what `Logo.tsx` used to render inline; `Logo.tsx` now just delegates to
+`CobrrLockup`, so every call site (`Navbar`, the mobile drawer) picked up the
+new mark for free.
+
+**`CobrrMark`** — the C/K outlines traced from the client's supplied artwork as
+real SVG paths (not an image), so they stay crisp at any size. Three layers,
+clipped to the glyphs: a stone gradient fill, a **generated** gold-crack
+veining (see below), and a `.mark-shine` — one soft diagonal band that sweeps
+across the glyph every 7s and is otherwise parked off-canvas
+(`transform: translateX(-100%)` via `transform-box: fill-box`, so "off-canvas"
+costs nothing extra — it just stops overlapping the clip region). A dim gold
+`.mark-rail` outline sits on top of everything.
+
+**No frame.** An earlier version wrapped the mark in a rounded gold-bordered
+badge with a dot orbiting it — reverted on explicit instruction ("I want a
+golden lining... simple, no border") once the client showed the actual
+reference artwork: plain marble letterform, no badge. The lesson generalises —
+*ask to see the reference before building a stand-in for it.*
+
+**The vein texture is tuned, not guessed.** `feComponentTransfer type="table"`
+(the first attempt) interpolates linearly between entries, and even a narrow
+"on" entry still ramps across roughly a third of the noise range — the result
+read as a blobby camouflage pattern, not cracks. Switched to `type="discrete"`
+(hard on/off buckets, no ramp) and found the right bucket by rendering a grid
+of ~10 candidates side by side in a standalone HTML file rather than
+guess-and-check one at a time — see §6. Current tuning:
+`baseFrequency=0.011, numOctaves=4`, 30 discrete buckets, bucket 19 "on".
+Buckets near the tails of the noise distribution rendered almost nothing
+(fractalNoise clusters near its centre); the usable range was mid-distribution
+with a narrow single bucket.
+
+**`CobrrLockup`** — the wordmark runs *continuously*, not on hover. Each
+letter is its own `lockup-run` animation (slide in from behind the mark, hold,
+slide out), all five sharing one keyframe timeline and differing only in
+`animation-delay` (`--i` steps of 0.3s) — that stagger alone produces the
+sequence "C, then O, then B, then R, then R" forever. This replaced two earlier
+designs: a hover-triggered reveal-and-stay, then a static word with a
+glow-chase overlay riding over it — both reverted on explicit feedback that the
+letters themselves needed to visibly run, not just glow. Reduced motion settles
+every letter to `opacity: 1, transform: none` rather than freezing mid-cycle.
 
 ---
 
@@ -212,6 +267,33 @@ assuming an API.**
    must go on the hovered ancestor.
 7. **Regex sweeps: `<p` matches `<path>` and `<polygon>`.** Use a lookahead.
 8. **Framer strands content under reduced motion** — see §3.
+9. **A multi-line SVG attribute string is a hydration mismatch waiting to
+   happen.** Node's SSR serializer collapses the embedded newlines/indentation
+   in something like a `feColorMatrix` `values` string into single spaces;
+   client-side `setAttribute` keeps them verbatim. The two disagree and React
+   flags it. Write such attributes on one line.
+10. **`feComponentTransfer type="table"` interpolates; `type="discrete"`
+    doesn't.** `table` ramps linearly either side of an "on" entry — even a
+    narrow one covers a wide effective band and reads as soft blobs, not fine
+    detail. `discrete` is a hard on/off step with no ramp. Reach for
+    `discrete` whenever the target look has a crisp edge (cracks, contour
+    lines) rather than a glow.
+11. **A CSS basic-shape passed to `offset-path` is measured against the
+    element's *own* border box, not its parent's.** `offset-path: inset(0
+    round 20%)` on a 7px dot traces a path the size of the dot, not whatever
+    it sits inside. To move something around a parent's shape, compute that
+    shape's real outline in pixels and hand it down (a CSS custom property
+    works and stays overridable; an inline `offset-path` does not — inline
+    styles beat every stylesheet rule, including a `prefers-reduced-motion`
+    override).
+12. **A long-running `next dev` can silently serve stale CSS.** After many
+    hot-reloads in one session, an edited `@media (prefers-reduced-motion:
+    reduce)` block was present in the source and in a fresh `next build`, but
+    missing from the bytes the dev server actually served — confirmed by
+    curling the served CSS chunk directly and diffing it against the source.
+    If a computed style disagrees with the file on disk, check the served
+    bytes before assuming the CSS logic is wrong; restart the dev server if
+    they've drifted.
 
 ---
 
@@ -235,6 +317,21 @@ Two cautions learned the hard way:
   them; an RGB parser reports white-on-black as failing.
 - Screenshots taken immediately after `networkidle` miss anything with an
   entrance delay. Wait ~2.5s before judging "it is missing".
+- **For CSS animation timing, read `element.getAnimations()[0]` — don't infer
+  from a `setTimeout` polling loop.** A polling loop's own start time isn't
+  phase-aligned with when the animation actually began, so spaced samples can
+  look like broken timing (a sweep arriving "too early", gaps that don't match
+  the keyframe percentages) when the animation is correct and the *sampling
+  window* is just misaligned. `getAnimations()[0].currentTime` and
+  `.effect.getComputedTiming()` give ground truth instead of an inference.
+- **Cloning a live element into a scratch DOM node is fragile against a
+  running dev server.** Turbopack HMR can push a refresh mid-script that
+  causes React to reconcile from its root and silently overwrite a manual
+  `document.body.innerHTML = ""` hack, producing a screenshot of the normal
+  page instead of the isolated test. For side-by-side comparison of many
+  parameter variants (the vein tuning above needed ~10), write a fully static
+  standalone HTML file and open it via a `file://` URL instead — no React, no
+  HMR, no race.
 
 ---
 
@@ -253,6 +350,17 @@ Two cautions learned the hard way:
 6. From the original audit, still true: **the contact form does not send
    anything** (`ContactForm.tsx` has a TODO and discards the lead), and there is
    no `sitemap.ts`, `robots.ts`, JSON-LD or analytics.
+7. **`public/hero/Hero1.mp4` and `Hero2.mp4`** (88MB, 19MB) sit untracked in the
+   repo, unreferenced by any code — the hero still runs on the generated
+   gradient loop. Find out what these are intended for before doing anything
+   with them: if they're the real footage to replace the generated clip, wire
+   one in and delete the rest; if they're leftover from testing, delete both.
+   Do not commit either as-is — 88MB is not a reasonable asset size, and it
+   almost certainly needs compressing regardless of which one is used.
+8. **Everything in §4a (the brand mark) is uncommitted.** Commit it as its own
+   change before starting anything else, so a revert of later work can't take
+   the mark with it — the exact mistake the navbar/hero-scene bundling made
+   once already (§8).
 
 ---
 
@@ -271,3 +379,18 @@ Two cautions learned the hard way:
 - Commit per coherent change, and **do not bundle an in-scope change with an
   out-of-scope one** — reverting the navbar also lost the hero scene, which cost
   two extra steps to unpick.
+- **"Revoke the previous prompt" means revert exactly the files that prompt's
+  response touched**, back to their state before it — not a general rollback,
+  and not a pretext to redo the same request differently. It has been used
+  more than once to mean precisely this.
+- **When asked to change something already built the same way twice, check
+  whether a reference image or file has just been supplied before rebuilding
+  again from description alone** — the mark's frame was removed the moment the
+  actual reference artwork was shown; the words alone ("golden lining", "small
+  dot of light") had been read as a badge-with-orbiting-dot, reasonably, but
+  differently from what was wanted.
+- For a visual tuning question with more than two or three plausible answers
+  (vein density, animation timing, colour), **render several candidates side
+  by side in one comparison image** rather than iterating on the live app one
+  guess at a time — found the right vein tuning in two comparison passes this
+  way instead of many individual rebuild-and-check cycles.

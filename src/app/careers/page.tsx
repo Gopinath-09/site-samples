@@ -74,7 +74,7 @@ export default function CareersPage() {
         <div className="container-page grid grid-cols-2 gap-6 md:grid-cols-4">
           {values.map((v) => (
             <div key={v.label} className="text-center">
-              <div className="text-base font-bold text-fg">{v.label}</div>
+              <div className="heading-md text-fg">{v.label}</div>
               <div className="mt-1 text-sm text-muted">{v.desc}</div>
             </div>
           ))}
@@ -202,7 +202,7 @@ export default function CareersPage() {
                   className="group flex w-full cursor-pointer flex-col gap-2 p-6 text-left transition-colors hover:bg-brand-soft/30 sm:flex-row sm:items-center sm:justify-between"
                 >
                   <div>
-                    <div className="text-lg font-semibold text-fg">{role.title}</div>
+                    <div className="heading-md text-fg">{role.title}</div>
                     <div className="mt-0.5 flex flex-wrap items-center gap-2 text-sm text-muted">
                       <span>{role.department}</span>
                       <span className="h-1 w-1 rounded-full bg-muted/40" />

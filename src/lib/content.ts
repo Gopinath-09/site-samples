@@ -837,6 +837,15 @@ export interface RoadmapItem {
   name: string;
   blurb: string;
   /**
+   * Card artwork, under `public/roadmap/`.
+   *
+   * These are placeholders: abstract compositions, not screenshots of a
+   * product, because none of these exists to photograph yet. They are here so
+   * the grid reads as designed rather than empty — swap the file for a real
+   * capture as each one ships, and nothing else has to change.
+   */
+  image?: string;
+  /**
    * Path under `public/roadmap/` to footage of the thing running, played on
    * hover. Absent for every entry today, and the row falls back to a drawn
    * panel — which is the honest state, because none of these has a running
@@ -852,42 +861,49 @@ export interface RoadmapItem {
 export const productRoadmap: RoadmapItem[] = [
   {
     name: "AI Agents",
+    image: "/roadmap/ai-agents.svg",
     video: "/roadmap/placeholder-flow.mp4",
     blurb:
       "Autonomous agents that carry out multi-step work inside a business, rather than answering one question at a time.",
   },
   {
     name: "Enterprise Automation",
+    image: "/roadmap/enterprise-automation.svg",
     video: "/roadmap/placeholder-cells.mp4",
     blurb:
       "Removing the manual handoffs between systems that quietly consume operational hours.",
   },
   {
     name: "Cloud SaaS Products",
+    image: "/roadmap/cloud-saas.svg",
     video: "/roadmap/placeholder-scan.mp4",
     blurb:
       "Multi-tenant platforms built on the infrastructure patterns we already run for clients.",
   },
   {
     name: "Healthcare AI",
+    image: "/roadmap/healthcare-ai.svg",
     video: "/roadmap/placeholder-flow.mp4",
     blurb:
       "Patient-facing assistance and clinical record intelligence, extending the clinic systems we have delivered.",
   },
   {
     name: "Educational AI",
+    image: "/roadmap/educational-ai.svg",
     video: "/roadmap/placeholder-cells.mp4",
     blurb:
       "Curriculum generation, assessment and analytics, building on the learning platforms already in use.",
   },
   {
     name: "Logistics Intelligence",
+    image: "/roadmap/logistics-intelligence.svg",
     video: "/roadmap/placeholder-scan.mp4",
     blurb:
       "Route, fleet and delivery optimisation informed by the transport tracking work we have shipped.",
   },
   {
     name: "Tourism Ecosystems",
+    image: "/roadmap/tourism-ecosystems.svg",
     /* Not footage of this direction, which does not exist yet, but of the
        platform it extends — hence the blurb naming YHAI explicitly. */
     video: "/projects/yhai-tamil-nadu.mp4",
@@ -896,6 +912,7 @@ export const productRoadmap: RoadmapItem[] = [
   },
   {
     name: "Government Digital Platforms",
+    image: "/roadmap/government-platforms.svg",
     video: "/roadmap/placeholder-cells.mp4",
     blurb:
       "Secure, auditable and accessible public-sector systems.",

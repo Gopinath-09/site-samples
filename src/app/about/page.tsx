@@ -44,7 +44,7 @@ export default function AboutPage() {
             <div className="space-y-6">
               <span className="eyebrow">OUR STORY & ORIGINS</span>
               <h2 className="heading-lg text-fg">Built by Senior Engineers to Eliminate Software Debt.</h2>
-              <div className="space-y-4 leading-relaxed text-muted text-sm sm:text-base">
+              <div className="body space-y-4">
                 <p>
                   COBRR was founded on a simple conviction: most enterprise software fails not for lack of features, but for lack of engineering discipline, clear architecture, and security foresight.
                 </p>
@@ -68,23 +68,23 @@ export default function AboutPage() {
 
               <div className="grid grid-cols-2 gap-4 border-t border-white/10 pt-6">
                 <div>
-                  <div className="text-lg font-bold text-white">2026</div>
+                  <div className="heading-md text-white">2026</div>
                   <div className="text-xs text-white/50">Founded</div>
                 </div>
                 <div>
-                  <div className="text-lg font-bold text-white">
+                  <div className="heading-md text-white">
                     {company.location}
                   </div>
                   <div className="text-xs text-white/50">Headquarters</div>
                 </div>
                 <div>
-                  <div className="text-lg font-bold text-white">
+                  <div className="heading-md text-white">
                     {verifiedProjects.length}
                   </div>
                   <div className="text-xs text-white/50">Platforms delivered</div>
                 </div>
                 <div>
-                  <div className="text-lg font-bold text-white">
+                  <div className="heading-md text-white">
                     {teamMembers.length}
                   </div>
                   <div className="text-xs text-white/50">Founding officers</div>

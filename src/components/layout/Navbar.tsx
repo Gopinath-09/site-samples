@@ -106,7 +106,7 @@ export default function Navbar() {
         hidden && !mobileOpen ? "-translate-y-full" : "translate-y-0",
       )}
     >
-      <nav className="container-page flex h-20 items-center justify-between py-3">
+      <nav className="container-page flex h-20 items-center justify-between py-3 sm:h-24">
         {/* Brand mark — hovering it opens the mega menu, clicking goes home.
             Focus opens it too, so keyboard users reach the navigation without
             a separate toggle control. */}
@@ -121,9 +121,14 @@ export default function Navbar() {
             aria-expanded={megaOpen}
             aria-controls="brand-mega-menu"
             aria-label="COBRR — go to home page, or browse the site menu"
-            className="cursor-pointer transition-opacity duration-200 hover:opacity-80"
+            className={cn(
+              "cursor-pointer transition-colors duration-300",
+              /* The wordmark inherits this. White would be invisible once the
+                 header turns light on scroll, so it inverts with the bar. */
+              overDarkHero ? "text-white" : "text-fg",
+            )}
           >
-            <Logo size={38} />
+            <Logo size={58} />
           </button>
         </div>
 
@@ -275,7 +280,8 @@ export default function Navbar() {
               className="fixed right-0 top-0 z-50 flex h-svh w-[88%] max-w-sm flex-col bg-paper shadow-2xl xl:hidden"
             >
               <div className="flex items-center justify-between border-b border-line px-5 py-4">
-                <Logo size={32} />
+                {/* Drawer sits on paper, so the wordmark inherits ink here. */}
+                <Logo size={44} className="text-fg" />
                 <button
                   onClick={() => setMobileOpen(false)}
                   aria-label="Close navigation menu"

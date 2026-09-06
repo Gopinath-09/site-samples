@@ -101,7 +101,7 @@ export default async function PortfolioDetailPage({ params }: Props) {
             {proj.results && proj.results.length > 0 && (
               <div className="rounded-2xl border border-line/80 bg-sand/80 p-6">
                 <span className="mono-label mb-4 block">Measured results</span>
-                <div className="grid grid-cols-3 gap-4 text-center">
+                <div className="grid grid-cols-1 gap-4 text-center sm:grid-cols-3">
                   {proj.results.map((r) => (
                     <div
                       key={r.label}
@@ -172,7 +172,7 @@ export default async function PortfolioDetailPage({ params }: Props) {
                 <span className="pill border-brand/20 bg-brand-soft font-bold text-brand">
                   Client feedback
                 </span>
-                <blockquote className="text-sm font-medium italic leading-relaxed text-fg sm:text-base">
+                <blockquote className="body font-medium italic text-fg">
                   &ldquo;{proj.clientFeedback.quote}&rdquo;
                 </blockquote>
                 <div className="text-xs font-bold text-fg">

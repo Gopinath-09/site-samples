@@ -41,7 +41,7 @@ export default function FaqSection({
                   aria-expanded={isOpen}
                   className="flex w-full cursor-pointer items-center justify-between gap-4 py-5 text-left"
                 >
-                  <span className="text-base font-semibold text-fg">
+                  <span className="heading-md text-fg">
                     {f.question}
                   </span>
                   <span

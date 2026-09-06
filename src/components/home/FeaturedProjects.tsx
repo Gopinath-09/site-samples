@@ -1,28 +1,34 @@
-import { verifiedProjects, placeholderClips } from "@/lib/content";
+"use client";
+
+import { useCallback, useEffect, useId, useRef, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { verifiedProjects, placeholderClips, type PortfolioProject } from "@/lib/content";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Button from "@/components/ui/Button";
-import CardLink from "@/components/ui/CardLink";
-import { RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import HoverMedia from "@/components/ui/HoverMedia";
-import { ArrowRight, ArrowUpRight } from "@/components/ui/icons";
+import { RevealGroup, RevealItem } from "@/components/ui/Reveal";
+import { ArrowRight, ArrowUpRight, Check, Close } from "@/components/ui/icons";
+import { useOutsideClick } from "@/hooks/useOutsideClick";
 import { cn } from "@/lib/utils";
 
 /**
- * Delivered work, as a wall of cells sharing hairline rules.
+ * Delivered work, as expandable cards.
  *
- * This is the treatment the reference uses for its client wins, and it belongs
- * here rather than on the roadmap: these are the only records that carry a real
- * client, a real sector and a real status. The grid draws the rules itself —
- * the container is the line colour and a one-pixel gap lets it through — which
- * avoids the doubled borders that adjacent bordered cells would produce.
+ * At rest this is the same wall of cells as before. Clicking one promotes it
+ * into a dialog through a shared-layout transition: the card itself travels to
+ * the centre and grows, rather than a separate modal fading in over the top.
+ * Framer Motion does this by matching `layoutId` between the two trees, so
+ * every shared element needs an id unique to *this* section as well as to the
+ * project — hence the `useId` prefix, which keeps a second instance of this
+ * component on the same page from animating into the first one's cards.
  *
- * Reads the proof gate rather than the raw dataset, so an uncleared project
- * cannot appear, and the section removes itself entirely rather than rendering
- * an empty wall.
+ * The expanded state carries what the cell has no room for — features,
+ * outcome, stack — and still links through to the full case study, so the
+ * dialog is a preview rather than a replacement for the page.
  *
- * Where the reference shows a client logo, these cells show the project name.
- * We hold artwork for none of these clients, and a wall of empty logo frames
- * would say less than the names do.
+ * Dismissal is deliberately over-provided: Escape, the close button, and a
+ * press anywhere outside. A dialog that traps someone because they did not
+ * find the one affordance that closes it is worse than no dialog.
  */
 export default function FeaturedProjects({
   limit,
@@ -33,6 +39,34 @@ export default function FeaturedProjects({
   showHeading?: boolean;
 }) {
   const list = limit ? verifiedProjects.slice(0, limit) : verifiedProjects;
+  const [active, setActive] = useState<PortfolioProject | null>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const closeRef = useRef<HTMLButtonElement>(null);
+  const uid = useId().replace(/:/g, "");
+
+  const close = useCallback(() => setActive(null), []);
+  useOutsideClick(dialogRef, close, active !== null);
+
+  /* Escape closes; the page behind is locked so it cannot scroll away. */
+  useEffect(() => {
+    if (!active) return;
+
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") close();
+    };
+    window.addEventListener("keydown", onKey);
+
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    /* Move focus into the dialog so the keyboard is not left behind it. */
+    closeRef.current?.focus();
+
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = previous;
+    };
+  }, [active, close]);
 
   if (list.length === 0) return null;
 
@@ -47,7 +81,7 @@ export default function FeaturedProjects({
             <SectionHeading
               eyebrow="Selected work"
               title="Systems we have built and delivered."
-              description="Learning platforms, tourism and school systems, clinic software and AI assistants — each one running for the organisation it was built for."
+              description="Learning platforms, tourism and school systems, clinic software and AI assistants — each one running for the organisation it was built for. Open any card for the detail."
             />
             <Button variant="outline" href="/portfolio" className="shrink-0">
               View full portfolio
@@ -56,6 +90,7 @@ export default function FeaturedProjects({
           </div>
         )}
 
+        {/* ---------------- Grid at rest ---------------- */}
         <RevealGroup
           className={cn(
             "grid gap-px border border-line bg-line sm:grid-cols-2 lg:grid-cols-3",
@@ -64,70 +99,200 @@ export default function FeaturedProjects({
         >
           {list.map((proj, i) => (
             <RevealItem key={proj.slug}>
-              <CardLink
-                href={`/portfolio/${proj.slug}`}
-                ariaLabel={proj.title}
-                className="group h-full"
+              <motion.article
+                layoutId={`${uid}-card-${proj.slug}`}
+                onClick={() => setActive(proj)}
+                role="button"
+                tabIndex={0}
+                aria-haspopup="dialog"
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    setActive(proj);
+                  }
+                }}
+                className="group relative flex h-full min-h-76 cursor-pointer flex-col justify-between overflow-hidden bg-paper p-7 outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-inset"
               >
-                <article className="relative flex h-full min-h-[19rem] flex-col justify-between overflow-hidden bg-paper p-7">
-                  {/* Real capture when a project has some; otherwise an
-                      abstract clip, which reads as motion rather than as a
-                      recording of this particular system. */}
-                  <HoverMedia
-                    seed={i}
-                    video={proj.video ?? placeholderClips[i % placeholderClips.length]}
-                  />
+                <HoverMedia
+                  seed={i}
+                  video={proj.video ?? placeholderClips[i % placeholderClips.length]}
+                />
 
-                  <div className="relative flex items-start justify-between gap-4">
-                    <span className="mono-label">
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    {/* Compound sectors like "Tourism / Membership / Activity
-                        Management" wrap to two lines and unsettle the row, so
-                        the cell shows the primary one; the case study carries
-                        the full value. */}
-                    <span className="mono-label text-right">
-                      {proj.industry.split("/")[0].trim()}
-                    </span>
-                  </div>
+                <div className="relative flex items-start justify-between gap-4">
+                  <span className="mono-label">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <span className="mono-label text-right">
+                    {proj.industry.split("/")[0].trim()}
+                  </span>
+                </div>
 
-                  <div className="relative mt-10">
-                    {/* Named clients are the closest thing we have to the
-                        reference's logo row, so they lead the cell. */}
-                    {proj.client && (
-                      <span className="mono-label block text-brand/80">
-                        {proj.client}
-                      </span>
-                    )}
-                    <h3
-                      className={cn(
-                        "text-lg font-semibold leading-snug text-fg",
-                        proj.client && "mt-2",
-                      )}
+                <div className="relative mt-10">
+                  {proj.client && (
+                    <motion.span
+                      layoutId={`${uid}-client-${proj.slug}`}
+                      className="mono-label block text-brand/80"
                     >
-                      {proj.title}
-                    </h3>
-                    <p className="body-sm mt-2.5 leading-relaxed text-muted line-clamp-3">
-                      {proj.summary}
-                    </p>
-                  </div>
+                      {proj.client}
+                    </motion.span>
+                  )}
+                  <motion.h3
+                    layoutId={`${uid}-title-${proj.slug}`}
+                    className={cn(
+                      "text-lg font-semibold leading-snug text-fg",
+                      proj.client && "mt-2",
+                    )}
+                  >
+                    {proj.title}
+                  </motion.h3>
+                  <motion.p
+                    layoutId={`${uid}-summary-${proj.slug}`}
+                    className="body-sm mt-2.5 line-clamp-3 leading-relaxed text-muted"
+                  >
+                    {proj.summary}
+                  </motion.p>
+                </div>
 
-                  <div className="relative mt-7 flex items-end justify-between gap-4 border-t border-line pt-5">
-                    <span className="text-[0.7rem] leading-relaxed text-muted">
-                      {proj.status}
-                    </span>
-                    <ArrowUpRight
-                      width={17}
-                      height={17}
-                      className="shrink-0 text-muted transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-fg"
-                    />
-                  </div>
-                </article>
-              </CardLink>
+                <div className="relative mt-7 flex items-end justify-between gap-4 border-t border-line pt-5">
+                  <span className="text-[0.7rem] leading-relaxed text-muted">
+                    {proj.status}
+                  </span>
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-line text-muted transition-colors duration-300 group-hover:border-brand group-hover:bg-brand group-hover:text-white">
+                    <ArrowUpRight width={15} height={15} />
+                  </span>
+                </div>
+              </motion.article>
             </RevealItem>
           ))}
         </RevealGroup>
       </div>
+
+      {/* ---------------- Expanded dialog ---------------- */}
+      <AnimatePresence>
+        {active && (
+          <div className="fixed inset-0 z-[60] grid place-items-center p-4 sm:p-6">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="absolute inset-0 bg-ink/70 backdrop-blur-sm"
+            />
+
+            <motion.div
+              ref={dialogRef}
+              layoutId={`${uid}-card-${active.slug}`}
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby={`${uid}-heading`}
+              className="relative flex max-h-[88svh] w-full max-w-2xl flex-col overflow-hidden rounded-2xl border border-line bg-paper shadow-2xl"
+            >
+              {/* Header band, tinted with the project's own accent */}
+              <div
+                className="relative shrink-0 border-b border-line p-7 sm:p-8"
+                style={{
+                  background: `linear-gradient(135deg, ${active.accent}14, transparent 70%)`,
+                }}
+              >
+                <button
+                  ref={closeRef}
+                  onClick={close}
+                  aria-label="Close project details"
+                  className="absolute right-5 top-5 flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border border-line bg-paper text-muted transition-colors hover:border-fg/30 hover:text-fg"
+                >
+                  <Close width={16} height={16} />
+                </button>
+
+                <div className="flex flex-wrap items-center gap-2 pr-12">
+                  <span className="pill text-[0.68rem]">{active.industry}</span>
+                  <span className="pill text-[0.68rem]">{active.projectType}</span>
+                </div>
+
+                {active.client && (
+                  <motion.span
+                    layoutId={`${uid}-client-${active.slug}`}
+                    className="mono-label mt-5 block text-brand/80"
+                  >
+                    {active.client}
+                  </motion.span>
+                )}
+
+                <motion.h3
+                  layoutId={`${uid}-title-${active.slug}`}
+                  id={`${uid}-heading`}
+                  className="heading-md mt-2 pr-12 font-semibold text-fg"
+                >
+                  {active.title}
+                </motion.h3>
+
+                <motion.p
+                  layoutId={`${uid}-summary-${active.slug}`}
+                  className="body mt-3 leading-relaxed text-muted"
+                >
+                  {active.summary}
+                </motion.p>
+              </div>
+
+              {/* Detail — the part the cell has no room for */}
+              <motion.div
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.25, delay: 0.12 }}
+                className="min-h-0 flex-1 overflow-y-auto p-7 sm:p-8"
+              >
+                <h4 className="mono-label">What it does</h4>
+                <ul className="mt-4 grid gap-2.5 sm:grid-cols-2">
+                  {active.features.map((f) => (
+                    <li key={f} className="flex items-start gap-2.5">
+                      <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-soft text-brand">
+                        <Check width={11} height={11} />
+                      </span>
+                      <span className="body-sm leading-snug text-fg">{f}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <h4 className="mono-label mt-8">Why it matters</h4>
+                <p className="body-sm mt-3 leading-relaxed text-muted">
+                  {active.benefits}
+                </p>
+
+                {active.technologies && active.technologies.length > 0 && (
+                  <>
+                    <h4 className="mono-label mt-8">Stack</h4>
+                    <ul className="mt-3 flex flex-wrap gap-1.5">
+                      {active.technologies.map((t) => (
+                        <li key={t} className="pill text-[0.68rem]">
+                          {t}
+                        </li>
+                      ))}
+                    </ul>
+                  </>
+                )}
+
+                <h4 className="mono-label mt-8">Status</h4>
+                <p className="body-sm mt-3 leading-relaxed text-muted">
+                  {active.status}
+                </p>
+              </motion.div>
+
+              {/* Footer action */}
+              <div className="shrink-0 border-t border-line bg-sand/60 p-5">
+                <Button
+                  variant="dark"
+                  size="sm"
+                  href={`/portfolio/${active.slug}`}
+                  className="w-full sm:w-auto"
+                >
+                  Read the full case study
+                  <ArrowUpRight width={15} height={15} />
+                </Button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }

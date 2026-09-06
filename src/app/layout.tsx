@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Archivo, IBM_Plex_Mono } from "next/font/google";
+import { Archivo, IBM_Plex_Mono, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { company } from "@/lib/site";
 import Navbar from "@/components/layout/Navbar";
@@ -27,6 +27,22 @@ const plexMono = IBM_Plex_Mono({
   variable: "--font-plex-mono",
   subsets: ["latin"],
   weight: ["400", "500", "600"],
+  display: "swap",
+});
+
+/**
+ * Space Grotesk sets the wordmark, and nothing else.
+ *
+ * A logo should not be the same typeface as the page it sits on, or it reads
+ * as a heading that happens to be in the corner. Space Grotesk is a technical
+ * grotesk with distinctly drawn capitals — narrower and more characterful than
+ * Archivo, which keeps the mark compact while still reading as engineering
+ * rather than decoration. One typeface, one job, loaded only for five letters.
+ */
+const wordmark = Space_Grotesk({
+  variable: "--font-wordmark",
+  subsets: ["latin"],
+  weight: ["500", "700"],
   display: "swap",
 });
 
@@ -70,7 +86,7 @@ export default function RootLayout({
       lang="en"
       data-scroll-behavior="smooth"
       suppressHydrationWarning
-      className={`${archivo.variable} ${plexMono.variable} h-full antialiased`}
+      className={`${archivo.variable} ${plexMono.variable} ${wordmark.variable} h-full antialiased`}
     >
       <body
         suppressHydrationWarning

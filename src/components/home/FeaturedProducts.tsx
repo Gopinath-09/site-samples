@@ -82,7 +82,20 @@ export default function FeaturedProducts() {
                   <div
                     className={`absolute inset-0 opacity-100 transition-all group-hover:scale-105 group-hover:opacity-0 ${SLOW}`}
                   >
-                    <RoadmapVisual seed={i} />
+                    {/* Placeholder artwork where we have it; the drawn panel
+                        remains the fallback for any entry without a file. */}
+                    {item.image ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={item.image}
+                        alt=""
+                        aria-hidden
+                        loading="lazy"
+                        className="h-full w-full object-cover"
+                      />
+                    ) : (
+                      <RoadmapVisual seed={i} />
+                    )}
                   </div>
 
                   <div

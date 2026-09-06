@@ -473,6 +473,137 @@ body {
   animation-play-state: paused;
 }
 
+/* ---- Wordmark ----------------------------------------------------------
+   The name set in Space Grotesk, as solid letters with a gold caret.
+
+   The letters are painted in `currentColor` and nothing else. An earlier
+   version put a gradient behind them and used `background-clip: text` with a
+   transparent text fill to make the highlight sweep through the glyphs — which
+   broke the moment the letters were transformed. A transformed child is
+   promoted to its own compositing layer, so the parent's clipped background
+   never paints into it, while the transparent fill *is* inherited: the glyphs
+   came out invisible, permanently so once hover held the transform. Solid
+   colour cannot fail that way.
+
+   The motion is transform and opacity only, so it stays on the compositor. */
+@keyframes wordmark-run {
+  0%,
+  70%,
+  100% {
+    transform: translateY(0);
+  }
+
+  35% {
+    transform: translateY(-0.16em);
+  }
+}
+
+/* The caret holds, then fades — a soft pulse rather than a hard terminal blink,
+   which would pull the eye away from the page in a fixed header. */
+@keyframes wordmark-caret {
+  0%,
+  40% {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+
+  70%,
+  100% {
+    opacity: 0.25;
+    transform: scaleY(0.82);
+  }
+}
+
+.wordmark {
+  font-family: var(--font-wordmark), var(--font-archivo), sans-serif;
+  font-weight: 700;
+  /* Compact: tight tracking pulls the five capitals into one block. */
+  letter-spacing: -0.02em;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  color: currentColor;
+}
+
+.wordmark-letters {
+  position: relative;
+  display: inline-flex;
+}
+
+/* A gold hairline draws under the name on hover. */
+.wordmark-letters::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  bottom: -0.24em;
+  height: 2px;
+  background: var(--color-brand);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.wordmark:hover .wordmark-letters::after {
+  transform: scaleX(1);
+}
+
+.wordmark-letter {
+  display: inline-block;
+  /* Stated explicitly so no inherited fill can blank it. */
+  color: currentColor;
+  -webkit-text-fill-color: currentColor;
+  /* Runs forever, each letter a beat behind the one before it. */
+  animation: wordmark-run 2.6s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+  animation-delay: calc(var(--i) * 0.11s);
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Hover lifts the word clear of its running cycle, left to right. */
+.wordmark:hover .wordmark-letter {
+  animation-play-state: paused;
+  transform: translateY(-0.14em);
+  transition-delay: calc(var(--i) * 0.035s);
+}
+
+/* The caret — the one piece of brand colour in the mark. */
+.wordmark-caret {
+  display: inline-block;
+  width: 0.15em;
+  height: 0.8em;
+  border-radius: 1px;
+  background: var(--color-brand);
+  animation: wordmark-caret 1.9s ease-in-out infinite alternate;
+}
+
+.wordmark:hover .wordmark-caret {
+  animation-duration: 0.9s;
+}
+
+/* Turning conic ring, used behind the named-client cards. The element is
+   larger than its container and clipped by it, so the gradient sweeps the
+   card's edge without the corners strobing as it passes. Only `transform`
+   animates, so this stays on the compositor. */
+@keyframes ring-turn {
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+.trusted-ring {
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    var(--color-brand) 40deg,
+    transparent 130deg,
+    transparent 230deg,
+    var(--color-copper) 280deg,
+    transparent 340deg
+  );
+  transform: translate(-50%, -50%) rotate(0deg);
+  animation: ring-turn 12s linear infinite;
+}
+
 /* Outlined "wave" text — a bordered wordmark with a bright highlight that
    sweeps through the letters forever. */
 @keyframes text-wave-sweep {
@@ -520,6 +651,17 @@ body {
 
   .marquee-track {
     animation: none;
+  }
+
+  .trusted-ring {
+    animation: none;
+  }
+
+  .wordmark-letter,
+  .wordmark-caret {
+    animation: none;
+    transform: none;
+    opacity: 1;
   }
 
   html {
@@ -613,9 +755,9 @@ body {
    * has to carry the whole first impression.
    */
   .heading-display {
-    font-size: clamp(2.75rem, 7.2vw, 5.5rem);
-    line-height: 0.98;
-    letter-spacing: -0.04em;
+    font-size: clamp(2rem, 4.8vw, 3.5rem);
+    line-height: 1.04;
+    letter-spacing: -0.03em;
     font-weight: 600;
   }
 
@@ -714,6 +856,267 @@ body {
 
   .band-dark .marker-index {
     color: var(--color-brand-light);
+  }
+}
+
+/* ==========================================================================
+   THE MARK
+   Black marble, cracked through with gold, with an occasional glint of light
+   — and the wordmark beside it running in a perpetual letter-by-letter chase.
+   ========================================================================== */
+
+/* A dim gold outline on the glyphs themselves, so the letterforms hold their
+   shape even against the stone fill's darkest corners. */
+.mark-rail {
+  stroke: rgba(227, 185, 100, 0.55);
+  stroke-width: 6;
+}
+
+/*
+ * The shine.
+ *
+ * A full-size rect, clipped to the same glyphs as the marble beneath it,
+ * filled with a gradient that is transparent except for one bright diagonal
+ * band. `transform-box: fill-box` makes the translate below relative to the
+ * rect's *own* box (1024×1024, same as the glyphs' viewBox) rather than the
+ * SVG viewport, so `-100%`/`100%` land exactly one full width to either side
+ * — parked there, the band no longer overlaps the clip region at all and the
+ * rect renders as nothing, which is what makes "off-canvas" free rather than
+ * needing a separate opacity toggle.
+ *
+ * Mostly still, with one sweep every 7s: a glint catching the marble now and
+ * then, not a continuous animation competing with the running wordmark next
+ * to it.
+ */
+.mark-shine {
+  transform-box: fill-box;
+  transform-origin: center;
+  transform: translateX(-100%);
+  animation: mark-shine 7s ease-in-out infinite;
+}
+
+@keyframes mark-shine {
+
+  0%,
+  76%,
+  100% {
+    transform: translateX(-100%);
+  }
+
+  92% {
+    transform: translateX(100%);
+  }
+}
+
+/*
+ * The wordmark — running letters.
+ *
+ * Each letter is its own animation, not a static glyph with a highlight
+ * riding over it: it runs in from behind the mark, holds in place, then runs
+ * on out, forever. All five letters share one keyframe timeline and differ
+ * only in `animation-delay` (`--i` steps of 0.3s), which is what turns five
+ * identical loops into the sequence described as "first C, next O, then B,
+ * then R then R" — C's delay is shortest, so it always leads.
+ *
+ * The hold (6%–70% of the cycle) is long relative to the run in/out, and each
+ * letter's hold overlaps the next one's, so the word is seen assembling
+ * left-to-right, sits complete for a beat, then peels away in the same
+ * order — never a blank gap, never the full static word sitting inert.
+ *
+ * Positioned rather than laid out in flow: each letter's box is a fixed
+ * width equal to its own glyph, held with `display:inline-block` and a
+ * shared line so the `translateX` run doesn't reflow its neighbours as it
+ * moves — a running letter that pushes the ones after it would read as the
+ * whole word flinching on every step.
+ */
+.lockup-letter {
+  display: inline-block;
+  color: transparent;
+  background-image: linear-gradient(155deg, #2c2c31 0%, #0e0e11 52%, #1c1c20 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-stroke: 1.5px var(--color-brand);
+  paint-order: stroke fill;
+  text-shadow:
+    0 0 8px rgba(227, 185, 100, 0.55),
+    0 0 20px rgba(201, 150, 47, 0.3);
+  opacity: 0;
+  transform: translateX(-0.55em);
+  animation: lockup-run 3.6s ease-in-out infinite;
+  animation-delay: calc(var(--i) * 0.3s);
+}
+
+/* The gap between the mark and the word lives on the first letter, so it
+   never leaves stray padding when nothing else about the layout depends on
+   the word's width any more. */
+.lockup-letter:first-child {
+  margin-inline-start: 0.22em;
+}
+
+@keyframes lockup-run {
+
+  0%,
+  100% {
+    opacity: 0;
+    transform: translateX(-0.55em);
+  }
+
+  8% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  70% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  80% {
+    opacity: 0;
+    transform: translateX(0.45em);
+  }
+}
+
+/* ==========================================================================
+   HERO MOTION
+   ========================================================================== */
+
+/*
+ * The footage is held slightly oversize and drifts across its own frame, so
+ * the band keeps moving even where the light in the clip is still. Very slow
+ * and very small — it should never be legible as a pan.
+ */
+@keyframes hero-drift {
+
+  0%,
+  100% {
+    transform: scale(1.12) translate3d(-1.2%, -0.8%, 0);
+  }
+
+  50% {
+    transform: scale(1.2) translate3d(1.2%, 1%, 0);
+  }
+}
+
+.hero-drift {
+  animation: hero-drift 48s ease-in-out infinite;
+  /* The footage is 4K. Promoting this to its own compositor layer keeps the
+     drift from forcing a re-raster of that texture on every frame, which shows
+     up as stutter in the video rather than in the movement itself. */
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* The measuring grid, creeping by exactly one cell so the loop is invisible. */
+@keyframes hero-grid {
+  to {
+    background-position: 56px 56px;
+  }
+}
+
+.hero-grid {
+  animation: hero-grid 26s linear infinite;
+}
+
+/* The gold pool under the composition, breathing. */
+@keyframes hero-pool {
+
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.85;
+    transform: scale(1.09);
+  }
+}
+
+.hero-pool {
+  animation: hero-pool 11s ease-in-out infinite;
+}
+
+/*
+ * A pale gold sheen crossing the headline once it has settled.
+ *
+ * The base of the gradient is white, not transparent, so the type is fully
+ * legible whether or not the animation ever runs — a sheen built on a
+ * transparent base is one reduced-motion setting away from an invisible
+ * headline.
+ */
+@keyframes hero-sheen {
+  0% {
+    background-position: 180% 0;
+  }
+
+  55%,
+  100% {
+    background-position: -80% 0;
+  }
+}
+
+.type-sheen {
+  color: transparent;
+  background-image: linear-gradient(100deg,
+      #ffffff 0%,
+      #ffffff 38%,
+      #f7e8c4 47%,
+      #ffffff 56%,
+      #ffffff 100%);
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: hero-sheen 7s 1.2s ease-in-out infinite;
+}
+
+/* A gold bead falling down the scroll cue's rule, on a long rest between runs. */
+@keyframes hero-bead {
+
+  0%,
+  62%,
+  100% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+
+  8% {
+    opacity: 1;
+  }
+
+  55% {
+    transform: translateY(240%);
+    opacity: 0;
+  }
+}
+
+.hero-bead {
+  animation: hero-bead 3.4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .mark-shine,
+  .hero-drift,
+  .hero-grid,
+  .hero-pool,
+  .type-sheen,
+  .hero-bead,
+  .lockup-letter {
+    animation: none;
+  }
+
+  /* The shine's parked position (`translateX(-100%)`) already renders as
+     nothing — turning the animation off is enough, with no extra position to
+     settle. */
+
+  /* Settle every letter in place rather than leaving whichever ones were
+     mid-run at random opacity, which is what simply freezing the animation
+     would otherwise do. */
+  .lockup-letter {
+    opacity: 1;
+    transform: none;
   }
 }
 

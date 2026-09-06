@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" width="640" height="400" role="img" aria-label="Placeholder artwork">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#121a2e"/>
+      <stop offset="100%" stop-color="#0a0e1a"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="78%" cy="18%" r="62%">
+      <stop offset="0%" stop-color="#2450e6" stop-opacity="0.30"/>
+      <stop offset="100%" stop-color="#2450e6" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M32 0H0V32" fill="none" stroke="#ffffff" stroke-opacity="0.05" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="640" height="400" fill="url(#bg)"/>
+  <rect width="640" height="400" fill="url(#grid)"/>
+  <rect width="640" height="400" fill="url(#glow)"/>
+
+  <path d="M110 300 L320 260 L530 300 L320 340 Z" fill="#fff" fill-opacity="0.06" stroke="#fff" stroke-opacity="0.12"/>
+  <path d="M140 254 L320 214 L500 254 L320 294 Z" fill="#fff" fill-opacity="0.06" stroke="#fff" stroke-opacity="0.12"/>
+  <path d="M170 208 L320 168 L470 208 L320 248 Z" fill="#fff" fill-opacity="0.06" stroke="#fff" stroke-opacity="0.12"/>
+  <path d="M200 162 L320 122 L440 162 L320 202 Z" fill="#fff" fill-opacity="0.06" stroke="#fff" stroke-opacity="0.12"/>
+  <path d="M230 116 L320 76 L410 116 L320 156 Z" fill="#2450e6" fill-opacity="0.35" stroke="#fff" stroke-opacity="0.12"/>
+</svg>

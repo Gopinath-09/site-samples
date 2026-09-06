@@ -50,7 +50,7 @@ function initials(name: string) {
 function Card({ t, index }: { t: Testimonial; index: number }) {
   const [from, to] = AVATARS[index % AVATARS.length];
   return (
-    <figure className="relative mx-2.5 flex w-[340px] shrink-0 flex-col overflow-hidden rounded-2xl border border-line bg-paper p-7 shadow-[0_1px_2px_rgba(10,14,26,0.04)] sm:w-[380px]">
+    <figure className="relative mx-2.5 flex w-[min(84vw,340px)] shrink-0 flex-col overflow-hidden rounded-2xl border border-line bg-paper p-7 shadow-[0_1px_2px_rgba(10,14,26,0.04)] sm:w-[380px]">
       {/* Large faint quote mark, sits behind the content */}
       <span
         aria-hidden

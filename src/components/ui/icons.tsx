@@ -25,6 +25,7 @@ export {
   Check,
   ChevronDown,
   Menu,
+  Search,
   Star,
   X as Close,
   Building2 as Building,

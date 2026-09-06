@@ -1,45 +1,26 @@
+import CobrrWordmark from "@/components/brand/CobrrWordmark";
 import { cn } from "@/lib/utils";
 
 /**
- * The COBRR wordmark.
+ * The COBRR brand mark, as used in the header and drawer.
  *
- * Set as type rather than artwork. There is no image to load, nothing to go
- * missing, and it stays crisp at any size and in any colour the surrounding
- * context sets — the previous mark shipped a PNG that did not exist and fell
- * back to an SVG only after hydration, so the header rendered a broken image
- * on first paint.
+ * The monogram and its lockup are gone: this is the name on its own, set in
+ * Syne rather than the page typeface, animated on load and on hover.
  *
- * The letterforms are tightened well past the default and given a slight
- * gradient falloff so the mark reads as one object; the accent stop closes it
- * off, which is what stops five identical-weight capitals from looking like a
- * word rather than a mark.
+ * `size` keeps its old meaning to the call sites (`Navbar`, the mobile
+ * drawer) — an approximate cap height — but now sets the wordmark's font size
+ * directly. Syne's capitals sit at roughly 0.72 of the em, so the value is
+ * scaled to keep a `size={58}` mark visually the height it was before.
+ *
+ * Colour is inherited, so the header sets it: white over the dark hero, ink
+ * once the header turns light.
  */
 export default function Logo({
   className,
   size = 38,
 }: {
   className?: string;
-  /** Rendered cap height in pixels; the mark scales from this. */
   size?: number;
 }) {
-  return (
-    <span
-      className={cn(
-        "inline-flex select-none items-baseline leading-none",
-        className,
-      )}
-      style={{ fontSize: size * 0.66 }}
-    >
-      <span className="bg-linear-to-r from-white via-white to-white/65 bg-clip-text font-bold tracking-tighter text-transparent">
-        COBRR
-      </span>
-      <span
-        aria-hidden
-        className="ml-[0.06em] text-brand"
-        style={{ fontSize: "1.15em", lineHeight: 0 }}
-      >
-        .
-      </span>
-    </span>
-  );
+  return <CobrrWordmark className={cn(className)} size={Math.round(size * 0.5)} />;
 }

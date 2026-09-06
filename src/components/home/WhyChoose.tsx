@@ -1,114 +1,217 @@
-"use client";
-
-import { useEffect, useRef, useState } from "react";
 import { differentiators } from "@/lib/content";
+import SectionHeading from "@/components/ui/SectionHeading";
+import Button from "@/components/ui/Button";
+import Icon from "@/components/ui/Icon";
+import { RevealGroup, RevealItem } from "@/components/ui/Reveal";
+import { ArrowRight } from "@/components/ui/icons";
 import { cn } from "@/lib/utils";
 
 /**
- * Why COBRR, as a pinned heading against a scrolling list.
+ * Why COBRR, as a bento grid.
  *
- * The left column stays put while the seven points move past it, so the
- * heading has time to land and the reader always knows where they are in the
- * set. Only the point crossing the middle of the viewport is lit; the rest are
- * held back, which turns a list that would otherwise be read all at once into
- * one that is read in order.
+ * Twelve columns, with each cell claiming a span from a fixed pattern rather
+ * than from its own position, so the rows always close square. The pattern
+ * tiles the seven points as 6+6 / 4+4+4 / 6+6; anything beyond the pattern
+ * falls back to a quarter-width cell, which keeps the layout valid if the
+ * dataset grows.
  *
- * The active point is found with an IntersectionObserver rather than a scroll
- * handler, so nothing runs on the main thread between intersections. The root
- * margin crops the viewport to a narrow band across its middle, which means at
- * most one point qualifies at a time and "active" needs no distance maths.
+ * Every cell carries a drawn figure above the words. They are decorative and
+ * deliberately abstract — a diagram that pretended to describe the specific
+ * point would be inventing detail we have not stated. All motion is CSS on
+ * hover, so the whole section stays a server component with no JavaScript of
+ * its own.
  */
-export default function WhyChoose() {
-  const [active, setActive] = useState(0);
-  const items = useRef<(HTMLElement | null)[]>([]);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (!entry.isIntersecting) continue;
-          const i = items.current.indexOf(entry.target as HTMLElement);
-          if (i !== -1) setActive(i);
-        }
-      },
-      // Only the middle 10% of the viewport counts as "here".
-      { rootMargin: "-45% 0px -45% 0px", threshold: 0 },
+/** Column spans over a 12-column grid, in order. */
+const SPANS = [6, 6, 4, 4, 4, 6, 6];
+
+/**
+ * Abstract figure for a cell. Five variants, chosen by index, so adjacent
+ * cells never repeat a drawing.
+ */
+function BentoFigure({ variant }: { variant: number }) {
+  const common = "absolute inset-0 h-full w-full";
+
+  if (variant === 0) {
+    /* Concentric arcs, widening on hover */
+    return (
+      <svg className={common} viewBox="0 0 200 100" fill="none" aria-hidden>
+        {[18, 30, 42, 54].map((r, i) => (
+          <circle
+            key={r}
+            cx="100"
+            cy="86"
+            r={r}
+            stroke="currentColor"
+            strokeWidth="0.8"
+            className="text-fg/15 transition-transform duration-700 ease-out group-hover:scale-110"
+            style={{ transformOrigin: "100px 86px", transitionDelay: `${i * 60}ms` }}
+          />
+        ))}
+      </svg>
     );
+  }
 
-    const observed = items.current.filter(Boolean) as HTMLElement[];
-    observed.forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
-  }, []);
+  if (variant === 1) {
+    /* Stacked planes, separating on hover */
+    return (
+      <svg className={common} viewBox="0 0 200 100" fill="none" aria-hidden>
+        {[0, 1, 2].map((i) => (
+          <rect
+            key={i}
+            x={62 + i * 6}
+            y={34 + i * 14}
+            width="76"
+            height="26"
+            rx="4"
+            stroke="currentColor"
+            strokeWidth="0.8"
+            className="text-fg/15 transition-transform duration-700 ease-out group-hover:-translate-y-1"
+            style={{ transitionDelay: `${(2 - i) * 70}ms` }}
+          />
+        ))}
+      </svg>
+    );
+  }
 
+  if (variant === 2) {
+    /* Bar series, rising on hover */
+    return (
+      <svg className={common} viewBox="0 0 200 100" fill="none" aria-hidden>
+        {[24, 40, 30, 56, 44, 68, 52].map((h, i) => (
+          <rect
+            key={i}
+            x={52 + i * 14}
+            y={90 - h}
+            width="7"
+            height={h}
+            rx="2"
+            className="fill-fg/12 transition-all duration-700 ease-out group-hover:fill-brand/30"
+            style={{ transitionDelay: `${i * 55}ms` }}
+          />
+        ))}
+      </svg>
+    );
+  }
+
+  if (variant === 3) {
+    /* Node mesh, brightening on hover */
+    return (
+      <svg className={common} viewBox="0 0 200 100" fill="none" aria-hidden>
+        <path
+          d="M60 74 L100 40 L140 74 M100 40 L100 86 M60 74 L140 74"
+          stroke="currentColor"
+          strokeWidth="0.8"
+          className="text-fg/15 transition-colors duration-500 group-hover:text-brand/40"
+        />
+        {[
+          [100, 40],
+          [60, 74],
+          [140, 74],
+          [100, 86],
+        ].map(([cx, cy], i) => (
+          <circle
+            key={i}
+            cx={cx}
+            cy={cy}
+            r="3.5"
+            className="fill-fg/20 transition-all duration-500 group-hover:fill-brand/60"
+            style={{ transitionDelay: `${i * 80}ms` }}
+          />
+        ))}
+      </svg>
+    );
+  }
+
+  /* Ruled field, drifting on hover */
+  return (
+    <svg className={common} viewBox="0 0 200 100" fill="none" aria-hidden>
+      {Array.from({ length: 9 }, (_, i) => (
+        <line
+          key={i}
+          x1={30 + i * 18}
+          y1="24"
+          x2={30 + i * 18}
+          y2="88"
+          stroke="currentColor"
+          strokeWidth="0.7"
+          className="text-fg/12 transition-transform duration-700 ease-out group-hover:translate-y-1"
+          style={{ transitionDelay: `${i * 45}ms` }}
+        />
+      ))}
+    </svg>
+  );
+}
+
+export default function WhyChoose() {
   return (
     <section className="section bg-sand" id="why-cobrr">
-      <div className="container-page grid gap-14 lg:grid-cols-[minmax(0,24rem)_1fr] lg:gap-24">
-        {/* Pinned side */}
-        <div className="lg:sticky lg:top-32 lg:self-start">
-          <span className="eyebrow">Why COBRR</span>
-          <h2 className="heading-lg mt-5 text-balance text-fg">
-            The difference is in how we work.
-          </h2>
-          <p className="body mt-6 max-w-sm leading-relaxed text-muted">
-            Seven things we hold to. None of them is a number we cannot show
-            you.
-          </p>
+      <div className="container-page">
+        <SectionHeading
+          eyebrow="Why COBRR"
+          title="The difference is in how we work."
+          description="Seven things we hold to. None of them is a number we cannot show you."
+        />
 
-          {/* Position in the set, and how far through it we are */}
-          <div className="mt-10 hidden items-center gap-4 lg:flex">
-            <span className="mono-figure text-sm text-fg">
-              {String(active + 1).padStart(2, "0")}
-            </span>
-            <span className="relative h-px flex-1 bg-line">
-              <span
-                className="absolute inset-y-0 left-0 bg-brand transition-[width] duration-500 ease-out"
-                style={{
-                  width: `${((active + 1) / differentiators.length) * 100}%`,
-                }}
-              />
-            </span>
-            <span className="mono-figure text-sm text-muted">
-              {String(differentiators.length).padStart(2, "0")}
-            </span>
-          </div>
-        </div>
-
-        {/* Scrolling side */}
-        <ol className="space-y-16 lg:space-y-24">
+        <RevealGroup className="mt-14 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-12">
           {differentiators.map((d, i) => (
-            <li
+            <RevealItem
               key={d.label}
-              ref={(el) => {
-                items.current[i] = el;
-              }}
               className={cn(
-                "border-t pt-8 transition-all duration-500 ease-out",
-                i === active
-                  ? "border-brand/60 opacity-100"
-                  : "border-line opacity-45",
+                "h-full",
+                SPANS[i] === 6 && "lg:col-span-6",
+                SPANS[i] === 4 && "lg:col-span-4",
+                SPANS[i] === undefined && "lg:col-span-3",
               )}
             >
-              <div className="flex items-baseline gap-4">
-                <span
-                  className={cn(
-                    "mono-figure text-sm transition-colors duration-500",
-                    i === active ? "text-brand" : "text-muted",
-                  )}
-                >
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <span className="mono-label">{d.label}</span>
-              </div>
+              <article className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-line bg-paper transition-colors duration-300 hover:border-brand/30">
+                {/* Figure */}
+                <div className="relative h-28 shrink-0 overflow-hidden border-b border-line/60 bg-sand/40">
+                  <BentoFigure variant={i % 5} />
+                  {/* Warm-up wash on hover */}
+                  <div className="absolute inset-0 bg-linear-to-t from-brand/8 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                </div>
 
-              <h3 className="heading-md mt-5 text-balance font-medium leading-snug tracking-[-0.01em] text-fg">
-                {d.title}
-              </h3>
-              <p className="body mt-4 max-w-2xl leading-relaxed text-muted">
-                {d.description}
-              </p>
-            </li>
+                {/* Words */}
+                <div className="flex flex-1 flex-col p-6 sm:p-7">
+                  <div className="flex items-center gap-2.5">
+                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-brand-soft text-brand">
+                      <Icon name={d.icon} width={14} height={14} />
+                    </span>
+                    <span className="mono-label">{d.label}</span>
+                  </div>
+
+                  <h3 className="heading-md mt-4 text-balance font-medium leading-snug tracking-[-0.01em] text-fg">
+                    {d.title}
+                  </h3>
+                  <p className="body-sm mt-3 leading-relaxed text-muted">
+                    {d.description}
+                  </p>
+                </div>
+
+                {/* Rule that draws across the foot on hover */}
+                <span
+                  aria-hidden
+                  className="absolute inset-x-0 bottom-0 h-px origin-left scale-x-0 bg-brand transition-transform duration-700 ease-out group-hover:scale-x-100"
+                />
+              </article>
+            </RevealItem>
           ))}
-        </ol>
+
+          {/* Closing cell — squares off the final row */}
+          <RevealItem className="h-full sm:col-span-2 lg:col-span-12">
+            <div className="flex flex-col items-start justify-between gap-6 rounded-3xl border border-line bg-fg/3 p-7 sm:flex-row sm:items-center">
+              <p className="body max-w-xl leading-relaxed text-muted">
+                None of this is a claim you have to take on trust. Ask about any
+                of it and we will show you the system it came from.
+              </p>
+              <Button variant="dark" size="sm" href="/contact" className="shrink-0">
+                Talk to an engineer
+                <ArrowRight width={15} height={15} />
+              </Button>
+            </div>
+          </RevealItem>
+        </RevealGroup>
       </div>
     </section>
   );

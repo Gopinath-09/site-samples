@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" width="640" height="400" role="img" aria-label="Placeholder artwork">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#121a2e"/>
+      <stop offset="100%" stop-color="#0a0e1a"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="78%" cy="18%" r="62%">
+      <stop offset="0%" stop-color="#2450e6" stop-opacity="0.30"/>
+      <stop offset="100%" stop-color="#2450e6" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M32 0H0V32" fill="none" stroke="#ffffff" stroke-opacity="0.05" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="640" height="400" fill="url(#bg)"/>
+  <rect width="640" height="400" fill="url(#grid)"/>
+  <rect width="640" height="400" fill="url(#glow)"/>
+  <rect x="286" y="66" width="68" height="40" rx="8" fill="#2450e6" fill-opacity="0.6"/>
+  <path d="M320 106 C320 160 174 150 174 196" fill="none" stroke="#fff" stroke-opacity="0.14"/>
+  <rect x="140" y="196" width="68" height="36" rx="8" fill="#fff" fill-opacity="0.14"/>
+  <rect x="140" y="256" width="68" height="8" rx="4" fill="#fff" fill-opacity="0.06"/>
+  <rect x="140" y="274" width="44" height="8" rx="4" fill="#fff" fill-opacity="0.06"/>
+  <path d="M320 106 C320 160 280 150 280 196" fill="none" stroke="#fff" stroke-opacity="0.14"/>
+  <rect x="246" y="196" width="68" height="36" rx="8" fill="#fff" fill-opacity="0.08"/>
+  <rect x="246" y="256" width="68" height="8" rx="4" fill="#fff" fill-opacity="0.06"/>
+  <rect x="246" y="274" width="44" height="8" rx="4" fill="#fff" fill-opacity="0.06"/>
+  <path d="M320 106 C320 160 428 150 428 196" fill="none" stroke="#fff" stroke-opacity="0.14"/>
+  <rect x="394" y="196" width="68" height="36" rx="8" fill="#fff" fill-opacity="0.14"/>
+  <rect x="394" y="256" width="68" height="8" rx="4" fill="#fff" fill-opacity="0.06"/>
+  <rect x="394" y="274" width="44" height="8" rx="4" fill="#fff" fill-opacity="0.06"/>
+  <path d="M320 106 C320 160 534 150 534 196" fill="none" stroke="#fff" stroke-opacity="0.14"/>
+  <rect x="500" y="196" width="68" height="36" rx="8" fill="#fff" fill-opacity="0.08"/>
+  <rect x="500" y="256" width="68" height="8" rx="4" fill="#fff" fill-opacity="0.06"/>
+  <rect x="500" y="274" width="44" height="8" rx="4" fill="#fff" fill-opacity="0.06"/>
+</svg>

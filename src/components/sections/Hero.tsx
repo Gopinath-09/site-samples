@@ -79,23 +79,29 @@ const slides: CarouselSlide[] = [
 const AUTOPLAY_MS = 6000;
 
 /**
- * Slide backdrop — subtle engineered line-art on the page surface. Colours
- * come from CSS variables, so the motif flips with the theme.
+ * Hero backdrop — ONE shared layer behind the whole carousel.
+ *
+ * It deliberately lives on the section, not on each slide: the grid and the
+ * arc motif are the hero's setting, so they should stay put while only the
+ * content slides across them. Rendering it per slide would also mean five
+ * copies of the same animated SVG all running at once.
+ *
+ * Colours come from CSS variables, so the motif flips with the theme.
  */
-function SlideBackdrop({ active }: { active: boolean }) {
+function HeroBackdrop() {
   const reduced = useReducedMotion();
   return (
-    <div className="absolute inset-0 overflow-hidden">
+    <div className="absolute inset-0 overflow-hidden" aria-hidden>
       {/* No colour wash: the hero sits on the same pure surface as every other
           section. Interest comes from the grid and the line-art motif only. */}
       {/* engineering grid */}
       <div className="bg-grid absolute inset-0" />
-      {/* concentric arc motif, slowly drifting when active */}
+      {/* concentric arc motif, drifting slowly */}
       <motion.svg
         viewBox="0 0 400 400"
         className="absolute -right-24 top-1/2 h-[130%] w-auto -translate-y-1/2 opacity-60"
         aria-hidden
-        animate={active && !reduced ? { rotate: [0, 8, 0] } : { rotate: 0 }}
+        animate={reduced ? { rotate: 0 } : { rotate: [0, 8, 0] }}
         transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
       >
         {[60, 110, 160, 195].map((r, i) => (
@@ -187,11 +193,15 @@ export default function Hero() {
 
   return (
     <section className="relative h-svh min-h-160 w-full overflow-hidden bg-paper text-fg">
+      {/* One backdrop for the whole hero — it stays put while slides move. */}
+      <HeroBackdrop />
+
       {/* Sliding track. Mixing % (slide index) and px (drag) in one calc keeps
-          this SSR-safe — no window access during render. */}
+          this SSR-safe — no window access during render. Slides now carry only
+          their own artwork; the setting behind them is shared. */}
       <div
         ref={containerRef}
-        className="flex h-full cursor-grab select-none active:cursor-grabbing"
+        className="relative z-10 flex h-full cursor-grab select-none active:cursor-grabbing"
         style={{
           transform: `translateX(calc(${-currentIndex * 100}% + ${translateX}px))`,
           transition: isDragging
@@ -224,7 +234,6 @@ export default function Hero() {
                 className="object-cover opacity-25"
               />
             )}
-            <SlideBackdrop active={index === currentIndex} />
             {/* Surface-coloured gradient keeps the copy readable over a photo */}
             {slide.image && (
               <div className="absolute inset-0 bg-linear-to-t from-paper via-paper/80 to-paper/40" />
@@ -234,7 +243,7 @@ export default function Hero() {
       </div>
 
       {/* Foreground content — animates per slide, independent of the track */}
-      <div className="pointer-events-none absolute inset-0 flex items-center">
+      <div className="pointer-events-none absolute inset-0 z-20 flex items-center">
         <div className="container-page w-full">
           <AnimatePresence mode="wait">
             <motion.div
@@ -281,7 +290,7 @@ export default function Hero() {
       </div>
 
       {/* Slide index + navigation dots */}
-      <div className="pointer-events-auto absolute bottom-8 left-1/2 z-20 flex -translate-x-1/2 items-center gap-4">
+      <div className="pointer-events-auto absolute bottom-8 left-1/2 z-30 flex -translate-x-1/2 items-center gap-4">
         <span className="font-mono text-xs tabular-nums text-muted">
           {String(currentIndex + 1).padStart(2, "0")}
         </span>
@@ -306,7 +315,7 @@ export default function Hero() {
       </div>
 
       {/* Top progress bar */}
-      <div className="absolute inset-x-0 top-0 z-20 h-0.5 bg-fg/8">
+      <div className="absolute inset-x-0 top-0 z-30 h-0.5 bg-fg/8">
         <motion.div
           key={currentIndex + (isAutoPlaying ? "-play" : "-pause")}
           className="h-full bg-brand"

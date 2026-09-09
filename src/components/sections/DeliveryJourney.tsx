@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useSyncExternalStore } from "react";
 import {
   AnimatePresence,
   motion,
@@ -163,6 +163,20 @@ const stageIndex = (v: number) => {
   return i;
 };
 
+/** Below the `lg` breakpoint, where the layout stacks. SSR renders desktop. */
+const MOBILE_QUERY = "(max-width: 1023.98px)";
+function useIsMobile() {
+  return useSyncExternalStore(
+    (cb) => {
+      const mq = window.matchMedia(MOBILE_QUERY);
+      mq.addEventListener("change", cb);
+      return () => mq.removeEventListener("change", cb);
+    },
+    () => window.matchMedia(MOBILE_QUERY).matches,
+    () => false,
+  );
+}
+
 /* ---------- Pieces ---------- */
 
 function MethodologySwitch({
@@ -275,16 +289,25 @@ function StageCard({
 
 export default function DeliveryJourney() {
   const wrapRef = useRef<HTMLDivElement>(null);
+  const pathRef = useRef<HTMLDivElement>(null);
   const reduced = useReducedMotion() ?? false;
   const [mode, setMode] = useState<Methodology>("agile");
   const [scrolled, setScrolled] = useState(0);
   // A stage chosen from the stepper stays active until scrolling moves on.
   const [picked, setPicked] = useState<{ index: number; when: number } | null>(null);
 
-  const { scrollYProgress } = useScroll({
-    target: wrapRef,
-    offset: ["start 70%", "end 60%"],
-  });
+  const isMobile = useIsMobile();
+
+  /* Two sources, one picked at runtime.
+     Desktop: the whole two-column block drives the draw — the route fills the
+     right column, so block and route line up.
+     Mobile: the heading and the switch stack ABOVE the route, so measuring the
+     block would start drawing while the reader is still on the heading and the
+     line would already be half-drawn by the time it appeared. There the route's
+     own box drives it, centred on the viewport, so the pen tracks mid-screen. */
+  const desktopScroll = useScroll({ target: wrapRef, offset: ["start 70%", "end 60%"] });
+  const mobileScroll = useScroll({ target: pathRef, offset: ["start center", "end center"] });
+  const scrollYProgress = isMobile ? mobileScroll.scrollYProgress : desktopScroll.scrollYProgress;
   const complete = useMotionValue(1);
   const progress = reduced ? complete : scrollYProgress;
   useMotionValueEvent(scrollYProgress, "change", (v) => setScrolled(stageIndex(v)));
@@ -386,7 +409,7 @@ export default function DeliveryJourney() {
 
         {/* ---- The drawn route: the whole section on mobile, the right-hand
              column on desktop. ---- */}
-        <div>
+        <div ref={pathRef}>
           <JourneyPath
             mode={mode}
             progress={progress}

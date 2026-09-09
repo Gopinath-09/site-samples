@@ -351,7 +351,7 @@ export default function DeliveryJourney() {
               })}
             </div>
 
-            <ol className="mt-0 flex gap-2" aria-label="Delivery stages">
+            <ol className="mt-2 flex gap-2" aria-label="Delivery stages">
               {stages.map((s, i) => {
                 const on = i === active;
                 return (

@@ -15,7 +15,6 @@ const nextConfig: NextConfig = {
     // Next 16 allow-lists qualities. 90 is for hero backgrounds.
     qualities: [60, 75, 90],
   },
-  allowedDevOrigins: ['whatsapp.cobrr.in'],
 };
 
 export default nextConfig;

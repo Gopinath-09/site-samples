@@ -52,7 +52,7 @@ export const megaMenu: MenuGroup[] = [
     blurb: "SaaS platforms we build and operate.",
     links: [
       { label: "All Products", href: "/products", desc: "SaaS platforms we build." },
-      { label: "Workship", href: "/products/workship", desc: "Operations platform" },
+      { label: "OnPremBox", href: "/products/onprembox", desc: "Operations platform" },
       { label: "Satisfy", href: "/products/satisfy", desc: "CX & feedback intelligence" },
       { label: "Upcoming SaaS", href: "/products/upcoming-saas", desc: "In the studio" },
     ],

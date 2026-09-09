@@ -11,7 +11,7 @@ site. Read this before adding a component or a page.
 | Design tokens (TS) | `src/lib/tokens.ts` | Mirror for places that cannot read CSS variables: OG images, SVG hex+alpha, Framer values. Keep both files in sync. |
 | Component classes | `src/app/globals.css` → `@layer components` | `.btn*`, `.card*`, `.pill*`, `.badge*`, `.chip*`, `.field*`, `.heading-*`, `.eyebrow*`, `.bg-grid*`, `.glow-brand`, `.anim-*` |
 | Primitives (React) | `src/components/ui/` | `Button`, `CardLink`, `Card`, `Section`, `IconChip`, `Badge`, `Field`/`TextArea`, `ShadedImage`, `SectionHeading`, `Reveal*`, `StatCounter`, `Icon`, `icons` |
-| Layout | `src/components/layout/` | `Navbar`, `Footer`, `PageHeader`, `Logo`, `LegalPage` |
+| Layout | `src/components/layout/` | `Navbar`, `Footer`, `PageHeader`, `Logo`, `BrandWordmark`, `LegalPage` |
 | Theme | `src/lib/theme.ts`, `src/components/theme/` | `ThemeScript` (no-flash), `ThemeToggle`, `Providers` (MotionConfig + Toaster) |
 | Sections | `src/components/sections/` | Composable page sections. Home and interior pages assemble these. |
 | Illustrations | `src/components/illustrations/` | Animated SVG scenes. Server components, `aria-hidden`, CSS-driven motion. |

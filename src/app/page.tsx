@@ -36,7 +36,7 @@ export default function Home() {
       <WhyChoose />
       <SuccessMetrics />
       <CaseStudiesSection />
-      <Testimonials limit={10} />
+      {/* <Testimonials limit={10} /> */}
       <FaqSection />
       <FinalCta />
     </>

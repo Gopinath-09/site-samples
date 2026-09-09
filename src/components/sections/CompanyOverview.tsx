@@ -1,5 +1,4 @@
 import Section from "@/components/ui/Section";
-import Card from "@/components/ui/Card";
 import IconChip from "@/components/ui/IconChip";
 import Button from "@/components/ui/Button";
 import Reveal, { RevealGroup, RevealItem } from "@/components/ui/Reveal";
@@ -65,9 +64,15 @@ export default function CompanyOverview() {
 
         {/* Layered platform illustration — the stack every engagement is built on */}
         <Reveal direction="left">
+          {/* On mobile the diagram stands on its own — no card frame, no
+              padding — so the illustration gets the full width. From `sm` up
+              it picks up the standard card surface. */}
           <div className="relative">
-            <div className="bg-grid absolute -inset-4 rounded-panel opacity-70" aria-hidden />
-            <Card padding="lg" className="relative overflow-hidden">
+            <div
+              className="bg-grid absolute -inset-4 hidden rounded-panel opacity-70 sm:block"
+              aria-hidden
+            />
+            <div className="relative overflow-hidden sm:rounded-card sm:border sm:border-line sm:bg-paper sm:p-8 sm:shadow-card md:p-9">
               <div className="flex items-center justify-between">
                 <span className="pill">Platform architecture</span>
                 <span className="font-mono text-xs text-muted">layered · observable</span>
@@ -81,7 +86,7 @@ export default function CompanyOverview() {
                   </div>
                 ))}
               </div>
-            </Card>
+            </div>
           </div>
         </Reveal>
       </div>

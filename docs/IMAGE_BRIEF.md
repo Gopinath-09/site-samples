@@ -248,13 +248,13 @@ layers.
 
 | Slot | Path | Size | Notes |
 | --- | --- | --- | --- |
-| Workship | `/public/images/products/workship.jpg` | 1200 × 480 (2.5:1) | operations / workflow |
+| OnPremBox | `/public/images/products/onprembox.jpg` | 1200 × 480 (2.5:1) | operations / workflow |
 | Satisfy | `/public/images/products/satisfy.jpg` | 1200 × 480 | feedback / signal |
 | Upcoming SaaS | `/public/images/products/upcoming.jpg` | 1200 × 480 | studio / incubation |
 
 Also render a **2400 × 1000** version of each if you plan a product-page hero.
 
-**Workship**
+**OnPremBox**
 
 > Base prompt. Isometric line-art of an operations cockpit: a set of
 > parallel workflow lanes drawn as thin navy rails with small task blocks

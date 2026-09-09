@@ -475,6 +475,12 @@ body {
     color: var(--color-fg);
     -webkit-text-stroke-color: var(--color-fg);
   }
+  /* Permanently filled variant — the hover appearance, held. Used by the
+     marquee's `fullFillColorIn` prop to interleave solid and hollow words. */
+  .tech-glass-filled {
+    color: var(--color-fg);
+    -webkit-text-stroke-color: var(--color-fg);
+  }
 
   /* Faint engineering grid — follows the foreground colour, so one class
      works on white and on matte black. */

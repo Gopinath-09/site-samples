@@ -15,7 +15,7 @@ export default function IndustriesServed() {
         description="We adapt our engineering to the realities of your industry — its regulations, its data and its pace."
       />
 
-      <RevealGroup className="mt-12 grid grid-cols-2 gap-4 md:grid-cols-4">
+      <RevealGroup className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4">
         {industries.map((ind) => (
           <RevealItem key={ind.name} className="h-full">
             <Card interactive className="flex h-full flex-col p-6">

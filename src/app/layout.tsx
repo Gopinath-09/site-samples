@@ -4,6 +4,7 @@ import "./globals.css";
 import { company } from "@/lib/site";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import BrandWordmark from "@/components/layout/BrandWordmark";
 import ThemeScript from "@/components/theme/ThemeScript";
 import Providers from "@/components/theme/Providers";
 
@@ -74,6 +75,8 @@ export default function RootLayout({
         <Providers>
           <Navbar />
           <main className="flex-1">{children}</main>
+          {/* Decorative sign-off between the last section and the footer. */}
+          <BrandWordmark />
           <Footer />
         </Providers>
       </body>

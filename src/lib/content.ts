@@ -158,14 +158,14 @@ export interface Product {
 
 export const products: Product[] = [
   {
-    slug: "workship",
-    name: "Workship",
+    slug: "onprembox",
+    name: "OnPremBox",
     status: "Live",
     tagline: "The operations platform that keeps distributed teams in sync.",
     problem:
       "Growing teams lose time to scattered tools, unclear ownership and manual status-chasing across projects.",
     solution:
-      "Workship unifies projects, workflows and reporting into a single operational cockpit with automation built in.",
+      "OnPremBox unifies projects, workflows and reporting into a single operational cockpit with automation built in.",
     features: [
       "Workflow automation",
       "Real-time dashboards",
@@ -201,7 +201,7 @@ export const products: Product[] = [
     problem:
       "We continuously identify underserved workflows in the enterprise and SME landscape.",
     solution:
-      "Our product studio incubates focused SaaS tools built on the same engineering foundations as Workship and Satisfy.",
+      "Our product studio incubates focused SaaS tools built on the same engineering foundations as OnPremBox and Satisfy.",
     features: [
       "Vertical SaaS",
       "AI-native workflows",
@@ -282,10 +282,10 @@ export interface Metric {
 }
 
 export const metrics: Metric[] = [
-  { value: 120, suffix: "+", label: "Products & platforms shipped" },
-  { value: 40, suffix: "+", label: "Enterprises & organisations served" },
+  { value: 14, suffix: "+", label: "Products & platforms shipped" },
+  { value: 6, suffix: "+", label: "Enterprises & organisations served" },
   { value: 99.9, suffix: "%", label: "Production uptime", decimals: 1 },
-  { value: 8, suffix: " yrs", label: "Engineering track record" },
+  { value: 20, suffix: "23", label: "Serving since" },
 ];
 
 export interface Differentiator {

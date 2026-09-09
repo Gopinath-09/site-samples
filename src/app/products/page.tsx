@@ -8,7 +8,7 @@ import { ArrowRight } from "@/components/ui/icons";
 export const metadata: Metadata = {
   title: "Products",
   description:
-    "Workship, Satisfy and upcoming SaaS platforms — products built and operated by the COBRR product studio.",
+    "OnPremBox, Satisfy and upcoming SaaS platforms — products built and operated by the COBRR product studio.",
 };
 
 export default function ProductsPage() {

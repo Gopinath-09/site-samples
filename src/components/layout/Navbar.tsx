@@ -278,7 +278,7 @@ export default function Navbar() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-              className="fixed right-0 top-0 z-50 flex h-svh w-[90%] max-w-sm flex-col border-l border-line bg-paper lg:hidden"
+              className="fixed right-0 top-0 z-50 flex h-svh w-full flex-col bg-paper lg:hidden"
             >
               <div className="flex items-center justify-between border-b border-line px-5 py-4">
                 <Logo size="sm" />

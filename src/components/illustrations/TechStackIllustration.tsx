@@ -52,7 +52,7 @@ const layers: readonly Layer[] = [
 ];
 
 /* ---- Geometry: a 2:1 dimetric projection of an L×D rectangle ---- */
-const L = 210; // slab length (along x)
+const L = 180; // slab length (along x)
 const D = 120; // slab depth (along y)
 const T = 12; // slab thickness
 const STEP = 44; // vertical distance between slabs
@@ -141,7 +141,8 @@ export default function TechStackIllustration({
       <circle cx={CX} cy={CY} r={186} stroke={p.line} strokeDasharray="3 9" className="anim-spin-slow" />
       <circle cx={CX} cy={CY} r={118} stroke={p.line} opacity={0.7} />
 
-      <g className="anim-float">
+      {/* <g className="anim-float"> */}
+      <g className="">
         {/* Request bus: packets flow down through the layers */}
         <text x={BUS_X - 8} y={busTop - 10} fontSize={9} letterSpacing="0.08em" className="fill-current font-mono">
           requests

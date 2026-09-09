@@ -49,7 +49,9 @@ Rules:
 ## 3. Theme
 
 `ThemeScript` sets `data-theme="light|dark"` on `<html>` before first paint
-(stored preference → OS preference → light). `ThemeToggle` flips it and persists
+(stored "dark" → dark; anything else → light — **light is the default and the
+OS `prefers-color-scheme` setting is deliberately ignored**, so a visitor only
+gets dark by choosing it). `ThemeToggle` flips it and persists
 to `localStorage` (`cobrr-theme`). Because the semantic tokens change value,
 components need **no** `dark:` classes. The `dark:` variant exists (keyed to
 `data-theme`) for rare exceptions.

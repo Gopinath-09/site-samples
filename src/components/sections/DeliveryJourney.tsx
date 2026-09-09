@@ -20,11 +20,9 @@ import { cn } from "@/lib/utils";
 import { motion as motionTokens } from "@/lib/tokens";
 import {
   JourneyPath,
-  JourneyRail,
   STAGE_PROGRESS,
   type JourneyLabels,
   type Methodology,
-  type RailDecoration,
 } from "@/components/illustrations/JourneyPath";
 
 /* ==========================================================================
@@ -272,54 +270,6 @@ function StageCard({
   );
 }
 
-/** One stacked row on mobile — drives its own rail from its own scroll. */
-function MobileStage({
-  stage,
-  index,
-  mode,
-  reduced,
-}: {
-  stage: Stage;
-  index: number;
-  mode: Methodology;
-  reduced: boolean;
-}) {
-  const ref = useRef<HTMLLIElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 70%", "end 70%"] });
-  const complete = useMotionValue(1);
-  const [passed, setPassed] = useState(false);
-  useMotionValueEvent(scrollYProgress, "change", (v) => setPassed(v > 0.02));
-
-  const last = index === stages.length - 1;
-  const lit = reduced || passed;
-  const decoration: RailDecoration = last
-    ? "loop"
-    : mode === "waterfall"
-      ? "gate"
-      : index === 2
-        ? "sprints"
-        : "none";
-
-  return (
-    <li ref={ref} className="grid grid-cols-[2.75rem_minmax(0,1fr)] gap-x-4">
-      <JourneyRail progress={reduced ? complete : scrollYProgress} lit={lit} decoration={decoration} />
-      <motion.div
-        className={cn(!last && "pb-8")}
-        initial={false}
-        animate={{ opacity: lit ? 1 : 0.55 }}
-        transition={{ duration: 0.5, ease }}
-      >
-        <StageCard
-          stage={stage}
-          index={index}
-          mode={mode}
-          gate={mode === "waterfall" && !last ? gates[index] : undefined}
-        />
-      </motion.div>
-    </li>
-  );
-}
-
 /* ---------- Section ---------- */
 
 export default function DeliveryJourney() {
@@ -347,12 +297,13 @@ export default function DeliveryJourney() {
         ref={wrapRef}
         className="grid gap-y-14 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:gap-x-16"
       >
-        {/* ---- Left: sticky narrative ---- */}
-        <div className="lg:sticky lg:top-28 lg:self-start">
+        {/* ---- Left: sticky narrative. Desktop only — on mobile this section
+             is the drawn route on its own. ---- */}
+        <div className="hidden lg:sticky lg:top-28 lg:block lg:self-start">
           <SectionHeading
             eyebrow="How we deliver"
-            title="From first conversation to a platform that keeps improving."
-            description="A disciplined path from discovery to launch — and a team that stays on afterwards, because the software that matters is the software that keeps getting better."
+            title="First talk to lifetime"
+            description="We don't just build and launch your software, We stay to make it continuously better."
           />
 
           <Reveal delay={0.1} className="mt-8">
@@ -376,8 +327,8 @@ export default function DeliveryJourney() {
             </div>
           </Reveal>
 
-          {/* Active stage — desktop only; on mobile the cards sit on the rail */}
-          <div className="mt-8 hidden lg:block">
+          {/* Active stage detail + stepper */}
+          <div className="mt-6">
             <div className="grid">
               {stages.map((s, i) => {
                 const on = i === active;
@@ -397,7 +348,7 @@ export default function DeliveryJourney() {
               })}
             </div>
 
-            <ol className="mt-5 flex gap-2" aria-label="Delivery stages">
+            <ol className="mt-0 flex gap-2" aria-label="Delivery stages">
               {stages.map((s, i) => {
                 const on = i === active;
                 return (
@@ -430,8 +381,9 @@ export default function DeliveryJourney() {
           </div>
         </div>
 
-        {/* ---- Right: the route (desktop) ---- */}
-        <div className="hidden lg:block">
+        {/* ---- The drawn route: the whole section on mobile, the right-hand
+             column on desktop. ---- */}
+        <div>
           <JourneyPath
             mode={mode}
             progress={progress}
@@ -440,13 +392,6 @@ export default function DeliveryJourney() {
             labels={journeyLabels}
           />
         </div>
-
-        {/* ---- Stacked stages with a rail (mobile) ---- */}
-        <ol className="lg:hidden" aria-label="Delivery stages">
-          {stages.map((s, i) => (
-            <MobileStage key={s.id} stage={s} index={i} mode={mode} reduced={reduced} />
-          ))}
-        </ol>
       </div>
 
       <Reveal className="mt-16 flex flex-wrap items-center gap-3 lg:mt-20">

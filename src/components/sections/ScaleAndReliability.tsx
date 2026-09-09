@@ -1,11 +1,13 @@
 import type { LucideIcon } from "lucide-react";
 import Section from "@/components/ui/Section";
 import SectionHeading from "@/components/ui/SectionHeading";
+import Card from "@/components/ui/Card";
 import IconChip from "@/components/ui/IconChip";
 import Button from "@/components/ui/Button";
 import Reveal, { RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { Activity, ArrowRight, Boxes, Server } from "@/components/ui/icons";
 import ScaleIllustration from "@/components/illustrations/ScaleIllustration";
+import { cn } from "@/lib/utils";
 
 interface Feature {
   icon: LucideIcon;
@@ -51,9 +53,20 @@ const ctas = {
 } as const;
 
 /**
- * Three scaling principles paired with the composed ScaleIllustration. The
- * illustration comes first on mobile (it sets the scene) and moves to the
- * right column from `lg` up.
+ * Shallow inward arc for the three cards: the middle one sits proud while the
+ * outer two settle lower and lean toward the centre. Transforms only apply
+ * from `md` up — below that the cards stack and any offset would just look
+ * like a misalignment.
+ */
+const arc = [
+  "md:translate-y-2 md:translate-x-3",
+  "md:-translate-y-6",
+  "md:translate-y-2 md:-translate-x-3",
+];
+
+/**
+ * The diagram leads: full width across the top, with the three principles
+ * beneath it as cards.
  */
 export default function ScaleAndReliability() {
   return (
@@ -64,38 +77,36 @@ export default function ScaleAndReliability() {
         description={heading.description}
       />
 
-      <div className="mt-14 grid gap-12 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-center lg:gap-16">
-        <Reveal direction="left" className="lg:order-last">
-          <ScaleIllustration className="mx-auto max-w-2xl" />
-        </Reveal>
+      <Reveal className="mt-12 lg:mt-14">
+        <ScaleIllustration className="mx-auto w-full max-w-5xl" />
+      </Reveal>
 
-        <RevealGroup className="flex flex-col">
-          {features.map((feature) => {
-            const FeatureIcon = feature.icon;
-            return (
-              <RevealItem
-                key={feature.title}
-                className="flex gap-5 border-t border-line py-7 first:border-t-0 first:pt-0 last:pb-0"
-              >
+      <RevealGroup className="mt-14 grid gap-6 md:grid-cols-3 lg:mt-16">
+        {features.map((feature, i) => {
+          const FeatureIcon = feature.icon;
+          return (
+            <RevealItem
+              key={feature.title}
+              className={cn("h-full transition-transform duration-500", arc[i])}
+            >
+              <Card interactive className="flex h-full flex-col">
                 <IconChip tone="brand">
                   <FeatureIcon width={20} height={20} />
                 </IconChip>
-                <div className="min-w-0">
-                  <h3 className="heading-sm text-fg">{feature.title}</h3>
-                  <p className="body-sm mt-2 max-w-md">{feature.description}</p>
-                  <ul className="mt-4 flex flex-wrap gap-2">
-                    {feature.tags.map((tag) => (
-                      <li key={tag} className="pill">
-                        {tag}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </RevealItem>
-            );
-          })}
-        </RevealGroup>
-      </div>
+                <h3 className="heading-sm mt-5 text-fg">{feature.title}</h3>
+                <p className="body-sm mt-2 flex-1">{feature.description}</p>
+                <ul className="mt-4 flex flex-wrap gap-2">
+                  {feature.tags.map((tag) => (
+                    <li key={tag} className="pill">
+                      {tag}
+                    </li>
+                  ))}
+                </ul>
+              </Card>
+            </RevealItem>
+          );
+        })}
+      </RevealGroup>
 
       <Reveal className="mt-14 flex flex-wrap gap-3 lg:mt-16">
         <Button href={ctas.primary.href}>

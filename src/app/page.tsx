@@ -1,29 +1,38 @@
-import HeroSection from "@/components/heroSection";
-import TrustedBy from "@/components/home/TrustedBy";
-import CompanyOverview from "@/components/home/CompanyOverview";
-import CoreServices from "@/components/home/CoreServices";
-import FeaturedProducts from "@/components/home/FeaturedProducts";
-import IndustriesServed from "@/components/home/IndustriesServed";
-import TechnologiesSection from "@/components/home/TechnologiesSection";
-import EngineeringProcess from "@/components/home/EngineeringProcess";
-import WhyChoose from "@/components/home/WhyChoose";
-import SuccessMetrics from "@/components/home/SuccessMetrics";
-import CaseStudiesSection from "@/components/home/CaseStudiesSection";
-import Testimonials from "@/components/home/Testimonials";
-import FaqSection from "@/components/home/FaqSection";
-import FinalCta from "@/components/home/FinalCta";
+import Hero from "@/components/sections/Hero";
+import TrustedBy from "@/components/sections/TrustedBy";
+import CompanyOverview from "@/components/sections/CompanyOverview";
+import CoreServices from "@/components/sections/CoreServices";
+import FeaturedProducts from "@/components/sections/FeaturedProducts";
+import ScaleAndReliability from "@/components/sections/ScaleAndReliability";
+import IndustriesServed from "@/components/sections/IndustriesServed";
+import TechnologiesSection from "@/components/sections/TechnologiesSection";
+import DeliveryJourney from "@/components/sections/DeliveryJourney";
+import ClientCare from "@/components/sections/ClientCare";
+import WhyChoose from "@/components/sections/WhyChoose";
+import SuccessMetrics from "@/components/sections/SuccessMetrics";
+import CaseStudiesSection from "@/components/sections/CaseStudiesSection";
+import Testimonials from "@/components/sections/Testimonials";
+import FaqSection from "@/components/sections/FaqSection";
+import FinalCta from "@/components/sections/FinalCta";
 
+/**
+ * Home. Sections alternate paper / sand / ink so adjacent bands always differ:
+ * ink → paper → paper(strip) → sand → paper → ink → sand → ink → sand → paper
+ * → sand → ink → paper → sand → paper → ink.
+ */
 export default function Home() {
   return (
     <>
-      <HeroSection />
+      <Hero />
       <TrustedBy />
       <CompanyOverview />
       <CoreServices limit={6} />
       <FeaturedProducts />
+      <ScaleAndReliability />
       <IndustriesServed />
       <TechnologiesSection />
-      <EngineeringProcess />
+      <DeliveryJourney />
+      <ClientCare />
       <WhyChoose />
       <SuccessMetrics />
       <CaseStudiesSection />

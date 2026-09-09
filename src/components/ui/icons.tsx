@@ -8,10 +8,20 @@
  *
  * Brand / social logos are NOT provided by lucide (it deliberately dropped
  * them). Use `react-icons` for those — see `Footer.tsx` (react-icons/fa6).
+ *
+ * Add new icons here rather than importing lucide directly in components.
  */
 export {
+  // Navigation & actions
   ArrowRight,
   ArrowUpRight,
+  Check,
+  ChevronDown,
+  X as Close,
+  Star,
+  Sun,
+  Moon,
+  // Content icon keys (see IconKey in content.ts)
   Code,
   Cloud,
   Cpu,
@@ -22,13 +32,23 @@ export {
   LayoutGrid as Grid,
   LineChart as Chart,
   Settings as Gear,
-  Check,
-  ChevronDown,
-  Menu,
-  Star,
-  X as Close,
   Building2 as Building,
   HeartPulse as Health,
   ShoppingBag as Bag,
   GraduationCap as Cap,
+  // Engineering / illustration vocabulary
+  Server,
+  Database,
+  Activity,
+  GitBranch,
+  Boxes,
+  Network,
+  Workflow,
+  HeartHandshake,
+  Headset,
+  Clock,
+  Repeat,
+  ListChecks,
+  Rocket,
+  Wrench,
 } from "lucide-react";

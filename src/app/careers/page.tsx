@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import PageHeader from "@/components/layout/PageHeader";
-import FinalCta from "@/components/home/FinalCta";
+import FinalCta from "@/components/sections/FinalCta";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Button from "@/components/ui/Button";
-import Icon from "@/components/ui/Icon";
+import IconChip from "@/components/ui/IconChip";
 import { RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { ArrowUpRight } from "@/components/ui/icons";
 import type { IconKey } from "@/lib/content";
@@ -36,7 +36,7 @@ export default function CareersPage() {
         title="Build software that matters, with people who care."
         description="We're a small, senior team that values craft, ownership and honesty. If that sounds like you, we'd love to talk."
       >
-        <Button variant="light" size="lg" href="/contact">
+        <Button size="lg" href="/contact">
           Introduce yourself
         </Button>
       </PageHeader>
@@ -48,10 +48,8 @@ export default function CareersPage() {
             {perks.map((p) => (
               <RevealItem key={p.title} className="h-full">
                 <div className="card h-full p-7">
-                  <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-soft text-brand">
-                    <Icon name={p.icon} width={20} height={20} />
-                  </span>
-                  <h3 className="mt-5 text-lg font-semibold text-ink">{p.title}</h3>
+                  <IconChip name={p.icon} tone="brand" size="md" />
+                  <h3 className="mt-5 text-lg font-semibold text-fg">{p.title}</h3>
                   <p className="mt-2 text-sm leading-relaxed text-muted">{p.body}</p>
                 </div>
               </RevealItem>
@@ -60,7 +58,7 @@ export default function CareersPage() {
         </div>
       </section>
 
-      <section className="section bg-sand">
+      <section className="section bg-paper">
         <div className="container-page">
           <SectionHeading eyebrow="Open roles" title="Current openings." />
           <RevealGroup className="mt-10 divide-y divide-line overflow-hidden rounded-2xl border border-line bg-paper">
@@ -71,7 +69,7 @@ export default function CareersPage() {
                   className="group flex w-full cursor-pointer flex-col gap-2 p-6 text-left transition-colors hover:bg-brand-soft/40 sm:flex-row sm:items-center sm:justify-between"
                 >
                   <div>
-                    <div className="text-lg font-semibold text-ink">{o.role}</div>
+                    <div className="text-lg font-semibold text-fg">{o.role}</div>
                     <div className="text-sm text-muted">
                       {o.team} · {o.type}
                     </div>

@@ -2,46 +2,97 @@
 
 /* ==========================================================================
    COBRR TECH LABS — Design System
-   A premium, corporate, engineering-focused visual language.
-   Light-first with disciplined ink/sand neutrals and a single confident accent.
+   ONE surface for the whole site:
+     light  → corporate white  (#ffffff)
+     dark   → matte black      (#0c0c0d)
+
+   There are no alternating section backgrounds and no permanently-dark bands.
+   Structure comes from hairlines, spacing, type scale and cards — never from
+   a different background colour. Every section uses `bg-paper` / `text-fg`.
+
+   THEMING
+   `data-theme="light|dark"` is set on <html> by ThemeScript before first
+   paint. The tokens below flip their VALUES under [data-theme="dark"], so
+   components keep the same class names in both themes.
+
+   The TypeScript mirror of these values lives in `src/lib/tokens.ts`.
    ========================================================================== */
 
+/* `dark:` keys off the attribute, not prefers-color-scheme, so the user's
+   toggle always wins. Rarely needed — prefer the semantic tokens. */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
 @theme {
-  /* Neutrals — the backbone of the system */
-  --color-ink: #0a0e1a; /* near-black navy, primary text + dark surfaces */
-  --color-ink-soft: #121a2e; /* elevated dark surface */
-  --color-ink-line: #1e2740; /* borders on dark */
-  --color-paper: #ffffff; /* base light surface */
-  --color-sand: #f5f4f0; /* warm off-white section surface */
-  --color-sand-deep: #ecebe4; /* slightly deeper warm surface */
-  --color-line: #e4e3dd; /* hairline borders on light */
+  /* ---- The single surface ---- */
+  --color-paper: #ffffff;
+  /* Barely-there tint. ONLY for small UI feedback (hover fills, tracks,
+     inset wells) — never for a section or card background. */
+  --color-elevate: #f7f7f8;
+  --color-line: #e5e5e8; /* hairline borders */
+  --color-fg: #101012; /* primary text */
+  --color-muted: #5b5d64; /* secondary text */
 
-  /* Text */
-  --color-muted: #565d6d; /* secondary text on light */
-  --color-muted-dark: #93a0bd; /* secondary text on dark */
-
-  /* Brand accent — a single, confident cobalt */
+  /* ---- One accent ---- */
   --color-brand: #2450e6;
   --color-brand-strong: #1b3ec2;
-  --color-brand-soft: #eaefff;
+  --color-brand-soft: #eef1fe; /* faint tint for icon chips */
 
-  /* Secondary accent — warm copper, used sparingly for emphasis */
-  --color-copper: #c1863c;
+  /* ---- Secondary accent, used very sparingly (ratings) ---- */
+  --color-copper: #b4762c;
 
-  /* Typography */
+  /* ---- Status ---- */
+  --color-success: #15803d;
+  --color-danger: #dc2626;
+
+  /* ---- Typography ---- */
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
 
-  /* Motion */
+  /* ---- Motion ---- */
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 
-  /* Radius scale — rounded corners with moderation */
+  /* ---- Radius ---- */
   --radius-card: 14px;
+  --radius-panel: 24px;
+  --radius-chip: 12px;
+  --radius-input: 12px;
+
+  /* ---- Shadows (light theme only; dark relies on hairlines) ---- */
+  --shadow-card: 0 1px 2px rgba(16, 16, 18, 0.05);
+  --shadow-card-hover: 0 24px 50px -30px rgba(16, 16, 18, 0.3);
+  --shadow-lift: 0 30px 60px -28px rgba(16, 16, 18, 0.35);
+  --shadow-header: 0 10px 30px -24px rgba(16, 16, 18, 0.45);
+  --shadow-btn: 0 12px 26px -16px rgba(16, 16, 18, 0.55);
 }
 
+/* ---- Dark theme: same names, matte-black values ---- */
 :root {
-  --background: var(--color-paper);
-  --foreground: var(--color-ink);
+  color-scheme: light;
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --color-paper: #0c0c0d; /* matte black */
+  --color-elevate: #161618;
+  --color-line: #26262a;
+  --color-fg: #f4f4f5;
+  --color-muted: #9c9ca4;
+
+  --color-brand: #6d8bff; /* lifted so it reads on matte black */
+  --color-brand-strong: #8aa2ff;
+  --color-brand-soft: #171b2c;
+
+  --color-copper: #d29a55;
+
+  --color-success: #4ade80;
+  --color-danger: #f87171;
+
+  /* Shadows all but disappear on black — keep them minimal. */
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --shadow-card-hover: 0 24px 50px -30px rgba(0, 0, 0, 0.9);
+  --shadow-lift: 0 30px 60px -28px rgba(0, 0, 0, 0.9);
+  --shadow-header: 0 10px 30px -24px rgba(0, 0, 0, 0.9);
+  --shadow-btn: 0 12px 26px -16px rgba(0, 0, 0, 0.9);
 }
 
 * {
@@ -50,17 +101,20 @@
 
 html {
   scroll-behavior: smooth;
-  /* offset for the sticky header when jumping to anchors */
+  /* offset for the fixed header when jumping to anchors */
   scroll-padding-top: 6rem;
   -webkit-text-size-adjust: 100%;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--color-paper);
+  color: var(--color-fg);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
 
 ::selection {
@@ -94,7 +148,7 @@ body {
     }
   }
 
-  /* ---- Typography helpers ---- */
+  /* ---- Typography ---- */
   .eyebrow {
     display: inline-flex;
     align-items: center;
@@ -134,21 +188,26 @@ body {
     letter-spacing: -0.015em;
     font-weight: 600;
   }
+  /* Card / list-item titles */
+  .heading-sm {
+    font-size: 1.125rem;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+    font-weight: 600;
+  }
   .lead {
     font-size: clamp(1.05rem, 1.4vw, 1.2rem);
     line-height: 1.6;
     color: var(--color-muted);
   }
-
-  /* Gradient rule used under section headings */
-  .rule-accent {
-    height: 3px;
-    width: 3rem;
-    border-radius: 999px;
-    background: linear-gradient(90deg, var(--color-brand), var(--color-copper));
+  /* Secondary body copy inside cards */
+  .body-sm {
+    font-size: 0.875rem;
+    line-height: 1.65;
+    color: var(--color-muted);
   }
 
-  /* ---- Buttons (base class + variants) ---- */
+  /* ---- Buttons ---- */
   .btn {
     display: inline-flex;
     align-items: center;
@@ -166,7 +225,8 @@ body {
       background-color 0.25s ease,
       color 0.25s ease,
       border-color 0.25s ease,
-      box-shadow 0.25s ease;
+      box-shadow 0.25s ease,
+      filter 0.25s ease;
     white-space: nowrap;
     user-select: none;
   }
@@ -177,63 +237,50 @@ body {
     outline: 2px solid var(--color-brand);
     outline-offset: 2px;
   }
-  .btn svg {
+  .btn > svg {
     transition: transform 0.3s var(--ease-out-expo);
   }
-  .btn:hover svg {
+  .btn:hover > svg:last-child {
     transform: translateX(3px);
   }
 
-  /* Primary CTA — "dark sand": premium ink button for light surfaces
-     (replaces the old repeated blue). */
+  /* Primary — solid foreground on the surface. Black-on-white in light,
+     white-on-black in dark. The only filled button on the site. */
   .btn-primary {
-    background: var(--color-ink);
-    color: #fff;
-    box-shadow: 0 12px 26px -16px rgba(10, 14, 26, 0.7);
+    background: var(--color-fg);
+    color: var(--color-paper);
+    box-shadow: var(--shadow-btn);
   }
   .btn-primary:hover {
-    background: var(--color-ink-soft);
-    box-shadow: 0 18px 34px -16px rgba(10, 14, 26, 0.6);
+    background: color-mix(in srgb, var(--color-fg) 84%, var(--color-paper));
   }
 
+  /* Same as primary, without the shadow (dense layouts, card footers). */
   .btn-dark {
-    background: var(--color-ink);
-    color: #fff;
+    background: var(--color-fg);
+    color: var(--color-paper);
   }
   .btn-dark:hover {
-    background: #000;
-  }
-
-  /* Solid light button — the primary CTA to use on top of dark surfaces. */
-  .btn-light {
-    background: var(--color-paper);
-    color: var(--color-ink);
-    box-shadow: 0 12px 26px -16px rgba(0, 0, 0, 0.5);
-  }
-  .btn-light:hover {
-    background: var(--color-sand-deep);
+    background: color-mix(in srgb, var(--color-fg) 84%, var(--color-paper));
   }
 
   .btn-outline {
     background: transparent;
-    color: var(--color-ink);
+    color: var(--color-fg);
     border-color: var(--color-line);
   }
   .btn-outline:hover {
-    border-color: var(--color-ink);
-    background: var(--color-ink);
-    color: #fff;
+    border-color: var(--color-fg);
+    background: var(--color-fg);
+    color: var(--color-paper);
   }
 
-  .btn-ghost-light {
-    background: rgba(255, 255, 255, 0.06);
+  /* Custom solid colour (hero slide accent) — colour comes from inline style */
+  .btn-accent {
     color: #fff;
-    border-color: rgba(255, 255, 255, 0.18);
   }
-  .btn-ghost-light:hover {
-    background: #fff;
-    color: var(--color-ink);
-    border-color: #fff;
+  .btn-accent:hover {
+    filter: brightness(1.08);
   }
 
   .btn-lg {
@@ -245,11 +292,157 @@ body {
     font-size: 0.85rem;
   }
 
+  /* ---- Cards — same surface as the page; the hairline defines them ---- */
+  .card {
+    background: var(--color-paper);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card);
+    transition:
+      transform 0.4s var(--ease-out-expo),
+      box-shadow 0.4s var(--ease-out-expo),
+      border-color 0.4s ease,
+      background-color 0.3s ease;
+  }
+  .card-hover:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-card-hover);
+    border-color: color-mix(in srgb, var(--color-fg) 28%, transparent);
+  }
+
+  /* ---- Pill / tag — outline only, no fill ---- */
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 0.3rem 0.7rem;
+    border-radius: 999px;
+    background: transparent;
+    border: 1px solid var(--color-line);
+    color: var(--color-muted);
+  }
+
+  /* ---- Status badge — colour lives in the text and border, not a fill ---- */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    width: fit-content;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    padding: 0.25rem 0.65rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1.2;
+    background: transparent;
+  }
+  .badge-success {
+    color: var(--color-success);
+    border-color: color-mix(in srgb, var(--color-success) 40%, transparent);
+  }
+  .badge-brand {
+    color: var(--color-brand);
+    border-color: color-mix(in srgb, var(--color-brand) 40%, transparent);
+  }
+  .badge-copper {
+    color: var(--color-copper);
+    border-color: color-mix(in srgb, var(--color-copper) 40%, transparent);
+  }
+  .badge-neutral {
+    color: var(--color-muted);
+    border-color: var(--color-line);
+  }
+
+  /* ---- Icon chip ---- */
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border-radius: var(--radius-chip);
+  }
+  .chip-brand {
+    background: var(--color-brand-soft);
+    color: var(--color-brand);
+  }
+  .chip-solid {
+    background: var(--color-fg);
+    color: var(--color-paper);
+  }
+  .chip-outline {
+    border: 1px solid var(--color-line);
+    color: var(--color-fg);
+  }
+  .chip-xs {
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 999px;
+  }
+  .chip-sm {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 0.5rem;
+  }
+  .chip-md {
+    width: 2.75rem;
+    height: 2.75rem;
+  }
+  .chip-lg {
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 1rem;
+  }
+
+  /* ---- Form fields ---- */
+  .field {
+    width: 100%;
+    border-radius: var(--radius-input);
+    border: 1px solid var(--color-line);
+    background: var(--color-paper);
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
+    color: var(--color-fg);
+    outline: none;
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.2s ease,
+      background-color 0.3s ease;
+  }
+  .field::placeholder {
+    color: color-mix(in srgb, var(--color-muted) 70%, transparent);
+  }
+  .field:focus {
+    border-color: var(--color-brand);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-brand) 15%, transparent);
+  }
+  .field-invalid,
+  .field-invalid:focus {
+    border-color: var(--color-danger);
+  }
+  .field-invalid:focus {
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-danger) 15%, transparent);
+  }
+  .field-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-fg);
+  }
+  .field-error {
+    margin-top: 0.375rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--color-danger);
+  }
+
   /* Text link with animated underline */
   .link-underline {
     position: relative;
     font-weight: 600;
-    color: var(--color-ink);
+    color: var(--color-fg);
   }
   .link-underline::after {
     content: "";
@@ -268,65 +461,52 @@ body {
     transform-origin: left;
   }
 
-  /* ---- Cards ---- */
-  .card {
-    background: var(--color-paper);
-    border: 1px solid var(--color-line);
-    border-radius: var(--radius-card);
-    transition:
-      transform 0.4s var(--ease-out-expo),
-      box-shadow 0.4s var(--ease-out-expo),
-      border-color 0.4s ease;
-  }
-  .card-hover:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 24px 50px -30px rgba(10, 14, 26, 0.35);
-    border-color: color-mix(in srgb, var(--color-ink) 22%, transparent);
-  }
-
-  /* Small pill/tag */
-  .pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    font-size: 0.78rem;
-    font-weight: 600;
-    padding: 0.3rem 0.7rem;
-    border-radius: 999px;
-    background: var(--color-sand);
-    border: 1px solid var(--color-line);
-    color: var(--color-muted);
-  }
-
-  /* Glass / etched technology text used in the marquee — translucent fill
-     with a subtle outline, brightening on hover. */
+  /* Etched technology wordmark for the marquee — hollow letters that fill in
+     on hover. Follows the foreground colour, so it works on both themes. */
   .tech-glass {
-    color: rgba(255, 255, 255, 0.05);
-    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.22);
+    color: transparent;
+    -webkit-text-stroke: 1px color-mix(in srgb, var(--color-fg) 26%, transparent);
     transition:
       color 0.4s ease,
       -webkit-text-stroke-color 0.4s ease;
     cursor: default;
   }
   .tech-glass:hover {
-    color: rgba(255, 255, 255, 0.82);
-    -webkit-text-stroke-color: rgba(255, 255, 255, 0.82);
+    color: var(--color-fg);
+    -webkit-text-stroke-color: var(--color-fg);
   }
 
-  /* Subtle engineering grid backdrop */
+  /* Faint engineering grid — follows the foreground colour, so one class
+     works on white and on matte black. */
   .bg-grid {
     background-image:
-      linear-gradient(to right, rgba(10, 14, 26, 0.045) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(10, 14, 26, 0.045) 1px, transparent 1px);
+      linear-gradient(
+        to right,
+        color-mix(in srgb, var(--color-fg) 5%, transparent) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        to bottom,
+        color-mix(in srgb, var(--color-fg) 5%, transparent) 1px,
+        transparent 1px
+      );
     background-size: 56px 56px;
   }
-  .bg-grid-dark {
-    background-image:
-      linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-    background-size: 56px 56px;
+
+  /* Soft brand glow — position with utilities. Deliberately very faint: the
+     surface must still read as pure white / matte black. */
+  .glow-brand {
+    background: var(--color-brand);
+    border-radius: 999px;
+    filter: blur(90px);
+    opacity: 0.055;
+    pointer-events: none;
   }
 }
+
+/* ==========================================================================
+   Motion
+   ========================================================================== */
 
 /* Infinite marquee — duplicate the content and slide by -50% for a seamless
    loop. Pauses on hover so cards stay readable. */
@@ -348,8 +528,7 @@ body {
   animation-play-state: paused;
 }
 
-/* Outlined "wave" text — a bordered wordmark with a bright highlight that
-   sweeps through the letters forever. */
+/* Outlined "wave" wordmark with a highlight sweeping through the letters. */
 @keyframes text-wave-sweep {
   0% {
     background-position: 200% 0;
@@ -361,13 +540,13 @@ body {
 
 .text-wave {
   -webkit-text-fill-color: transparent;
-  -webkit-text-stroke: 1px var(--color-sand-deep);
+  -webkit-text-stroke: 1px color-mix(in srgb, var(--color-fg) 18%, transparent);
   background-image: linear-gradient(
     100deg,
     transparent 18%,
-    color-mix(in srgb, var(--color-sand-deep) 60%, #fff) 42%,
-    #ffffff 50%,
-    color-mix(in srgb, var(--color-sand-deep) 60%, #fff) 58%,
+    color-mix(in srgb, var(--color-fg) 12%, transparent) 42%,
+    color-mix(in srgb, var(--color-fg) 34%, transparent) 50%,
+    color-mix(in srgb, var(--color-fg) 12%, transparent) 58%,
     transparent 82%
   );
   background-size: 220% 100%;
@@ -377,10 +556,105 @@ body {
   animation: text-wave-sweep 4.5s linear infinite;
 }
 
+/* ---- Illustration motion vocabulary (SVG) ----
+   CSS-driven so prefers-reduced-motion applies for free. Apply to SVG
+   elements: <path class="anim-dash-flow" />, <g class="anim-float" /> … */
+@keyframes dash-flow {
+  to {
+    stroke-dashoffset: -24;
+  }
+}
+@keyframes dash-flow-reverse {
+  to {
+    stroke-dashoffset: 24;
+  }
+}
+@keyframes pulse-soft {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+@keyframes float-y {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes ping-ring {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+}
+@keyframes bar-grow {
+  from {
+    transform: scaleY(0.25);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+.anim-dash-flow {
+  stroke-dasharray: 6 6;
+  animation: dash-flow 1.2s linear infinite;
+}
+.anim-dash-flow-reverse {
+  stroke-dasharray: 6 6;
+  animation: dash-flow-reverse 1.2s linear infinite;
+}
+.anim-pulse {
+  animation: pulse-soft 2.4s ease-in-out infinite;
+}
+.anim-float {
+  animation: float-y 5s ease-in-out infinite;
+}
+.anim-spin-slow {
+  animation: spin-slow 40s linear infinite;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+.anim-ping {
+  animation: ping-ring 2.2s cubic-bezier(0, 0, 0.2, 1) infinite;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+/* Stagger helpers: add alongside an anim-* class */
+.anim-delay-1 {
+  animation-delay: 0.3s;
+}
+.anim-delay-2 {
+  animation-delay: 0.6s;
+}
+.anim-delay-3 {
+  animation-delay: 0.9s;
+}
+.anim-delay-4 {
+  animation-delay: 1.2s;
+}
+
 /* Respect reduced motion preferences */
 @media (prefers-reduced-motion: reduce) {
-  .marquee-track {
-    animation: none;
+  .marquee-track,
+  .text-wave,
+  [class*="anim-"] {
+    animation: none !important;
   }
   html {
     scroll-behavior: auto;

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { caseStudies } from "@/lib/content";
 import PageHeader from "@/components/layout/PageHeader";
-import FinalCta from "@/components/home/FinalCta";
+import FinalCta from "@/components/sections/FinalCta";
 import Reveal from "@/components/ui/Reveal";
 import Button from "@/components/ui/Button";
 import { ArrowRight } from "@/components/ui/icons";
@@ -34,7 +34,7 @@ export default async function CaseStudyDetailPage(
         title={study.title}
         description={study.summary}
       >
-        <Button variant="light" size="lg" href="/contact">
+        <Button size="lg" href="/contact">
           Start a similar project
           <ArrowRight width={18} height={18} />
         </Button>
@@ -45,10 +45,7 @@ export default async function CaseStudyDetailPage(
         <div className="container-page grid grid-cols-1 gap-8 sm:grid-cols-3">
           {study.results.map((r) => (
             <Reveal key={r.label} className="text-center">
-              <div
-                className="text-4xl font-semibold tracking-tight md:text-5xl"
-                style={{ color: study.accent }}
-              >
+              <div className="text-4xl font-semibold tracking-tight text-fg md:text-5xl">
                 {r.value}
               </div>
               <p className="mt-2 text-sm text-muted">{r.label}</p>
@@ -65,15 +62,15 @@ export default async function CaseStudyDetailPage(
               <span className="eyebrow">Overview</span>
               <div className="mt-6 space-y-6 text-sm text-muted">
                 <div>
-                  <div className="font-semibold text-ink">Client</div>
+                  <div className="font-semibold text-fg">Client</div>
                   {study.client}
                 </div>
                 <div>
-                  <div className="font-semibold text-ink">Industry</div>
+                  <div className="font-semibold text-fg">Industry</div>
                   {study.industry}
                 </div>
                 <div>
-                  <div className="font-semibold text-ink">Engagement</div>
+                  <div className="font-semibold text-fg">Engagement</div>
                   Design, engineering & ongoing support
                 </div>
               </div>

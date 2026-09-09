@@ -13,21 +13,14 @@ export const company = {
   phone: "+91 00000 00000",
   location: "India",
   foundedYear: 2026,
+  /** Canonical origin — used by metadataBase, sitemap, robots and OG images. */
+  siteUrl: "https://cobrr.tech",
 } as const;
 
 export type NavItem = {
   label: string;
   href: string;
 };
-
-export const primaryNav: NavItem[] = [
-  { label: "Services", href: "/services" },
-  { label: "Products", href: "/products" },
-  { label: "Industries", href: "/industries" },
-  { label: "Technologies", href: "/technologies" },
-  { label: "Case Studies", href: "/case-studies" },
-  { label: "About", href: "/about" },
-];
 
 export type MenuLink = NavItem & { desc: string };
 export type MenuGroup = {

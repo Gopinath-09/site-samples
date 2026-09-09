@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import PageHeader from "@/components/layout/PageHeader";
-import FinalCta from "@/components/home/FinalCta";
+import FinalCta from "@/components/sections/FinalCta";
 import CardLink from "@/components/ui/CardLink";
 import { RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { ArrowUpRight } from "@/components/ui/icons";
@@ -34,7 +34,7 @@ export default function BlogPage() {
                   <span className="pill text-brand">{p.category}</span>
                   <span className="text-xs text-muted">{p.read}</span>
                 </div>
-                <h2 className="mt-5 text-xl font-semibold leading-snug text-ink">
+                <h2 className="mt-5 text-xl font-semibold leading-snug text-fg">
                   {p.title}
                 </h2>
                 <p className="mt-3 flex-1 text-sm leading-relaxed text-muted">

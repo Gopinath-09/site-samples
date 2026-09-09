@@ -1,53 +1,52 @@
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 /**
- * COBRR wordmark. A precise, monospaced-feeling geometric mark ("C" carved
- * from a rounded square) paired with the wordmark — reads as engineered, not
- * decorative.
+ * COBRR logo — the company mark (`/public/brand/logo-mark-*.png`, derived from
+ * `/public/company_logo.png`) inside a white tile, plus the spaced wordmark.
+ *
+ * The tile stays white in both themes because the mark itself is a black
+ * marble glyph; on the matte-black surface it reads as a deliberate brand
+ * plate. The wordmark uses the semantic foreground colour.
  */
 export default function Logo({
-  tone = "light",
+  size = "md",
+  wordmark = true,
   className,
 }: {
-  tone?: "light" | "dark";
+  size?: "sm" | "md" | "lg";
+  wordmark?: boolean;
   className?: string;
 }) {
-  const text = tone === "dark" ? "text-white" : "text-ink";
+  const px = size === "lg" ? 40 : size === "sm" ? 24 : 30;
+  const tile =
+    size === "lg" ? "rounded-xl p-1.5" : size === "sm" ? "rounded-md p-0.5" : "rounded-lg p-1";
+  const text = size === "lg" ? "text-3xl" : size === "sm" ? "text-lg" : "text-2xl";
+
   return (
     <span className={cn("inline-flex items-center gap-2.5", className)}>
-      <svg
-        width="30"
-        height="30"
-        viewBox="0 0 32 32"
-        fill="none"
-        aria-hidden="true"
-        className="shrink-0"
-      >
-        <rect
-          x="1"
-          y="1"
-          width="30"
-          height="30"
-          rx="8"
-          className="fill-brand"
-        />
-        <path
-          d="M22 11.5A7 7 0 1 0 22 20.5"
-          stroke="#fff"
-          strokeWidth="2.6"
-          strokeLinecap="round"
-          fill="none"
-        />
-        <circle cx="16" cy="16" r="2.2" fill="#fff" />
-      </svg>
       <span
         className={cn(
-          "text-[1.35rem] font-bold tracking-[-0.04em] leading-none",
-          text,
+          "flex shrink-0 items-center justify-center bg-white ring-1 ring-black/10",
+          tile,
         )}
       >
-        COBRR
+        <Image
+          src="/brand/logo-mark-128.png"
+          alt="COBRR mark"
+          width={px}
+          height={px}
+          draggable={false}
+          className="select-none"
+        />
       </span>
+      {wordmark && (
+        <span
+          className={cn("font-extrabold leading-none tracking-[0.12em] text-fg", text)}
+        >
+          COBRR
+        </span>
+      )}
     </span>
   );
 }

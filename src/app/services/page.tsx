@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import PageHeader from "@/components/layout/PageHeader";
-import CoreServices from "@/components/home/CoreServices";
-import EngineeringProcess from "@/components/home/EngineeringProcess";
-import FinalCta from "@/components/home/FinalCta";
+import CoreServices from "@/components/sections/CoreServices";
+import ScaleAndReliability from "@/components/sections/ScaleAndReliability";
+import EngineeringProcess from "@/components/sections/EngineeringProcess";
+import FinalCta from "@/components/sections/FinalCta";
 import Button from "@/components/ui/Button";
 import { ArrowRight } from "@/components/ui/icons";
 
@@ -20,13 +21,14 @@ export default function ServicesPage() {
         title="Engineering capability across the full software lifecycle."
         description="From first line of code to long-term operation, COBRR delivers the disciplines modern organisations depend on — with one consistent standard of quality."
       >
-        <Button variant="light" size="lg" href="/contact">
+        <Button size="lg" href="/contact">
           Discuss your project
           <ArrowRight width={18} height={18} />
         </Button>
       </PageHeader>
 
       <CoreServices showHeading={false} />
+      <ScaleAndReliability />
       <EngineeringProcess />
       <FinalCta />
     </>

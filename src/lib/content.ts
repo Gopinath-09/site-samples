@@ -5,6 +5,8 @@
  * where they render.
  */
 
+import type { AccentName } from "./tokens";
+
 export type IconKey =
   | "code"
   | "cloud"
@@ -326,7 +328,8 @@ export interface CaseStudy {
   title: string;
   summary: string;
   results: { label: string; value: string }[];
-  accent: string;
+  /** Accent name from tokens.ts — resolved to a colour where it renders. */
+  accent: AccentName;
 }
 
 export const caseStudies: CaseStudy[] = [
@@ -342,7 +345,7 @@ export const caseStudies: CaseStudy[] = [
       { label: "Order accuracy", value: "+35%" },
       { label: "Uptime", value: "99.9%" },
     ],
-    accent: "#2450e6",
+    accent: "cobalt",
   },
   {
     slug: "healthcare-patient-platform",
@@ -356,7 +359,7 @@ export const caseStudies: CaseStudy[] = [
       { label: "Staff hours saved", value: "1.2k/mo" },
       { label: "Audit findings", value: "0" },
     ],
-    accent: "#0ea5a4",
+    accent: "teal",
   },
   {
     slug: "retail-ai-personalisation",
@@ -370,7 +373,7 @@ export const caseStudies: CaseStudy[] = [
       { label: "Search relevance", value: "+40%" },
       { label: "Page speed", value: "no regression" },
     ],
-    accent: "#7c5cff",
+    accent: "violet",
   },
 ];
 

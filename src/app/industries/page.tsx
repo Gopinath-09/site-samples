@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import PageHeader from "@/components/layout/PageHeader";
-import IndustriesServed from "@/components/home/IndustriesServed";
-import CaseStudiesSection from "@/components/home/CaseStudiesSection";
-import FinalCta from "@/components/home/FinalCta";
+import IndustriesServed from "@/components/sections/IndustriesServed";
+import CaseStudiesSection from "@/components/sections/CaseStudiesSection";
+import FinalCta from "@/components/sections/FinalCta";
 
 export const metadata: Metadata = {
   title: "Industries",

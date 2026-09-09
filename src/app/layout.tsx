@@ -4,7 +4,8 @@ import "./globals.css";
 import { company } from "@/lib/site";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import { Toaster } from "sonner";
+import ThemeScript from "@/components/theme/ThemeScript";
+import Providers from "@/components/theme/Providers";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,10 +17,13 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const siteTitle = `${company.legalName} — Enterprise Software & AI Engineering`;
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://cobrr.tech"),
+  metadataBase: new URL(company.siteUrl),
+  applicationName: company.name,
   title: {
-    default: `${company.legalName} — Enterprise Software & AI Engineering`,
+    default: siteTitle,
     template: `%s — ${company.name}`,
   },
   description: company.description,
@@ -33,15 +37,18 @@ export const metadata: Metadata = {
     "COBRR Tech Labs",
   ],
   authors: [{ name: company.legalName }],
+  // Open Graph / Twitter images come from app/opengraph-image.tsx and
+  // app/twitter-image.tsx (plus per-route files under dynamic segments).
   openGraph: {
     type: "website",
-    title: `${company.legalName} — Enterprise Software & AI Engineering`,
+    title: siteTitle,
     description: company.description,
     siteName: company.legalName,
+    url: company.siteUrl,
   },
   twitter: {
     card: "summary_large_image",
-    title: `${company.legalName}`,
+    title: siteTitle,
     description: company.description,
   },
 };
@@ -60,12 +67,15 @@ export default function RootLayout({
     >
       <body
         suppressHydrationWarning
-        className="min-h-full flex flex-col bg-paper text-ink"
+        className="min-h-full flex flex-col bg-paper text-fg"
       >
-        <Navbar />
-        <main className="flex-1">{children}</main>
-        <Footer />
-        <Toaster richColors position="top-center" />
+        {/* Sets data-theme before first paint — must be the first child. */}
+        <ThemeScript />
+        <Providers>
+          <Navbar />
+          <main className="flex-1">{children}</main>
+          <Footer />
+        </Providers>
       </body>
     </html>
   );

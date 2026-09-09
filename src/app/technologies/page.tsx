@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
-import PageHeader from "@/components/layout/PageHeader";
-import TechnologiesSection from "@/components/home/TechnologiesSection";
-import FinalCta from "@/components/home/FinalCta";
+import TechnologiesSection from "@/components/sections/TechnologiesSection";
+import FinalCta from "@/components/sections/FinalCta";
 import SectionHeading from "@/components/ui/SectionHeading";
 import { RevealGroup, RevealItem } from "@/components/ui/Reveal";
 
@@ -29,11 +28,7 @@ const principles = [
 export default function TechnologiesPage() {
   return (
     <>
-      {/* <PageHeader
-        eyebrow="Technologies"
-        title="A stack chosen for the long run."
-        description="We invest in technologies that stay supportable for years, so the platform we build with you doesn't become tomorrow's legacy."
-      /> */}
+      {/* The dark technologies marquee doubles as this page's hero band. */}
       <TechnologiesSection />
 
       <section className="section bg-paper">
@@ -46,7 +41,7 @@ export default function TechnologiesPage() {
             {principles.map((p) => (
               <RevealItem key={p.title} className="h-full">
                 <div className="card h-full p-7">
-                  <h3 className="text-lg font-semibold text-ink">{p.title}</h3>
+                  <h3 className="text-lg font-semibold text-fg">{p.title}</h3>
                   <p className="mt-2 text-sm leading-relaxed text-muted">
                     {p.body}
                   </p>

@@ -3,6 +3,9 @@
 import { useState } from "react";
 import { toast } from "sonner";
 import Button from "@/components/ui/Button";
+import Card, { cardClasses } from "@/components/ui/Card";
+import IconChip from "@/components/ui/IconChip";
+import { Field, TextArea } from "@/components/ui/Field";
 import { Check } from "@/components/ui/icons";
 import { cn } from "@/lib/utils";
 
@@ -75,33 +78,34 @@ export default function ContactForm() {
 
   if (sent) {
     return (
-      <div className="card flex flex-col items-center p-10 text-center">
-        <span className="flex h-14 w-14 items-center justify-center rounded-full bg-brand-soft text-brand">
+      <Card padding="lg" className="flex flex-col items-center text-center">
+        <IconChip tone="brand" size="lg">
           <Check width={26} height={26} />
-        </span>
-        <h3 className="mt-6 heading-md">Thank you — message received.</h3>
-        <p className="mt-3 max-w-sm text-sm text-muted">
+        </IconChip>
+        <h3 className="heading-md mt-6">Thank you — message received.</h3>
+        <p className="body-sm mt-3 max-w-sm">
           Our team will get back to you within one business day. In the meantime,
           feel free to explore our work.
         </p>
         <Button variant="outline" href="/case-studies" className="mt-6">
           View case studies
         </Button>
-      </div>
+      </Card>
     );
   }
 
   return (
-    <form onSubmit={handleSubmit} noValidate className="card p-7 md:p-9">
+    <form onSubmit={handleSubmit} noValidate className={cardClasses({ padding: "lg" })}>
       <div className="grid gap-5 sm:grid-cols-2">
         <Field
           label="Full name"
           name="name"
           placeholder="Jane Doe"
           required
+          autoComplete="name"
           value={values.name}
           error={errors.name}
-          onChange={setField}
+          onChange={(e) => setField("name", e.target.value)}
         />
         <Field
           label="Work email"
@@ -109,76 +113,68 @@ export default function ContactForm() {
           type="email"
           placeholder="jane@company.com"
           required
+          autoComplete="email"
           value={values.email}
           error={errors.email}
-          onChange={setField}
+          onChange={(e) => setField("email", e.target.value)}
         />
         <Field
           label="Company"
           name="company"
           placeholder="Company Inc."
+          autoComplete="organization"
           value={values.company}
           error={errors.company}
-          onChange={setField}
+          onChange={(e) => setField("company", e.target.value)}
         />
         <Field
           label="Phone"
           name="phone"
           type="tel"
           placeholder="+91 00000 00000"
+          autoComplete="tel"
           value={values.phone}
           error={errors.phone}
-          onChange={setField}
+          onChange={(e) => setField("phone", e.target.value)}
         />
       </div>
 
       <div className="mt-5">
-        <label className="mb-2 block text-sm font-medium text-ink">
-          What can we help with?
-        </label>
-        <div className="flex flex-wrap gap-2">
-          {services.map((s) => (
-            <button
-              key={s}
-              type="button"
-              onClick={() => setInterest(s)}
-              className={cn(
-                "cursor-pointer rounded-full border px-3.5 py-1.5 text-sm font-medium transition-colors",
-                interest === s
-                  ? "border-brand bg-brand text-white"
-                  : "border-line bg-paper text-muted hover:border-ink",
-              )}
-            >
-              {s}
-            </button>
-          ))}
+        <span className="field-label">What can we help with?</span>
+        <div className="flex flex-wrap gap-2" role="group" aria-label="Area of interest">
+          {services.map((s) => {
+            const on = interest === s;
+            return (
+              <button
+                key={s}
+                type="button"
+                aria-pressed={on}
+                onClick={() => setInterest(s)}
+                className={cn(
+                  "cursor-pointer rounded-full border px-3.5 py-1.5 text-sm font-medium transition-colors",
+                  on
+                    ? "border-brand bg-brand text-white"
+                    : "border-line bg-paper text-muted hover:border-fg hover:text-fg",
+                )}
+              >
+                {s}
+              </button>
+            );
+          })}
         </div>
       </div>
 
-      <div className="mt-5">
-        <label htmlFor="message" className="mb-2 block text-sm font-medium text-ink">
-          Tell us about your project
-          <span className="text-brand"> *</span>
-        </label>
-        <textarea
-          id="message"
-          name="message"
-          rows={5}
-          value={values.message}
-          onChange={(e) => setField("message", e.target.value)}
-          aria-invalid={!!errors.message}
-          placeholder="A few sentences on your goals, timeline and any constraints…"
-          className={cn(
-            "w-full resize-none rounded-xl border bg-paper px-4 py-3 text-sm text-ink outline-none transition-colors placeholder:text-muted/70",
-            errors.message
-              ? "border-red-500 focus:border-red-500 focus:ring-2 focus:ring-red-500/15"
-              : "border-line focus:border-brand focus:ring-2 focus:ring-brand/15",
-          )}
-        />
-        {errors.message && (
-          <p className="mt-1.5 text-xs font-medium text-red-500">{errors.message}</p>
-        )}
-      </div>
+      <TextArea
+        className="mt-5"
+        label="Tell us about your project"
+        name="message"
+        required
+        rows={5}
+        value={values.message}
+        error={errors.message}
+        onChange={(e) => setField("message", e.target.value)}
+        placeholder="A few sentences on your goals, timeline and any constraints…"
+      />
 
       <Button type="submit" variant="primary" size="lg" className="mt-6 w-full sm:w-auto">
         Send message
@@ -187,50 +183,5 @@ export default function ContactForm() {
         By submitting, you agree to our privacy policy. We never share your data.
       </p>
     </form>
-  );
-}
-
-function Field({
-  label,
-  name,
-  type = "text",
-  placeholder,
-  required,
-  value,
-  error,
-  onChange,
-}: {
-  label: string;
-  name: FieldName;
-  type?: string;
-  placeholder?: string;
-  required?: boolean;
-  value: string;
-  error?: string;
-  onChange: (name: FieldName, value: string) => void;
-}) {
-  return (
-    <div>
-      <label htmlFor={name} className="mb-2 block text-sm font-medium text-ink">
-        {label}
-        {required && <span className="text-brand"> *</span>}
-      </label>
-      <input
-        id={name}
-        name={name}
-        type={type}
-        value={value}
-        onChange={(e) => onChange(name, e.target.value)}
-        aria-invalid={!!error}
-        placeholder={placeholder}
-        className={cn(
-          "w-full rounded-xl border bg-paper px-4 py-3 text-sm text-ink outline-none transition-colors placeholder:text-muted/70",
-          error
-            ? "border-red-500 focus:border-red-500 focus:ring-2 focus:ring-red-500/15"
-            : "border-line focus:border-brand focus:ring-2 focus:ring-brand/15",
-        )}
-      />
-      {error && <p className="mt-1.5 text-xs font-medium text-red-500">{error}</p>}
-    </div>
   );
 }

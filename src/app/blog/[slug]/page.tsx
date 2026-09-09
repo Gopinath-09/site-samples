@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { blogPosts } from "@/lib/content";
 import PageHeader from "@/components/layout/PageHeader";
-import FinalCta from "@/components/home/FinalCta";
+import FinalCta from "@/components/sections/FinalCta";
 import Reveal from "@/components/ui/Reveal";
 import Button from "@/components/ui/Button";
 import { ArrowRight } from "@/components/ui/icons";
@@ -32,8 +32,8 @@ export default async function BlogPostPage(props: PageProps<"/blog/[slug]">) {
       <article className="section bg-paper">
         <div className="container-page max-w-2xl">
           <Reveal>
-            <div className="space-y-6 text-[1.05rem] leading-relaxed text-ink/85">
-              <p className="text-xl font-medium text-ink">{post.excerpt}</p>
+            <div className="space-y-6 text-[1.05rem] leading-relaxed text-fg/85">
+              <p className="text-xl font-medium text-fg">{post.excerpt}</p>
               {post.body.map((para, i) => (
                 <p key={i}>{para}</p>
               ))}

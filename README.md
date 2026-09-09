@@ -1,36 +1,43 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# COBRR TECH LABS — corporate website
 
-## Getting Started
+Next.js 16 (App Router) · React 19 · Tailwind CSS v4 · Framer Motion 12 · TypeScript · pnpm
 
-First, run the development server:
+## Run
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
+pnpm dev        # http://localhost:3000
+pnpm build      # production build (also validates OG images, sitemap, robots)
+pnpm start
+pnpm lint
+pnpm exec tsc --noEmit
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Read first
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- `AGENTS.md` — this Next.js version differs from older docs; the bundled docs are in `node_modules/next/dist/docs/`.
+- `docs/DESIGN_SYSTEM.md` — tokens, theme, primitives, motion, and the checklist for adding a section.
+- `docs/IMAGE_BRIEF.md` — every image slot on the site with sizes and generation prompts.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Structure
 
-## Learn More
+```
+src/app/                 routes (page.tsx per route, opengraph-image.tsx per dynamic segment)
+src/app/globals.css      design tokens + component classes (source of truth)
+src/lib/tokens.ts        TS mirror of the tokens (OG images, SVG, Framer)
+src/lib/content.ts       all copy: services, products, industries, case studies, …
+src/lib/site.ts          company facts, navigation, siteUrl
+src/components/ui/       primitives: Button, Card, CardLink, Section, IconChip, Badge, Field, ShadedImage, …
+src/components/layout/   Navbar, Footer, PageHeader, Logo, LegalPage
+src/components/sections/ composable page sections
+src/components/illustrations/ animated SVG scenes
+src/components/theme/    ThemeScript, ThemeToggle, Providers
+public/brand/            logo marks derived from public/company_logo.png
+```
 
-To learn more about Next.js, take a look at the following resources:
+## House rules
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Every navigation is a **button click through the router**. No `<a>` or `<Link>`.
+- All styling goes through tokens and the shared classes/primitives. No hard-coded hex, no Tailwind default palette.
+- Light and dark themes are automatic: use semantic classes (`bg-paper`, `text-fg`, `border-line`). `ink` is the always-dark surface.
+- Copy lives in `src/lib/content.ts`, not in components.

@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { services } from "@/lib/content";
 import PageHeader from "@/components/layout/PageHeader";
-import FinalCta from "@/components/home/FinalCta";
-import Icon from "@/components/ui/Icon";
+import FinalCta from "@/components/sections/FinalCta";
+import ScaleAndReliability from "@/components/sections/ScaleAndReliability";
+import IconChip from "@/components/ui/IconChip";
 import Button from "@/components/ui/Button";
 import Reveal, { RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { ArrowRight, Check } from "@/components/ui/icons";
@@ -20,6 +21,15 @@ export async function generateMetadata(
   if (!service) return { title: "Service" };
   return { title: service.title, description: service.summary };
 }
+
+/** Services where the scaling / high-availability story is central. */
+const infrastructureServices = new Set([
+  "cloud-engineering",
+  "devops",
+  "maintenance-support",
+  "saas-development",
+  "enterprise-software",
+]);
 
 const deliverables = [
   "Discovery & technical strategy",
@@ -42,7 +52,7 @@ export default async function ServiceDetailPage(
   return (
     <>
       <PageHeader eyebrow="Service" title={service.title} description={service.summary}>
-        <Button variant="light" size="lg" href="/contact">
+        <Button size="lg" href="/contact">
           Request a proposal
           <ArrowRight width={18} height={18} />
         </Button>
@@ -69,11 +79,11 @@ export default async function ServiceDetailPage(
               {deliverables.map((d) => (
                 <RevealItem
                   key={d}
-                  className="flex items-center gap-3 text-sm font-medium text-ink"
+                  className="flex items-center gap-3 text-sm font-medium text-fg"
                 >
-                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-soft text-brand">
+                  <IconChip tone="brand" size="xs">
                     <Check width={14} height={14} />
-                  </span>
+                  </IconChip>
                   {d}
                 </RevealItem>
               ))}
@@ -82,10 +92,8 @@ export default async function ServiceDetailPage(
 
           <Reveal direction="left">
             <div className="card p-8">
-              <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-ink text-white">
-                <Icon name={service.icon} width={22} height={22} />
-              </span>
-              <h3 className="mt-6 text-lg font-semibold text-ink">Focus areas</h3>
+              <IconChip name={service.icon} tone="solid" size="lg" />
+              <h3 className="mt-6 text-lg font-semibold text-fg">Focus areas</h3>
               <ul className="mt-4 space-y-3">
                 {service.points.map((p) => (
                   <li key={p} className="flex items-start gap-3 text-sm text-muted">
@@ -104,8 +112,10 @@ export default async function ServiceDetailPage(
         </div>
       </section>
 
+      {infrastructureServices.has(service.slug) && <ScaleAndReliability />}
+
       {/* Related services */}
-      <section className="section bg-sand">
+      <section className="section border-t border-line bg-paper">
         <div className="container-page">
           <h2 className="heading-md">Related services</h2>
           <RevealGroup className="mt-8 grid gap-6 md:grid-cols-3">

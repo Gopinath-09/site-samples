@@ -49,7 +49,7 @@ export default function ContactPage() {
                   <dt className="text-xs font-semibold uppercase tracking-[0.14em] text-muted">
                     Company
                   </dt>
-                  <dd className="mt-1 text-lg font-semibold text-ink">
+                  <dd className="mt-1 text-lg font-semibold text-fg">
                     {company.legalName}
                   </dd>
                 </div>
@@ -57,14 +57,14 @@ export default function ContactPage() {
                   <dt className="text-xs font-semibold uppercase tracking-[0.14em] text-muted">
                     Location
                   </dt>
-                  <dd className="mt-1 text-lg font-semibold text-ink">
+                  <dd className="mt-1 text-lg font-semibold text-fg">
                     {company.location}
                   </dd>
                 </div>
               </dl>
 
-              <div className="mt-10 card bg-sand p-6">
-                <h3 className="font-semibold text-ink">Response time</h3>
+              <div className="card mt-10 p-6">
+                <h3 className="font-semibold text-fg">Response time</h3>
                 <p className="mt-1.5 text-sm text-muted">
                   We reply to every genuine enquiry within one business day.
                 </p>

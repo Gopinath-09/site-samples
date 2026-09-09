@@ -10,8 +10,9 @@ interface PageHeaderProps {
 }
 
 /**
- * Interior-page hero band. Dark, understated, with the engineering grid motif —
- * sits directly under the fixed navbar (note the top padding).
+ * Interior-page hero band. Sits on the same surface as everything else, with
+ * the faint engineering grid for texture — note the top padding, which clears
+ * the fixed navbar.
  */
 export default function PageHeader({
   eyebrow,
@@ -22,13 +23,9 @@ export default function PageHeader({
 }: PageHeaderProps) {
   const centered = align === "center";
   return (
-    <section className="relative overflow-hidden bg-ink text-white">
-      <div className="bg-grid-dark absolute inset-0 opacity-40" aria-hidden />
-      <div
-        className="absolute right-0 top-0 h-72 w-96 rounded-full opacity-20 blur-3xl"
-        style={{ background: "var(--color-brand)" }}
-        aria-hidden
-      />
+    <section className="relative overflow-hidden border-b border-line bg-paper text-fg">
+      <div className="bg-grid absolute inset-0" aria-hidden />
+      <div className="glow-brand absolute right-0 top-0 h-72 w-96" aria-hidden />
       <div
         className={cn(
           "relative container-page pb-16 pt-36 md:pb-24 md:pt-44",
@@ -38,17 +35,12 @@ export default function PageHeader({
         <Reveal>
           <div className={cn("max-w-3xl", centered && "mx-auto")}>
             {eyebrow && (
-              <span
-                className={cn("eyebrow", centered && "eyebrow-center")}
-                style={{ color: "#7f9dff" }}
-              >
+              <span className={cn("eyebrow", centered && "eyebrow-center")}>
                 {eyebrow}
               </span>
             )}
-            <h1 className="heading-xl mt-5 text-balance text-white">{title}</h1>
-            {description && (
-              <p className="lead mt-6 text-muted-dark">{description}</p>
-            )}
+            <h1 className="heading-xl mt-5 text-balance text-fg">{title}</h1>
+            {description && <p className="lead mt-6">{description}</p>}
             {children && <div className="mt-9">{children}</div>}
           </div>
         </Reveal>

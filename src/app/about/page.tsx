@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
 import PageHeader from "@/components/layout/PageHeader";
-import SuccessMetrics from "@/components/home/SuccessMetrics";
-import EngineeringProcess from "@/components/home/EngineeringProcess";
-import WhyChoose from "@/components/home/WhyChoose";
-import FinalCta from "@/components/home/FinalCta";
+import WhoWeAre from "@/components/sections/WhoWeAre";
+import SuccessMetrics from "@/components/sections/SuccessMetrics";
+import ClientCare from "@/components/sections/ClientCare";
+import WhyChoose from "@/components/sections/WhyChoose";
+import FinalCta from "@/components/sections/FinalCta";
+import Section from "@/components/ui/Section";
+import Card from "@/components/ui/Card";
 import SectionHeading from "@/components/ui/SectionHeading";
 import Reveal, { RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { company } from "@/lib/site";
@@ -30,8 +33,8 @@ export default function AboutPage() {
         description={`${company.legalName} exists to build software organisations can depend on — and to be the kind of long-term partner that's rare in this industry.`}
       />
 
-      <section className="section bg-paper">
-        <div className="container-page grid gap-12 lg:grid-cols-2 lg:gap-20">
+      <Section>
+        <div className="grid gap-12 lg:grid-cols-2 lg:gap-20">
           <Reveal>
             <div>
               <span className="eyebrow">Our story</span>
@@ -55,14 +58,14 @@ export default function AboutPage() {
           </Reveal>
 
           <Reveal direction="left">
-            <div className="card bg-ink p-8 text-white">
-              <h3 className="text-lg font-semibold">Our mission</h3>
-              <p className="mt-3 leading-relaxed text-white/80">
+            <Card padding="lg">
+              <h3 className="heading-sm text-fg">Our mission</h3>
+              <p className="mt-3 leading-relaxed text-muted">
                 To engineer software that creates lasting value — clear, secure
                 and dependable — and to build partnerships measured in years, not
                 projects.
               </p>
-              <div className="mt-8 grid grid-cols-2 gap-6 border-t border-ink-line pt-6">
+              <div className="mt-8 grid grid-cols-2 gap-6 border-t border-line pt-6">
                 {[
                   ["Founded", String(company.foundedYear)],
                   ["Head office", company.location],
@@ -70,35 +73,34 @@ export default function AboutPage() {
                   ["Approach", "Engineering-first"],
                 ].map(([k, v]) => (
                   <div key={k}>
-                    <div className="text-lg font-semibold">{v}</div>
-                    <div className="text-sm text-muted-dark">{k}</div>
+                    <div className="text-lg font-semibold text-fg">{v}</div>
+                    <div className="text-sm text-muted">{k}</div>
                   </div>
                 ))}
               </div>
-            </div>
+            </Card>
           </Reveal>
         </div>
-      </section>
+      </Section>
 
+      <WhoWeAre />
       <SuccessMetrics />
 
-      <section className="section bg-sand">
-        <div className="container-page">
-          <SectionHeading eyebrow="Our values" title="What we hold ourselves to." />
-          <RevealGroup className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {values.map((v) => (
-              <RevealItem key={v.title} className="h-full">
-                <div className="card h-full p-7">
-                  <h3 className="text-lg font-semibold text-ink">{v.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted">{v.body}</p>
-                </div>
-              </RevealItem>
-            ))}
-          </RevealGroup>
-        </div>
-      </section>
+      <Section>
+        <SectionHeading eyebrow="Our values" title="What we hold ourselves to." />
+        <RevealGroup className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {values.map((v) => (
+            <RevealItem key={v.title} className="h-full">
+              <Card className="h-full">
+                <h3 className="heading-sm text-fg">{v.title}</h3>
+                <p className="body-sm mt-2">{v.body}</p>
+              </Card>
+            </RevealItem>
+          ))}
+        </RevealGroup>
+      </Section>
 
-      <EngineeringProcess />
+      <ClientCare />
       <WhyChoose />
       <FinalCta />
     </>

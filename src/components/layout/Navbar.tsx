@@ -6,6 +6,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { megaMenu } from "@/lib/site";
 import Button from "@/components/ui/Button";
+import Logo from "@/components/layout/Logo";
+import ThemeToggle from "@/components/theme/ThemeToggle";
 import { ArrowRight, ArrowUpRight, ChevronDown, Close } from "@/components/ui/icons";
 
 export default function Navbar() {
@@ -50,9 +52,10 @@ export default function Navbar() {
     };
   }, [mobileOpen]);
 
-  // Solid (sand) header when scrolled or the mega-menu is open.
+  /* The whole site sits on one surface, so the header only ever needs to
+     decide whether it is flush (transparent) or floating (surface + shadow +
+     hairline). Text colour never changes. */
   const solid = scrolled || megaOpen;
-  const dark = solid; // dark text/logo on the light (sand) header
 
   // `exact` matches only the page itself (used for leaf links like "All
   // Services" so they don't stay active on child routes). Non-exact also
@@ -79,17 +82,20 @@ export default function Navbar() {
     closeTimer.current = setTimeout(() => setMegaOpen(false), 120);
   };
 
+  const activeLinkClass =
+    "border-brand/50 bg-brand-soft shadow-[inset_2px_0_0_var(--color-brand)]";
+
   return (
     <header
       className={cn(
         "fixed inset-x-0 top-0 z-50 transition-all duration-300",
-        solid ? "bg-sand shadow-[0_10px_30px_-24px_rgba(10,14,26,0.5)]" : "bg-transparent",
+        solid ? "border-b border-line bg-paper shadow-header" : "bg-transparent",
         // Hide on scroll-down / reveal on scroll-up (mobile + desktop).
         hidden && !mobileOpen ? "-translate-y-full" : "translate-y-0",
       )}
     >
       <nav className="container-page flex h-18 items-center justify-between py-4">
-        {/* Desktop: "Explore COBRR" wordmark = brand + hover trigger */}
+        {/* Desktop: logo = brand + hover trigger for the mega-menu */}
         <div
           className="hidden lg:block"
           onMouseEnter={openMega}
@@ -98,19 +104,13 @@ export default function Navbar() {
           <button
             onClick={() => setMegaOpen((v) => !v)}
             aria-expanded={megaOpen}
-            className={cn(
-              "flex cursor-pointer items-center gap-2 text-lg font-bold tracking-tight transition-colors",
-              dark ? "text-ink" : "text-white",
-            )}
+            aria-label="Explore COBRR"
+            className="flex cursor-pointer items-center gap-2.5"
           >
-            <span>
-              {/* Explore{" "} */}
-              <span  className={cn(dark ? "text-ink" : "text-white","tracking-[0.12em] text-2xl font-extrabold")}>COBRR</span>
-            </span>
+            <Logo />
             <span
               className={cn(
-                "flex h-6 w-6 items-center justify-center rounded-full border transition-all duration-300",
-                dark ? "border-line" : "border-white/30",
+                "flex h-6 w-6 items-center justify-center rounded-full border border-line text-fg transition-transform duration-300",
                 megaOpen && "rotate-180",
               )}
             >
@@ -126,27 +126,28 @@ export default function Navbar() {
                 animate={{ clipPath: "inset(0 0 0% 0)", opacity: 1 }}
                 exit={{ clipPath: "inset(0 0 100% 0)", opacity: 0 }}
                 transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                className="absolute inset-x-0 top-full border-t border-line bg-sand"
+                className="absolute inset-x-0 top-full border-t border-line bg-paper"
               >
                 <div className="container-page flex gap-10 py-10">
-                  {/* Professional "Home" feature tile */}
+                  {/* "Home" feature tile */}
                   <button
                     onClick={() => go("/")}
                     className={cn(
-                      "group flex w-64 cursor-pointer shrink-0 flex-col justify-between overflow-hidden rounded-2xl bg-ink p-6 text-left text-white transition-shadow",
-                      isActive("/") && "ring-2 ring-brand ring-offset-2 ring-offset-sand",
+                      "group relative flex w-64 shrink-0 cursor-pointer flex-col justify-between overflow-hidden rounded-panel border border-line p-6 text-left transition-colors hover:border-fg/30",
+                      isActive("/") && "border-brand/50",
                     )}
                   >
-                    <div>
-                      <span className="text-xs font-semibold uppercase tracking-[0.16em] text-white/50">
+                    <div className="bg-grid absolute inset-0" aria-hidden />
+                    <div className="relative">
+                      <span className="text-xs font-semibold uppercase tracking-[0.16em] text-muted">
                         COBRR Tech Labs
                       </span>
-                      <h3 className="mt-3 text-2xl font-bold">Home</h3>
-                      <p className="mt-2 text-sm leading-relaxed text-white/70">
+                      <h3 className="mt-3 text-2xl font-bold text-fg">Home</h3>
+                      <p className="mt-2 text-sm leading-relaxed text-muted">
                         Enterprise software, AI and cloud — engineered to last.
                       </p>
                     </div>
-                    <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-medium text-white/85 transition-colors group-hover:text-white">
+                    <span className="relative mt-6 inline-flex items-center gap-1.5 text-sm font-medium text-fg">
                       Overview
                       <ArrowRight
                         width={16}
@@ -166,7 +167,7 @@ export default function Navbar() {
                             onClick={() => go(group.href)}
                             className={cn(
                               "group flex cursor-pointer items-center gap-1.5 text-sm font-semibold uppercase tracking-widest transition-colors",
-                              groupActive ? "text-brand" : "text-ink",
+                              groupActive ? "text-brand" : "text-fg",
                             )}
                           >
                             {group.title}
@@ -190,14 +191,14 @@ export default function Navbar() {
                                     className={cn(
                                       "w-full cursor-pointer border-l-2 px-3 py-2 text-left transition-colors",
                                       active
-                                        ? "border-brand/40 bg-linear-to-r from-brand-soft to-transparent shadow-[inset_2px_0_0_var(--color-brand)]"
-                                        : "border-transparent hover:bg-sand",
+                                        ? activeLinkClass
+                                        : "border-transparent hover:bg-elevate",
                                     )}
                                   >
                                     <span
                                       className={cn(
                                         "block text-sm font-medium",
-                                        active ? "text-brand" : "text-ink",
+                                        active ? "text-brand" : "text-fg",
                                       )}
                                     >
                                       {link.label}
@@ -217,12 +218,12 @@ export default function Navbar() {
                 </div>
 
                 {/* CTA strip */}
-                <div className="border-t border-line/70 bg-sand-deep/50">
+                <div className="border-t border-line">
                   <div className="container-page flex flex-col items-start justify-between gap-4 py-5 sm:flex-row sm:items-center">
                     <p className="text-sm text-muted">
                       Have a project in mind? We reply within one business day.
                     </p>
-                    <Button size="sm" variant="primary" href="/contact">
+                    <Button size="sm" href="/contact">
                       Start a project
                       <ArrowRight width={16} height={16} />
                     </Button>
@@ -233,38 +234,24 @@ export default function Navbar() {
           </AnimatePresence>
         </div>
 
-        {/* Mobile: "Explore COBRR" wordmark is the only opener */}
+        {/* Mobile: logo is the only drawer opener */}
         <button
           onClick={() => setMobileOpen(true)}
           aria-label="Open menu"
-          className={cn(
-            "flex items-center gap-2 text-base font-bold tracking-tight lg:hidden",
-            dark ? "text-ink" : "text-white",
-          )}
+          className="flex cursor-pointer items-center gap-2 lg:hidden"
         >
-          {/* Explore  */}<span className="tracking-[0.12em] text-2xl font-extrabold">COBRR</span>
-          <ChevronDown width={16} height={16} />
+          <Logo />
+          <ChevronDown width={16} height={16} className="text-fg" />
         </button>
 
-        {/* Desktop CTAs — equal width */}
-        <div className="hidden items-center gap-2 lg:flex">
-          {/* <Button
-            variant={dark ? "outline" : "ghost-light"}
-            size="sm"
-            href="/careers"
-            className={cn(
-              "w-36 justify-center",
-              isActive("/careers") && "ring-2 ring-brand/50",
-            )}
-          >
-            Careers
-          </Button> */}
+        {/* Right side: theme + CTA */}
+        <div className="flex items-center gap-2">
+          <ThemeToggle />
           <Button
-            variant={dark ? "primary" : "light"}
             size="sm"
             href="/contact"
             className={cn(
-              "w-36 justify-center",
+              "hidden w-36 justify-center lg:inline-flex",
               isActive("/contact") && "ring-2 ring-brand/50",
             )}
           >
@@ -284,23 +271,27 @@ export default function Navbar() {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.25 }}
               onClick={() => setMobileOpen(false)}
-              className="fixed inset-0 z-40 bg-ink/50 backdrop-blur-sm lg:hidden"
+              className="fixed inset-0 z-40 bg-fg/25 backdrop-blur-sm lg:hidden"
             />
             <motion.aside
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-              className="fixed right-0 top-0 z-50 flex h-svh w-[90%] max-w-sm flex-col bg-paper shadow-2xl lg:hidden"
+              className="fixed right-0 top-0 z-50 flex h-svh w-[90%] max-w-sm flex-col border-l border-line bg-paper lg:hidden"
             >
-              <div className="flex items-center justify-end border-b border-line px-5 py-4">
-                <button
-                  onClick={() => setMobileOpen(false)}
-                  aria-label="Close menu"
-                  className="flex h-9 w-9 items-center justify-center rounded-full border border-line text-ink"
-                >
-                  <Close width={18} height={18} />
-                </button>
+              <div className="flex items-center justify-between border-b border-line px-5 py-4">
+                <Logo size="sm" />
+                <div className="flex items-center gap-2">
+                  <ThemeToggle />
+                  <button
+                    onClick={() => setMobileOpen(false)}
+                    aria-label="Close menu"
+                    className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border border-line text-fg"
+                  >
+                    <Close width={18} height={18} />
+                  </button>
+                </div>
               </div>
 
               <div className="flex-1 overflow-y-auto px-4 py-4">
@@ -310,8 +301,8 @@ export default function Navbar() {
                   className={cn(
                     "mb-2 block w-full cursor-pointer border-l-2 px-3 py-2 text-left text-sm font-semibold transition-colors",
                     isActive("/")
-                      ? "border-brand/40 bg-linear-to-r from-brand-soft to-transparent text-brand shadow-[inset_2px_0_0_var(--color-brand)]"
-                      : "border-transparent text-ink hover:bg-sand",
+                      ? cn(activeLinkClass, "text-brand")
+                      : "border-transparent text-fg hover:bg-elevate",
                   )}
                 >
                   Home
@@ -335,14 +326,14 @@ export default function Navbar() {
                               className={cn(
                                 "w-full cursor-pointer border-l-2 px-3 py-2 text-left transition-colors",
                                 active
-                                  ? "border-brand/40 bg-linear-to-r from-brand-soft to-transparent shadow-[inset_2px_0_0_var(--color-brand)]"
-                                  : "border-transparent hover:bg-sand",
+                                  ? activeLinkClass
+                                  : "border-transparent hover:bg-elevate",
                               )}
                             >
                               <span
                                 className={cn(
                                   "block text-[0.82rem] font-medium",
-                                  active ? "text-brand" : "text-ink",
+                                  active ? "text-brand" : "text-fg",
                                 )}
                               >
                                 {link.label}
@@ -360,10 +351,7 @@ export default function Navbar() {
               </div>
 
               <div className="flex flex-col gap-2 border-t border-line p-4">
-                {/* <Button variant="outline" size="sm" href="/careers" className="w-full">
-                  Careers
-                </Button> */}
-                <Button variant="primary" size="sm" href="/contact" className="w-full">
+                <Button size="sm" href="/contact" className="w-full">
                   Contact us
                   <ArrowRight width={16} height={16} />
                 </Button>

@@ -4,15 +4,13 @@ import type React from "react";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 
-type Variant = "primary" | "dark" | "light" | "outline" | "ghost-light";
+type Variant = "primary" | "dark" | "outline";
 type Size = "sm" | "md" | "lg";
 
 const variantClass: Record<Variant, string> = {
   primary: "btn-primary",
   dark: "btn-dark",
-  light: "btn-light",
   outline: "btn-outline",
-  "ghost-light": "btn-ghost-light",
 };
 
 const sizeClass: Record<Size, string> = {
@@ -23,13 +21,21 @@ const sizeClass: Record<Size, string> = {
 
 export interface ButtonProps
   extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "onClick"> {
+  /**
+   * primary — solid foreground fill (black on white, white on matte black)
+   * dark    — same as primary without the shadow
+   * outline — hairline border, fills on hover
+   *
+   * Because the site uses one surface everywhere, these three work on every
+   * page; there are no separate "on dark" variants.
+   */
   variant?: Variant;
   size?: Size;
   /** Internal route or external URL to navigate to on click. */
   href?: string;
   /** Open external links in the same tab by default (no right-click / new tab). */
   external?: boolean;
-  /** Solid fill colour override (e.g. a hero slide's accent). Forces white text. */
+  /** Solid fill colour override (e.g. a hero slide's accent). White text, brightens on hover. */
   accentColor?: string;
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
@@ -74,15 +80,11 @@ export default function Button({
       onClick={handleClick}
       className={cn(
         "btn",
-        !accentColor && variantClass[variant],
+        accentColor ? "btn-accent" : variantClass[variant],
         sizeClass[size],
         className,
       )}
-      style={
-        accentColor
-          ? { background: accentColor, color: "#fff", ...style }
-          : style
-      }
+      style={accentColor ? { background: accentColor, ...style } : style}
       {...rest}
     >
       {children}

@@ -2,9 +2,10 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { products } from "@/lib/content";
 import PageHeader from "@/components/layout/PageHeader";
-import FaqSection from "@/components/home/FaqSection";
-import FinalCta from "@/components/home/FinalCta";
+import FaqSection from "@/components/sections/FaqSection";
+import FinalCta from "@/components/sections/FinalCta";
 import Button from "@/components/ui/Button";
+import IconChip from "@/components/ui/IconChip";
 import Reveal, { RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { ArrowRight, Check } from "@/components/ui/icons";
 import type { Faq } from "@/lib/content";
@@ -51,11 +52,11 @@ export default async function ProductDetailPage(
     <>
       <PageHeader eyebrow={`Product · ${product.status}`} title={product.name} description={product.tagline}>
         <div className="flex flex-wrap gap-3">
-          <Button variant="light" size="lg" href="/contact">
+          <Button size="lg" href="/contact">
             Request a demo
             <ArrowRight width={18} height={18} />
           </Button>
-          <Button variant="ghost-light" size="lg" href="/products">
+          <Button variant="outline" size="lg" href="/products">
             All products
           </Button>
         </div>
@@ -67,17 +68,15 @@ export default async function ProductDetailPage(
           <Reveal>
             <div className="card h-full p-8">
               <span className="pill text-copper">The problem</span>
-              <p className="mt-5 text-lg leading-relaxed text-ink">
+              <p className="mt-5 text-lg leading-relaxed text-fg">
                 {product.problem}
               </p>
             </div>
           </Reveal>
           <Reveal direction="left">
-            <div className="card h-full bg-ink p-8 text-white">
-              <span className="pill border-white/15 bg-white/10 text-white">
-                Our solution
-              </span>
-              <p className="mt-5 text-lg leading-relaxed text-white/90">
+            <div className="card h-full p-8">
+              <span className="pill">Our solution</span>
+              <p className="mt-5 text-lg leading-relaxed text-fg">
                 {product.solution}
               </p>
             </div>
@@ -86,7 +85,7 @@ export default async function ProductDetailPage(
       </section>
 
       {/* Features */}
-      <section className="section bg-sand">
+      <section className="section border-y border-line bg-paper">
         <div className="container-page">
           <span className="eyebrow">Features</span>
           <Reveal>
@@ -96,10 +95,10 @@ export default async function ProductDetailPage(
             {product.features.map((f) => (
               <RevealItem key={f}>
                 <div className="card flex items-center gap-3 p-5">
-                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-brand-soft text-brand">
+                  <IconChip tone="brand" size="sm">
                     <Check width={16} height={16} />
-                  </span>
-                  <span className="text-sm font-medium text-ink">{f}</span>
+                  </IconChip>
+                  <span className="text-sm font-medium text-fg">{f}</span>
                 </div>
               </RevealItem>
             ))}
@@ -122,11 +121,11 @@ export default async function ProductDetailPage(
                   ["Zero-downtime releases", "Continuous delivery with automated rollbacks."],
                 ].map(([t, d]) => (
                   <li key={t} className="flex gap-4">
-                    <span className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-ink text-white">
+                    <IconChip tone="solid" size="xs" className="mt-1">
                       <Check width={13} height={13} />
-                    </span>
+                    </IconChip>
                     <div>
-                      <div className="font-semibold text-ink">{t}</div>
+                      <div className="font-semibold text-fg">{t}</div>
                       <div className="text-sm text-muted">{d}</div>
                     </div>
                   </li>
@@ -149,7 +148,7 @@ export default async function ProductDetailPage(
                     key={tier}
                     className="flex items-center justify-between rounded-xl border border-line px-5 py-4"
                   >
-                    <span className="font-semibold text-ink">{tier}</span>
+                    <span className="font-semibold text-fg">{tier}</span>
                     <span className="font-mono text-sm text-muted">
                       {i === 2 ? "Custom" : "On request"}
                     </span>

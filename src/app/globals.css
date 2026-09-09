@@ -65,11 +65,15 @@
   --shadow-btn: 0 12px 26px -16px rgba(16, 16, 18, 0.55);
 }
 
-/* ---- Dark theme: same names, matte-black values ---- */
+/* ---- Dark theme: same names, matte-black values ----
+   DARK IS THE DEFAULT. The selector matches anything that is not explicitly
+   light, so the dark palette also applies before `ThemeScript` has set the
+   attribute and for visitors without JavaScript. Only an explicit
+   `data-theme="light"` falls back to the light values in `@theme` above. */
 :root {
   color-scheme: light;
 }
-:root[data-theme="dark"] {
+:root:not([data-theme="light"]) {
   color-scheme: dark;
 
   --color-paper: #0c0c0d; /* matte black */

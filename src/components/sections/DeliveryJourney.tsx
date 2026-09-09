@@ -30,7 +30,8 @@ import {
 
    Desktop: a sticky left column (heading, methodology switch, the active
    stage's detail) beside a tall right column where the route draws as you
-   scroll. Mobile: stages stacked, each with its own scroll-drawn rail.
+   scroll. Mobile: the heading and switch stack above the same drawn route,
+   which carries its own stage labels.
 
    Scroll linkage: one `useScroll` on the two-column wrapper. Its progress
    drives every path's `pathLength`; crossing a STAGE_PROGRESS threshold
@@ -297,9 +298,10 @@ export default function DeliveryJourney() {
         ref={wrapRef}
         className="grid gap-y-14 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:gap-x-16"
       >
-        {/* ---- Left: sticky narrative. Desktop only — on mobile this section
-             is the drawn route on its own. ---- */}
-        <div className="hidden lg:sticky lg:top-28 lg:block lg:self-start">
+        {/* ---- Left: sticky narrative. The heading and the methodology
+             switch show at every width; only the per-stage detail below them
+             is desktop-only. ---- */}
+        <div className="lg:sticky lg:top-28 lg:self-start">
           <SectionHeading
             eyebrow="How we deliver"
             title="First talk to lifetime"
@@ -327,8 +329,9 @@ export default function DeliveryJourney() {
             </div>
           </Reveal>
 
-          {/* Active stage detail + stepper */}
-          <div className="mt-6">
+          {/* Active stage detail + stepper — desktop only; on mobile the drawn
+              route carries the stage labels itself. */}
+          <div className="mt-6 hidden lg:block">
             <div className="grid">
               {stages.map((s, i) => {
                 const on = i === active;

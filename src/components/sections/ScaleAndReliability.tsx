@@ -7,7 +7,6 @@ import Button from "@/components/ui/Button";
 import Reveal, { RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { Activity, ArrowRight, Boxes, Server } from "@/components/ui/icons";
 import ScaleIllustration from "@/components/illustrations/ScaleIllustration";
-import { cn } from "@/lib/utils";
 
 interface Feature {
   icon: LucideIcon;
@@ -53,18 +52,6 @@ const ctas = {
 } as const;
 
 /**
- * Shallow inward arc for the three cards: the middle one sits proud while the
- * outer two settle lower and lean toward the centre. Transforms only apply
- * from `md` up — below that the cards stack and any offset would just look
- * like a misalignment.
- */
-const arc = [
-  "md:translate-y-2 md:translate-x-3",
-  "md:-translate-y-6",
-  "md:translate-y-2 md:-translate-x-3",
-];
-
-/**
  * The diagram leads: full width across the top, with the three principles
  * beneath it as cards.
  */
@@ -82,13 +69,10 @@ export default function ScaleAndReliability() {
       </Reveal>
 
       <RevealGroup className="mt-14 grid gap-6 md:grid-cols-3 lg:mt-16">
-        {features.map((feature, i) => {
+        {features.map((feature) => {
           const FeatureIcon = feature.icon;
           return (
-            <RevealItem
-              key={feature.title}
-              className={cn("h-full transition-transform duration-500", arc[i])}
-            >
+            <RevealItem key={feature.title} className="h-full">
               <Card interactive className="flex h-full flex-col">
                 <IconChip tone="brand">
                   <FeatureIcon width={20} height={20} />

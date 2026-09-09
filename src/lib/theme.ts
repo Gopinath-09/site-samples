@@ -14,9 +14,10 @@ export { THEME_STORAGE_KEY };
 
 const listeners = new Set<() => void>();
 
+/** Dark is the default: only an explicit "light" opts out of it. */
 export function getTheme(): Theme {
-  if (typeof document === "undefined") return "light";
-  return document.documentElement.dataset.theme === "dark" ? "dark" : "light";
+  if (typeof document === "undefined") return "dark";
+  return document.documentElement.dataset.theme === "light" ? "light" : "dark";
 }
 
 export function setTheme(theme: Theme) {
@@ -40,9 +41,9 @@ function subscribe(cb: () => void) {
   };
 }
 
-const getServerTheme = (): Theme => "light";
+const getServerTheme = (): Theme => "dark";
 
-/** Current theme, kept in sync with the <html> attribute. SSR renders "light". */
+/** Current theme, kept in sync with the <html> attribute. SSR renders "dark". */
 export function useTheme(): Theme {
   return useSyncExternalStore(subscribe, getTheme, getServerTheme);
 }
